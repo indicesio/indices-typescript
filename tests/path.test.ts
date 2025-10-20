@@ -1,4 +1,4 @@
-import { createPathTagFunction, encodeURIPath } from 'indices/internal/utils/path';
+import { createPathTagFunction, encodeURIPath } from 'indices-ts/internal/utils/path';
 import { inspect } from 'node:util';
 import { runInNewContext } from 'node:vm';
 

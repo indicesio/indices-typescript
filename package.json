@@ -1,5 +1,5 @@
 {
-  "name": "indices",
+  "name": "indices-ts",
   "version": "0.0.1",
   "description": "The official TypeScript library for the Indices API",
   "author": "Indices <support@indices.io>",

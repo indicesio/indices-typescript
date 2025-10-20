@@ -1,5 +1,5 @@
-import { multipartFormRequestOptions, createForm } from 'indices/internal/uploads';
-import { toFile } from 'indices/core/uploads';
+import { multipartFormRequestOptions, createForm } from 'indices-ts/internal/uploads';
+import { toFile } from 'indices-ts/core/uploads';
 
 describe('form data validation', () => {
   test('valid values do not error', async () => {

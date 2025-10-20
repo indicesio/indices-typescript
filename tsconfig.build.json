@@ -5,8 +5,8 @@
   "compilerOptions": {
     "rootDir": "./dist/src",
     "paths": {
-      "indices/*": ["./dist/src/*"],
-      "indices": ["./dist/src/index.ts"]
+      "indices-ts/*": ["./dist/src/*"],
+      "indices-ts": ["./dist/src/index.ts"]
     },
     "noEmit": false,
     "declaration": true,
