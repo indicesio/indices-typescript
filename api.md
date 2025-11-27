@@ -10,12 +10,12 @@ Types:
 
 Methods:
 
-- <code title="post /v1/tasks">client.tasks.<a href="./src/resources/tasks.ts">create</a>({ ...params }) -> Task</code>
-- <code title="get /v1/tasks/{id}">client.tasks.<a href="./src/resources/tasks.ts">retrieve</a>(id) -> Task</code>
-- <code title="get /v1/tasks">client.tasks.<a href="./src/resources/tasks.ts">list</a>() -> TaskListResponse</code>
-- <code title="delete /v1/tasks/{id}">client.tasks.<a href="./src/resources/tasks.ts">delete</a>(id) -> unknown</code>
-- <code title="post /v1/tasks/{id}/complete-manual-session">client.tasks.<a href="./src/resources/tasks.ts">completeManualSession</a>(id) -> unknown</code>
-- <code title="post /v1/tasks/{id}/start-manual-session">client.tasks.<a href="./src/resources/tasks.ts">startManualSession</a>(id, { ...params }) -> TaskStartManualSessionResponse</code>
+- <code title="post /v1beta/tasks">client.tasks.<a href="./src/resources/tasks.ts">create</a>({ ...params }) -> Task</code>
+- <code title="get /v1beta/tasks/{id}">client.tasks.<a href="./src/resources/tasks.ts">retrieve</a>(id) -> Task</code>
+- <code title="get /v1beta/tasks">client.tasks.<a href="./src/resources/tasks.ts">list</a>() -> TaskListResponse</code>
+- <code title="delete /v1beta/tasks/{id}">client.tasks.<a href="./src/resources/tasks.ts">delete</a>(id) -> unknown</code>
+- <code title="post /v1beta/tasks/{id}/complete-manual-session">client.tasks.<a href="./src/resources/tasks.ts">completeManualSession</a>(id) -> unknown</code>
+- <code title="post /v1beta/tasks/{id}/start-manual-session">client.tasks.<a href="./src/resources/tasks.ts">startManualSession</a>(id, { ...params }) -> TaskStartManualSessionResponse</code>
 
 # Runs
 
@@ -26,6 +26,6 @@ Types:
 
 Methods:
 
-- <code title="get /v1/runs/{run_id}">client.runs.<a href="./src/resources/runs.ts">retrieve</a>(runID) -> Run</code>
-- <code title="get /v1/runs">client.runs.<a href="./src/resources/runs.ts">list</a>({ ...params }) -> RunListResponse</code>
-- <code title="post /v1/runs">client.runs.<a href="./src/resources/runs.ts">run</a>({ ...params }) -> Run</code>
+- <code title="get /v1beta/runs/{run_id}">client.runs.<a href="./src/resources/runs.ts">retrieve</a>(runID) -> Run</code>
+- <code title="get /v1beta/runs">client.runs.<a href="./src/resources/runs.ts">list</a>({ ...params }) -> RunListResponse</code>
+- <code title="post /v1beta/runs">client.runs.<a href="./src/resources/runs.ts">run</a>({ ...params }) -> Run</code>

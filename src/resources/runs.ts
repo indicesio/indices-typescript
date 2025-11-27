@@ -10,21 +10,21 @@ export class Runs extends APIResource {
    * <p>Retrieve a run by its ID.</p>
    */
   retrieve(runID: string, options?: RequestOptions): APIPromise<Run> {
-    return this._client.get(path`/v1/runs/${runID}`, options);
+    return this._client.get(path`/v1beta/runs/${runID}`, options);
   }
 
   /**
    * <p>List all runs for a given task.</p>
    */
   list(query: RunListParams, options?: RequestOptions): APIPromise<RunListResponse> {
-    return this._client.get('/v1/runs', { query, ...options });
+    return this._client.get('/v1beta/runs', { query, ...options });
   }
 
   /**
    * <p>Execute a task that has already been created.</p>
    */
   run(body: RunRunParams, options?: RequestOptions): APIPromise<Run> {
-    return this._client.post('/v1/runs', { body, ...options });
+    return this._client.post('/v1beta/runs', { body, ...options });
   }
 }
 

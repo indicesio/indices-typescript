@@ -11,35 +11,35 @@ export class Tasks extends APIResource {
    *         <p>Once a task has been created and is ready for usage, it can be repeatedly executed using the `run` endpoint.</p>
    */
   create(body: TaskCreateParams, options?: RequestOptions): APIPromise<Task> {
-    return this._client.post('/v1/tasks', { body, ...options });
+    return this._client.post('/v1beta/tasks', { body, ...options });
   }
 
   /**
    * <p>Retrieve a task by its ID.</p>
    */
   retrieve(id: string, options?: RequestOptions): APIPromise<Task> {
-    return this._client.get(path`/v1/tasks/${id}`, options);
+    return this._client.get(path`/v1beta/tasks/${id}`, options);
   }
 
   /**
    * <p>List all tasks that have been created.</p>
    */
   list(options?: RequestOptions): APIPromise<TaskListResponse> {
-    return this._client.get('/v1/tasks', options);
+    return this._client.get('/v1beta/tasks', options);
   }
 
   /**
    * <p>Delete a task by its ID.</p>
    */
   delete(id: string, options?: RequestOptions): APIPromise<unknown> {
-    return this._client.delete(path`/v1/tasks/${id}`, options);
+    return this._client.delete(path`/v1beta/tasks/${id}`, options);
   }
 
   /**
    * <p>Mark the manual browser session as complete and continue the task workflow.</p>
    */
   completeManualSession(id: string, options?: RequestOptions): APIPromise<unknown> {
-    return this._client.post(path`/v1/tasks/${id}/complete-manual-session`, options);
+    return this._client.post(path`/v1beta/tasks/${id}/complete-manual-session`, options);
   }
 
   /**
@@ -50,7 +50,7 @@ export class Tasks extends APIResource {
     body: TaskStartManualSessionParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<TaskStartManualSessionResponse> {
-    return this._client.post(path`/v1/tasks/${id}/start-manual-session`, { body, ...options });
+    return this._client.post(path`/v1beta/tasks/${id}/start-manual-session`, { body, ...options });
   }
 }
 
