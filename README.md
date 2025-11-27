@@ -26,7 +26,9 @@ const client = new Indices({
   apiKey: process.env['INDICES_API_KEY'], // This is the default and can be omitted
 });
 
-const tasks = await client.tasks.list();
+const run = await client.runs.run({ task_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e' });
+
+console.log(run.id);
 ```
 
 ### Request & Response types
@@ -41,7 +43,8 @@ const client = new Indices({
   apiKey: process.env['INDICES_API_KEY'], // This is the default and can be omitted
 });
 
-const tasks: Indices.TaskListResponse = await client.tasks.list();
+const params: Indices.RunRunParams = { task_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e' };
+const run: Indices.Run = await client.runs.run(params);
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -54,7 +57,7 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-const tasks = await client.tasks.list().catch(async (err) => {
+const run = await client.runs.run({ task_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e' }).catch(async (err) => {
   if (err instanceof Indices.APIError) {
     console.log(err.status); // 400
     console.log(err.name); // BadRequestError
@@ -94,7 +97,7 @@ const client = new Indices({
 });
 
 // Or, configure per-request:
-await client.tasks.list({
+await client.runs.run({ task_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e' }, {
   maxRetries: 5,
 });
 ```
@@ -111,7 +114,7 @@ const client = new Indices({
 });
 
 // Override per-request:
-await client.tasks.list({
+await client.runs.run({ task_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e' }, {
   timeout: 5 * 1000,
 });
 ```
@@ -134,13 +137,15 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 ```ts
 const client = new Indices();
 
-const response = await client.tasks.list().asResponse();
+const response = await client.runs.run({ task_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e' }).asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: tasks, response: raw } = await client.tasks.list().withResponse();
+const { data: run, response: raw } = await client.runs
+  .run({ task_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e' })
+  .withResponse();
 console.log(raw.headers.get('X-My-Header'));
-console.log(tasks);
+console.log(run.id);
 ```
 
 ### Logging
@@ -220,7 +225,7 @@ parameter. This library doesn't validate at runtime that the request matches the
 send will be sent as-is.
 
 ```ts
-client.tasks.list({
+client.runs.run({
   // ...
   // @ts-expect-error baz is not yet public
   baz: 'undocumented option',
