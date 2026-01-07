@@ -26,7 +26,10 @@ const client = new Indices({
   apiKey: process.env['INDICES_API_KEY'], // This is the default and can be omitted
 });
 
-const run = await client.runs.run({ task_id: '<your_task_id>', arguments: { '...': null } });
+const run = await client.runs.run({
+  task_id: '<your_task_id>',
+  arguments: { '...': null },
+});
 
 console.log(run.result_json);
 ```
@@ -43,7 +46,10 @@ const client = new Indices({
   apiKey: process.env['INDICES_API_KEY'], // This is the default and can be omitted
 });
 
-const params: Indices.RunRunParams = { task_id: '<your_task_id>', arguments: { '...': null } };
+const params: Indices.RunRunParams = {
+  task_id: '<your_task_id>',
+  arguments: { '...': null },
+};
 const run: Indices.Run = await client.runs.run(params);
 ```
 
@@ -58,7 +64,10 @@ a subclass of `APIError` will be thrown:
 <!-- prettier-ignore -->
 ```ts
 const run = await client.runs
-  .run({ task_id: '<your_task_id>', arguments: { '...': null } })
+  .run({
+    task_id: '<your_task_id>',
+    arguments: { '...': null },
+  })
   .catch(async (err) => {
     if (err instanceof Indices.APIError) {
       console.log(err.status); // 400
@@ -99,7 +108,10 @@ const client = new Indices({
 });
 
 // Or, configure per-request:
-await client.runs.run({ task_id: '<your_task_id>', arguments: { '...': null } }, {
+await client.runs.run({
+  task_id: '<your_task_id>',
+  arguments: { '...': null },
+}, {
   maxRetries: 5,
 });
 ```
@@ -116,7 +128,10 @@ const client = new Indices({
 });
 
 // Override per-request:
-await client.runs.run({ task_id: '<your_task_id>', arguments: { '...': null } }, {
+await client.runs.run({
+  task_id: '<your_task_id>',
+  arguments: { '...': null },
+}, {
   timeout: 5 * 1000,
 });
 ```
@@ -140,13 +155,19 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 const client = new Indices();
 
 const response = await client.runs
-  .run({ task_id: '<your_task_id>', arguments: { '...': null } })
+  .run({
+    task_id: '<your_task_id>',
+    arguments: { '...': null },
+  })
   .asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
 const { data: run, response: raw } = await client.runs
-  .run({ task_id: '<your_task_id>', arguments: { '...': null } })
+  .run({
+    task_id: '<your_task_id>',
+    arguments: { '...': null },
+  })
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
 console.log(run.result_json);
