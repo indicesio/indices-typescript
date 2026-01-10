@@ -18,7 +18,7 @@ import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import { Run, RunListParams, RunListResponse, RunRunParams, Runs } from './resources/runs';
 import {
-  Run as SecretsAPIRun,
+  Secret,
   SecretCreateParams,
   SecretDeleteResponse,
   SecretGetTotpResponse,
@@ -765,7 +765,7 @@ export declare namespace Indices {
 
   export {
     Secrets as Secrets,
-    type SecretsAPIRun as Run,
+    type Secret as Secret,
     type SecretListResponse as SecretListResponse,
     type SecretDeleteResponse as SecretDeleteResponse,
     type SecretGetTotpResponse as SecretGetTotpResponse,

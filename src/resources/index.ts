@@ -3,7 +3,7 @@
 export { Runs, type Run, type RunListResponse, type RunListParams, type RunRunParams } from './runs';
 export {
   Secrets,
-  type Run,
+  type Secret,
   type SecretListResponse,
   type SecretDeleteResponse,
   type SecretGetTotpResponse,
