@@ -18,6 +18,14 @@ import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import { Run, RunListParams, RunListResponse, RunRunParams, Runs } from './resources/runs';
 import {
+  Run as SecretsAPIRun,
+  SecretCreateParams,
+  SecretDeleteResponse,
+  SecretGetTotpResponse,
+  SecretListResponse,
+  Secrets,
+} from './resources/secrets';
+import {
   Task,
   TaskCompleteManualSessionResponse,
   TaskCreateParams,
@@ -726,10 +734,12 @@ export class Indices {
 
   tasks: API.Tasks = new API.Tasks(this);
   runs: API.Runs = new API.Runs(this);
+  secrets: API.Secrets = new API.Secrets(this);
 }
 
 Indices.Tasks = Tasks;
 Indices.Runs = Runs;
+Indices.Secrets = Secrets;
 
 export declare namespace Indices {
   export type RequestOptions = Opts.RequestOptions;
@@ -751,5 +761,14 @@ export declare namespace Indices {
     type RunListResponse as RunListResponse,
     type RunListParams as RunListParams,
     type RunRunParams as RunRunParams,
+  };
+
+  export {
+    Secrets as Secrets,
+    type SecretsAPIRun as Run,
+    type SecretListResponse as SecretListResponse,
+    type SecretDeleteResponse as SecretDeleteResponse,
+    type SecretGetTotpResponse as SecretGetTotpResponse,
+    type SecretCreateParams as SecretCreateParams,
   };
 }
