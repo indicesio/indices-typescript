@@ -9,7 +9,7 @@ export class Secrets extends APIResource {
   /**
    * <p>Create a new secret. Credentials are stored securely in 1Password.</p>
    */
-  create(body: SecretCreateParams, options?: RequestOptions): APIPromise<Run> {
+  create(body: SecretCreateParams, options?: RequestOptions): APIPromise<Secret> {
     return this._client.post('/v1beta/secrets', { body, ...options });
   }
 
@@ -35,7 +35,7 @@ export class Secrets extends APIResource {
   }
 }
 
-export interface Run {
+export interface Secret {
   /**
    * Timestamp when the secret was created.
    */
@@ -72,7 +72,7 @@ export interface Run {
   website: string | null;
 }
 
-export type SecretListResponse = Array<Run>;
+export type SecretListResponse = Array<Secret>;
 
 export interface SecretDeleteResponse {
   /**
@@ -137,7 +137,7 @@ export interface SecretCreateParams {
 
 export declare namespace Secrets {
   export {
-    type Run as Run,
+    type Secret as Secret,
     type SecretListResponse as SecretListResponse,
     type SecretDeleteResponse as SecretDeleteResponse,
     type SecretGetTotpResponse as SecretGetTotpResponse,
