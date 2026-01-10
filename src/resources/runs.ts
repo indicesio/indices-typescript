@@ -55,9 +55,20 @@ export interface Run {
   result_json: string | null;
 
   /**
+   * Whether the run was successful.
+   */
+  success: boolean;
+
+  /**
    * ID of the task executed in this run.
    */
   task_id: string;
+
+  /**
+   * Secrets to use for this run. This dict must be a mapping of secret slot names to
+   * secret UUIDs.
+   */
+  secret_bindings?: { [key: string]: string };
 }
 
 export type RunListResponse = Array<Run>;
@@ -80,6 +91,12 @@ export interface RunRunParams {
    * arguments.
    */
   arguments?: { [key: string]: unknown };
+
+  /**
+   * Mapping of secret slot names to secret UUIDs. Each slot defined in the task's
+   * required_secrets must be mapped to a user-owned secret.
+   */
+  secret_bindings?: { [key: string]: string };
 }
 
 export declare namespace Runs {
