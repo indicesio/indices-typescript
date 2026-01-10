@@ -81,11 +81,6 @@ export interface Task {
   input_schema: string;
 
   /**
-   * If true, the server will run the browser task autonomously.
-   */
-  is_fully_autonomous: boolean;
-
-  /**
    * Task output in the form of a JSON schema.
    */
   output_schema: string;
@@ -106,12 +101,44 @@ export interface Task {
   website: string;
 
   /**
+   * List of secrets provided during task creation.
+   */
+  creation_secrets?: Array<Task.CreationSecret>;
+
+  /**
    * Information about why a task failed, for user display.
    */
   failure_info?: Task.FailureInfo | null;
+
+  /**
+   * List of secrets that must be provided when running this task.
+   */
+  required_secrets?: Array<Task.RequiredSecret>;
+
+  /**
+   * Mapping of required secret slot names to secret UUIDs bound during task
+   * creation.
+   */
+  secret_bindings?: { [key: string]: string };
 }
 
 export namespace Task {
+  /**
+   * A secret provided during task creation
+   */
+  export interface CreationSecret {
+    /**
+     * UUID of the secret to bind.
+     */
+    secret_uuid: string;
+
+    /**
+     * Optional description of what this secret is used for (helps generate meaningful
+     * slot names).
+     */
+    description?: string | null;
+  }
+
   /**
    * Information about why a task failed, for user display.
    */
@@ -125,6 +152,27 @@ export namespace Task {
      * Summary of the failure cause
      */
     message: string;
+  }
+
+  /**
+   * Definition of a secret slot that a task requires.
+   */
+  export interface RequiredSecret {
+    /**
+     * Name of the secret slot (used as env var prefix, e.g., 'LOGIN' →
+     * LOGIN_USERNAME).
+     */
+    name: string;
+
+    /**
+     * Type of secret required: 'login' or 'string'.
+     */
+    type: 'login' | 'string';
+
+    /**
+     * Whether this login slot requires 2FA/TOTP. Only applicable for 'login' type.
+     */
+    requires_totp?: boolean;
   }
 }
 
@@ -147,6 +195,11 @@ export interface TaskStartManualSessionResponse {
 }
 
 export interface TaskCreateParams {
+  /**
+   * Information used during task creation.
+   */
+  creation_params: TaskCreateParams.CreationParams;
+
   /**
    * Short title shown in the dashboard. Informational only; not used to generate the
    * task.
@@ -172,19 +225,98 @@ export interface TaskCreateParams {
    * The website to perform the task on.
    */
   website: string;
+}
 
+export namespace TaskCreateParams {
   /**
-   * If true, the server will run the browser task autonomously. If false, the user
-   * must complete the task manually in a spawned browser.
+   * Information used during task creation.
    */
-  is_fully_autonomous?: boolean;
+  export interface CreationParams {
+    /**
+     * Initial values for input schema fields, keyed by property name. Used during task
+     * creation to demonstrate the task. Especially important for tasks requiring
+     * authentication, as initial credentials must be provided.
+     */
+    initial_input_values?: { [key: string]: unknown };
+
+    /**
+     * If true, the server will run the browser task autonomously. If false, the user
+     * must complete the task manually in a spawned browser.
+     */
+    is_fully_autonomous?: boolean;
+
+    /**
+     * List of secrets to use for this task.
+     */
+    secrets?: Array<CreationParams.Secret>;
+  }
+
+  export namespace CreationParams {
+    /**
+     * A secret provided during task creation
+     */
+    export interface Secret {
+      /**
+       * UUID of the secret to bind.
+       */
+      secret_uuid: string;
+
+      /**
+       * Optional description of what this secret is used for (helps generate meaningful
+       * slot names).
+       */
+      description?: string | null;
+    }
+  }
 }
 
 export interface TaskStartManualSessionParams {
   /**
+   * Initial cookies to set in the browser session.
+   */
+  cookies?: Array<TaskStartManualSessionParams.Cookie>;
+
+  /**
    * If true, spawn the browser session using a proxy.
    */
   use_proxy?: boolean;
+}
+
+export namespace TaskStartManualSessionParams {
+  /**
+   * A cookie to set in the browser session.
+   */
+  export interface Cookie {
+    /**
+     * The name of the cookie.
+     */
+    name: string;
+
+    /**
+     * The value of the cookie.
+     */
+    value: string;
+
+    /**
+     * The domain of the cookie.
+     */
+    domain?: string | null;
+
+    /**
+     * Whether the cookie is HTTP only.
+     */
+    http_only?: boolean | null;
+
+    /**
+     * The path of the cookie.
+     */
+    path?: string | null;
+
+    /**
+     * Whether the cookie is secure.
+     */
+    secure?: boolean | null;
+  }
 }
 
 export declare namespace Tasks {
