@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import Indices from 'indices';
+import Indices from 'indices-ts';
 
 const client = new Indices({
   apiKey: 'My API Key',
@@ -11,9 +11,8 @@ describe('resource tasks', () => {
   // Prism tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.tasks.create({
+      creation_params: {},
       display_name: 'display_name',
-      input_schema: 'input_schema',
-      output_schema: 'output_schema',
       task: 'task',
       website: 'https://example.com',
     });
@@ -29,12 +28,17 @@ describe('resource tasks', () => {
   // Prism tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.tasks.create({
+      creation_params: {
+        auto_generate_schemas: true,
+        initial_input_values: { foo: 'bar' },
+        is_fully_autonomous: true,
+        secrets: [{ secret_uuid: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', description: 'description' }],
+      },
       display_name: 'display_name',
-      input_schema: 'input_schema',
-      output_schema: 'output_schema',
       task: 'task',
       website: 'https://example.com',
-      is_fully_autonomous: true,
+      input_schema: 'input_schema',
+      output_schema: 'output_schema',
     });
   });
 
@@ -104,7 +108,19 @@ describe('resource tasks', () => {
     await expect(
       client.tasks.startManualSession(
         '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-        { use_proxy: true },
+        {
+          cookies: [
+            {
+              name: 'name',
+              value: 'value',
+              domain: 'domain',
+              http_only: true,
+              path: 'path',
+              secure: true,
+            },
+          ],
+          use_proxy: true,
+        },
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(Indices.NotFoundError);

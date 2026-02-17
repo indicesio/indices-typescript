@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { Indices } from 'indices';
+import { Indices } from 'indices-ts';
 
 const { stringifyQuery } = Indices.prototype as any;
 

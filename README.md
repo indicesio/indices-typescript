@@ -1,6 +1,6 @@
 # Indices TypeScript API Library
 
-[![NPM version](<https://img.shields.io/npm/v/indices.svg?label=npm%20(stable)>)](https://npmjs.org/package/indices) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/indices)
+[![NPM version](<https://img.shields.io/npm/v/indices-ts.svg?label=npm%20(stable)>)](https://npmjs.org/package/indices-ts) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/indices-ts)
 
 This library provides convenient access to the Indices REST API from server-side TypeScript or JavaScript.
 
@@ -11,11 +11,8 @@ It is generated with [Stainless](https://www.stainless.com/).
 ## Installation
 
 ```sh
-npm install git+ssh://git@github.com:stainless-sdks/indices-typescript.git
+npm install indices-ts
 ```
-
-> [!NOTE]
-> Once this package is [published to npm](https://www.stainless.com/docs/guides/publish), this will become: `npm install indices`
 
 ## Usage
 
@@ -23,13 +20,18 @@ The full API of this library can be found in [api.md](api.md).
 
 <!-- prettier-ignore -->
 ```js
-import Indices from 'indices';
+import Indices from 'indices-ts';
 
 const client = new Indices({
   apiKey: process.env['INDICES_API_KEY'], // This is the default and can be omitted
 });
 
-const tasks = await client.tasks.list();
+const run = await client.runs.run({
+  task_id: '<your_task_id>',
+  arguments: { '...': null },
+});
+
+console.log(run.result_json);
 ```
 
 ### Request & Response types
@@ -38,13 +40,17 @@ This library includes TypeScript definitions for all request params and response
 
 <!-- prettier-ignore -->
 ```ts
-import Indices from 'indices';
+import Indices from 'indices-ts';
 
 const client = new Indices({
   apiKey: process.env['INDICES_API_KEY'], // This is the default and can be omitted
 });
 
-const tasks: Indices.TaskListResponse = await client.tasks.list();
+const params: Indices.RunRunParams = {
+  task_id: '<your_task_id>',
+  arguments: { '...': null },
+};
+const run: Indices.Run = await client.runs.run(params);
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -57,15 +63,20 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-const tasks = await client.tasks.list().catch(async (err) => {
-  if (err instanceof Indices.APIError) {
-    console.log(err.status); // 400
-    console.log(err.name); // BadRequestError
-    console.log(err.headers); // {server: 'nginx', ...}
-  } else {
-    throw err;
-  }
-});
+const run = await client.runs
+  .run({
+    task_id: '<your_task_id>',
+    arguments: { '...': null },
+  })
+  .catch(async (err) => {
+    if (err instanceof Indices.APIError) {
+      console.log(err.status); // 400
+      console.log(err.name); // BadRequestError
+      console.log(err.headers); // {server: 'nginx', ...}
+    } else {
+      throw err;
+    }
+  });
 ```
 
 Error codes are as follows:
@@ -97,7 +108,10 @@ const client = new Indices({
 });
 
 // Or, configure per-request:
-await client.tasks.list({
+await client.runs.run({
+  task_id: '<your_task_id>',
+  arguments: { '...': null },
+}, {
   maxRetries: 5,
 });
 ```
@@ -114,7 +128,10 @@ const client = new Indices({
 });
 
 // Override per-request:
-await client.tasks.list({
+await client.runs.run({
+  task_id: '<your_task_id>',
+  arguments: { '...': null },
+}, {
   timeout: 5 * 1000,
 });
 ```
@@ -137,13 +154,23 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 ```ts
 const client = new Indices();
 
-const response = await client.tasks.list().asResponse();
+const response = await client.runs
+  .run({
+    task_id: '<your_task_id>',
+    arguments: { '...': null },
+  })
+  .asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: tasks, response: raw } = await client.tasks.list().withResponse();
+const { data: run, response: raw } = await client.runs
+  .run({
+    task_id: '<your_task_id>',
+    arguments: { '...': null },
+  })
+  .withResponse();
 console.log(raw.headers.get('X-My-Header'));
-console.log(tasks);
+console.log(run.result_json);
 ```
 
 ### Logging
@@ -160,7 +187,7 @@ The log level can be configured in two ways:
 2. Using the `logLevel` client option (overrides the environment variable if set)
 
 ```ts
-import Indices from 'indices';
+import Indices from 'indices-ts';
 
 const client = new Indices({
   logLevel: 'debug', // Show all log messages
@@ -188,7 +215,7 @@ When providing a custom logger, the `logLevel` option still controls which messa
 below the configured level will not be sent to your logger.
 
 ```ts
-import Indices from 'indices';
+import Indices from 'indices-ts';
 import pino from 'pino';
 
 const logger = pino();
@@ -223,7 +250,7 @@ parameter. This library doesn't validate at runtime that the request matches the
 send will be sent as-is.
 
 ```ts
-client.tasks.list({
+client.runs.run({
   // ...
   // @ts-expect-error baz is not yet public
   baz: 'undocumented option',
@@ -257,7 +284,7 @@ globalThis.fetch = fetch;
 Or pass it to the client:
 
 ```ts
-import Indices from 'indices';
+import Indices from 'indices-ts';
 import fetch from 'my-fetch';
 
 const client = new Indices({ fetch });
@@ -268,7 +295,7 @@ const client = new Indices({ fetch });
 If you want to set custom `fetch` options without overriding the `fetch` function, you can provide a `fetchOptions` object when instantiating the client or making a request. (Request-specific options override client options.)
 
 ```ts
-import Indices from 'indices';
+import Indices from 'indices-ts';
 
 const client = new Indices({
   fetchOptions: {
@@ -285,7 +312,7 @@ options to requests:
 <img src="https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/node.svg" align="top" width="18" height="21"> **Node** <sup>[[docs](https://github.com/nodejs/undici/blob/main/docs/docs/api/ProxyAgent.md#example---proxyagent-with-fetch)]</sup>
 
 ```ts
-import Indices from 'indices';
+import Indices from 'indices-ts';
 import * as undici from 'undici';
 
 const proxyAgent = new undici.ProxyAgent('http://localhost:8888');
@@ -299,7 +326,7 @@ const client = new Indices({
 <img src="https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/bun.svg" align="top" width="18" height="21"> **Bun** <sup>[[docs](https://bun.sh/guides/http/proxy)]</sup>
 
 ```ts
-import Indices from 'indices';
+import Indices from 'indices-ts';
 
 const client = new Indices({
   fetchOptions: {
@@ -311,7 +338,7 @@ const client = new Indices({
 <img src="https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/deno.svg" align="top" width="18" height="21"> **Deno** <sup>[[docs](https://docs.deno.com/api/deno/~/Deno.createHttpClient)]</sup>
 
 ```ts
-import Indices from 'npm:indices';
+import Indices from 'npm:indices-ts';
 
 const httpClient = Deno.createHttpClient({ proxy: { url: 'http://localhost:8888' } });
 const client = new Indices({
@@ -333,7 +360,7 @@ This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) con
 
 We take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.
 
-We are keen for your feedback; please open an [issue](https://www.github.com/stainless-sdks/indices-typescript/issues) with questions, bugs, or suggestions.
+We are keen for your feedback; please open an [issue](https://www.github.com/indicesio/indices-typescript/issues) with questions, bugs, or suggestions.
 
 ## Requirements
 

@@ -10,21 +10,28 @@ export class Runs extends APIResource {
    * <p>Retrieve a run by its ID.</p>
    */
   retrieve(runID: string, options?: RequestOptions): APIPromise<Run> {
-    return this._client.get(path`/v1/runs/${runID}`, options);
+    return this._client.get(path`/v1beta/runs/${runID}`, options);
   }
 
   /**
    * <p>List all runs for a given task.</p>
    */
   list(query: RunListParams, options?: RequestOptions): APIPromise<RunListResponse> {
-    return this._client.get('/v1/runs', { query, ...options });
+    return this._client.get('/v1beta/runs', { query, ...options });
+  }
+
+  /**
+   * <p>Retrieve stdout and stderr logs for a run.</p>
+   */
+  logs(runID: string, options?: RequestOptions): APIPromise<RunLogsResponse> {
+    return this._client.get(path`/v1beta/runs/${runID}/logs`, options);
   }
 
   /**
    * <p>Execute a task that has already been created.</p>
    */
   run(body: RunRunParams, options?: RequestOptions): APIPromise<Run> {
-    return this._client.post('/v1/runs', { body, ...options });
+    return this._client.post('/v1beta/runs', { body, ...options });
   }
 }
 
@@ -55,12 +62,35 @@ export interface Run {
   result_json: string | null;
 
   /**
+   * Whether the run was successful.
+   */
+  success: boolean;
+
+  /**
    * ID of the task executed in this run.
    */
   task_id: string;
+
+  /**
+   * Secrets to use for this run. This dict must be a mapping of secret slot names to
+   * secret UUIDs.
+   */
+  secret_bindings?: { [key: string]: string };
 }
 
 export type RunListResponse = Array<Run>;
+
+export interface RunLogsResponse {
+  /**
+   * Standard error output from the run execution.
+   */
+  stderr: string;
+
+  /**
+   * Standard output from the run execution.
+   */
+  stdout: string;
+}
 
 export interface RunListParams {
   /**
@@ -80,12 +110,19 @@ export interface RunRunParams {
    * arguments.
    */
   arguments?: { [key: string]: unknown };
+
+  /**
+   * Mapping of secret slot names to secret UUIDs. Each slot defined in the task's
+   * required_secrets must be mapped to a user-owned secret.
+   */
+  secret_bindings?: { [key: string]: string };
 }
 
 export declare namespace Runs {
   export {
     type Run as Run,
     type RunListResponse as RunListResponse,
+    type RunLogsResponse as RunLogsResponse,
     type RunListParams as RunListParams,
     type RunRunParams as RunRunParams,
   };

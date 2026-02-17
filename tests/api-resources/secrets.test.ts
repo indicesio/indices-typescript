@@ -7,10 +7,10 @@ const client = new Indices({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource runs', () => {
+describe('resource secrets', () => {
   // Prism tests are disabled
-  test.skip('retrieve', async () => {
-    const responsePromise = client.runs.retrieve('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
+  test.skip('create: only required params', async () => {
+    const responsePromise = client.secrets.create({ name: 'name', secret_type: 'login' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,52 +21,51 @@ describe('resource runs', () => {
   });
 
   // Prism tests are disabled
-  test.skip('list: only required params', async () => {
-    const responsePromise = client.runs.list({ task_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e' });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Prism tests are disabled
-  test.skip('list: required and optional params', async () => {
-    const response = await client.runs.list({ task_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e' });
-  });
-
-  // Prism tests are disabled
-  test.skip('logs', async () => {
-    const responsePromise = client.runs.logs('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Prism tests are disabled
-  test.skip('run: only required params', async () => {
-    const responsePromise = client.runs.run({ task_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e' });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Prism tests are disabled
-  test.skip('run: required and optional params', async () => {
-    const response = await client.runs.run({
-      task_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      arguments: { foo: 'bar' },
-      secret_bindings: { foo: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e' },
+  test.skip('create: required and optional params', async () => {
+    const response = await client.secrets.create({
+      name: 'name',
+      secret_type: 'login',
+      password: 'password',
+      totp_secret: 'totp_secret',
+      username: 'username',
+      value: 'value',
+      website: 'website',
     });
+  });
+
+  // Prism tests are disabled
+  test.skip('list', async () => {
+    const responsePromise = client.secrets.list();
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('delete', async () => {
+    const responsePromise = client.secrets.delete('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('getTotp', async () => {
+    const responsePromise = client.secrets.getTotp('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
   });
 });

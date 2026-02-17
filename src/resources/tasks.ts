@@ -11,35 +11,35 @@ export class Tasks extends APIResource {
    *         <p>Once a task has been created and is ready for usage, it can be repeatedly executed using the `run` endpoint.</p>
    */
   create(body: TaskCreateParams, options?: RequestOptions): APIPromise<Task> {
-    return this._client.post('/v1/tasks', { body, ...options });
+    return this._client.post('/v1beta/tasks', { body, ...options });
   }
 
   /**
    * <p>Retrieve a task by its ID.</p>
    */
   retrieve(id: string, options?: RequestOptions): APIPromise<Task> {
-    return this._client.get(path`/v1/tasks/${id}`, options);
+    return this._client.get(path`/v1beta/tasks/${id}`, options);
   }
 
   /**
    * <p>List all tasks that have been created.</p>
    */
   list(options?: RequestOptions): APIPromise<TaskListResponse> {
-    return this._client.get('/v1/tasks', options);
+    return this._client.get('/v1beta/tasks', options);
   }
 
   /**
    * <p>Delete a task by its ID.</p>
    */
   delete(id: string, options?: RequestOptions): APIPromise<unknown> {
-    return this._client.delete(path`/v1/tasks/${id}`, options);
+    return this._client.delete(path`/v1beta/tasks/${id}`, options);
   }
 
   /**
    * <p>Mark the manual browser session as complete and continue the task workflow.</p>
    */
-  completeManualSession(id: string, options?: RequestOptions): APIPromise<unknown> {
-    return this._client.post(path`/v1/tasks/${id}/complete-manual-session`, options);
+  completeManualSession(id: string, options?: RequestOptions): APIPromise<Task> {
+    return this._client.post(path`/v1beta/tasks/${id}/complete-manual-session`, options);
   }
 
   /**
@@ -50,7 +50,7 @@ export class Tasks extends APIResource {
     body: TaskStartManualSessionParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<TaskStartManualSessionResponse> {
-    return this._client.post(path`/v1/tasks/${id}/start-manual-session`, { body, ...options });
+    return this._client.post(path`/v1beta/tasks/${id}/start-manual-session`, { body, ...options });
   }
 }
 
@@ -81,11 +81,6 @@ export interface Task {
   input_schema: string;
 
   /**
-   * If true, the server will run the browser task autonomously.
-   */
-  is_fully_autonomous: boolean;
-
-  /**
    * Task output in the form of a JSON schema.
    */
   output_schema: string;
@@ -106,12 +101,44 @@ export interface Task {
   website: string;
 
   /**
+   * List of secrets provided during task creation.
+   */
+  creation_secrets?: Array<Task.CreationSecret>;
+
+  /**
    * Information about why a task failed, for user display.
    */
   failure_info?: Task.FailureInfo | null;
+
+  /**
+   * List of secrets that must be provided when running this task.
+   */
+  required_secrets?: Array<Task.RequiredSecret>;
+
+  /**
+   * Mapping of required secret slot names to secret UUIDs bound during task
+   * creation.
+   */
+  secret_bindings?: { [key: string]: string };
 }
 
 export namespace Task {
+  /**
+   * A secret provided during task creation
+   */
+  export interface CreationSecret {
+    /**
+     * UUID of the secret to bind.
+     */
+    secret_uuid: string;
+
+    /**
+     * Optional description of what this secret is used for (helps generate meaningful
+     * slot names).
+     */
+    description?: string | null;
+  }
+
   /**
    * Information about why a task failed, for user display.
    */
@@ -126,13 +153,32 @@ export namespace Task {
      */
     message: string;
   }
+
+  /**
+   * Definition of a secret slot that a task requires.
+   */
+  export interface RequiredSecret {
+    /**
+     * Name of the secret slot (used as env var prefix, e.g., 'LOGIN' →
+     * LOGIN_USERNAME).
+     */
+    name: string;
+
+    /**
+     * Type of secret required: 'login' or 'string'.
+     */
+    type: 'login' | 'string';
+
+    /**
+     * Whether this login slot requires 2FA/TOTP. Only applicable for 'login' type.
+     */
+    requires_totp?: boolean;
+  }
 }
 
 export type TaskListResponse = Array<Task>;
 
 export type TaskDeleteResponse = unknown;
-
-export type TaskCompleteManualSessionResponse = unknown;
 
 export interface TaskStartManualSessionResponse {
   /**
@@ -148,20 +194,15 @@ export interface TaskStartManualSessionResponse {
 
 export interface TaskCreateParams {
   /**
+   * Information used during task creation.
+   */
+  creation_params: TaskCreateParams.CreationParams;
+
+  /**
    * Short title shown in the dashboard. Informational only; not used to generate the
    * task.
    */
   display_name: string;
-
-  /**
-   * Task input parameters in the form of a JSON schema.
-   */
-  input_schema: string;
-
-  /**
-   * Task output in the form of a JSON schema.
-   */
-  output_schema: string;
 
   /**
    * Detailed explanation of the task to be performed.
@@ -174,17 +215,116 @@ export interface TaskCreateParams {
   website: string;
 
   /**
-   * If true, the server will run the browser task autonomously. If false, the user
-   * must complete the task manually in a spawned browser.
+   * Task input parameters in the form of a JSON schema. Optional if
+   * auto_generate_schemas is enabled.
    */
-  is_fully_autonomous?: boolean;
+  input_schema?: string | null;
+
+  /**
+   * Task output in the form of a JSON schema. Optional if auto_generate_schemas is
+   * enabled.
+   */
+  output_schema?: string | null;
+}
+
+export namespace TaskCreateParams {
+  /**
+   * Information used during task creation.
+   */
+  export interface CreationParams {
+    /**
+     * If true, input and output schemas will be automatically generated from captured
+     * HAR traffic. When enabled, input_schema and output_schema in the request are
+     * optional and will be replaced with auto-generated schemas during the task
+     * creation workflow.
+     */
+    auto_generate_schemas?: boolean;
+
+    /**
+     * Initial values for input schema fields, keyed by property name. Used during task
+     * creation to demonstrate the task. Especially important for tasks requiring
+     * authentication, as initial credentials must be provided.
+     */
+    initial_input_values?: { [key: string]: unknown };
+
+    /**
+     * If true, the server will run the browser task autonomously. If false, the user
+     * must complete the task manually in a spawned browser.
+     */
+    is_fully_autonomous?: boolean;
+
+    /**
+     * List of secrets to use for this task.
+     */
+    secrets?: Array<CreationParams.Secret>;
+  }
+
+  export namespace CreationParams {
+    /**
+     * A secret provided during task creation
+     */
+    export interface Secret {
+      /**
+       * UUID of the secret to bind.
+       */
+      secret_uuid: string;
+
+      /**
+       * Optional description of what this secret is used for (helps generate meaningful
+       * slot names).
+       */
+      description?: string | null;
+    }
+  }
 }
 
 export interface TaskStartManualSessionParams {
   /**
+   * Initial cookies to set in the browser session.
+   */
+  cookies?: Array<TaskStartManualSessionParams.Cookie>;
+
+  /**
    * If true, spawn the browser session using a proxy.
    */
   use_proxy?: boolean;
+}
+
+export namespace TaskStartManualSessionParams {
+  /**
+   * A cookie to set in the browser session.
+   */
+  export interface Cookie {
+    /**
+     * The name of the cookie.
+     */
+    name: string;
+
+    /**
+     * The value of the cookie.
+     */
+    value: string;
+
+    /**
+     * The domain of the cookie.
+     */
+    domain?: string | null;
+
+    /**
+     * Whether the cookie is HTTP only.
+     */
+    http_only?: boolean | null;
+
+    /**
+     * The path of the cookie.
+     */
+    path?: string | null;
+
+    /**
+     * Whether the cookie is secure.
+     */
+    secure?: boolean | null;
+  }
 }
 
 export declare namespace Tasks {
@@ -192,7 +332,6 @@ export declare namespace Tasks {
     type Task as Task,
     type TaskListResponse as TaskListResponse,
     type TaskDeleteResponse as TaskDeleteResponse,
-    type TaskCompleteManualSessionResponse as TaskCompleteManualSessionResponse,
     type TaskStartManualSessionResponse as TaskStartManualSessionResponse,
     type TaskCreateParams as TaskCreateParams,
     type TaskStartManualSessionParams as TaskStartManualSessionParams,

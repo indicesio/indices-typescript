@@ -16,10 +16,17 @@ import * as Errors from './core/error';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
-import { Run, RunListParams, RunListResponse, RunRunParams, Runs } from './resources/runs';
+import { Run, RunListParams, RunListResponse, RunLogsResponse, RunRunParams, Runs } from './resources/runs';
+import {
+  Secret,
+  SecretCreateParams,
+  SecretDeleteResponse,
+  SecretGetTotpResponse,
+  SecretListResponse,
+  Secrets,
+} from './resources/secrets';
 import {
   Task,
-  TaskCompleteManualSessionResponse,
   TaskCreateParams,
   TaskDeleteResponse,
   TaskListResponse,
@@ -124,7 +131,7 @@ export class Indices {
   baseURL: string;
   maxRetries: number;
   timeout: number;
-  logger: Logger | undefined;
+  logger: Logger;
   logLevel: LogLevel | undefined;
   fetchOptions: MergedRequestInit | undefined;
 
@@ -458,7 +465,7 @@ export class Indices {
       loggerFor(this).info(`${responseInfo} - ${retryMessage}`);
 
       const errText = await response.text().catch((err: any) => castToError(err).message);
-      const errJSON = safeJSON(errText);
+      const errJSON = safeJSON(errText) as any;
       const errMessage = errJSON ? undefined : errText;
 
       loggerFor(this).debug(
@@ -499,9 +506,10 @@ export class Indices {
     controller: AbortController,
   ): Promise<Response> {
     const { signal, method, ...options } = init || {};
-    if (signal) signal.addEventListener('abort', () => controller.abort());
+    const abort = this._makeAbort(controller);
+    if (signal) signal.addEventListener('abort', abort, { once: true });
 
-    const timeout = setTimeout(() => controller.abort(), ms);
+    const timeout = setTimeout(abort, ms);
 
     const isReadableBody =
       ((globalThis as any).ReadableStream && options.body instanceof (globalThis as any).ReadableStream) ||
@@ -668,6 +676,12 @@ export class Indices {
     return headers.values;
   }
 
+  private _makeAbort(controller: AbortController) {
+    // note: we can't just inline this method inside `fetchWithTimeout()` because then the closure
+    //       would capture all request options, and cause a memory leak.
+    return () => controller.abort();
+  }
+
   private buildBody({ options: { body, headers: rawHeaders } }: { options: FinalRequestOptions }): {
     bodyHeaders: HeadersLike;
     body: BodyInit | undefined;
@@ -700,6 +714,14 @@ export class Indices {
         (Symbol.iterator in body && 'next' in body && typeof body.next === 'function'))
     ) {
       return { bodyHeaders: undefined, body: Shims.ReadableStreamFrom(body as AsyncIterable<Uint8Array>) };
+    } else if (
+      typeof body === 'object' &&
+      headers.values.get('content-type') === 'application/x-www-form-urlencoded'
+    ) {
+      return {
+        bodyHeaders: { 'content-type': 'application/x-www-form-urlencoded' },
+        body: this.stringifyQuery(body as Record<string, unknown>),
+      };
     } else {
       return this.#encoder({ body, headers });
     }
@@ -726,10 +748,12 @@ export class Indices {
 
   tasks: API.Tasks = new API.Tasks(this);
   runs: API.Runs = new API.Runs(this);
+  secrets: API.Secrets = new API.Secrets(this);
 }
 
 Indices.Tasks = Tasks;
 Indices.Runs = Runs;
+Indices.Secrets = Secrets;
 
 export declare namespace Indices {
   export type RequestOptions = Opts.RequestOptions;
@@ -739,7 +763,6 @@ export declare namespace Indices {
     type Task as Task,
     type TaskListResponse as TaskListResponse,
     type TaskDeleteResponse as TaskDeleteResponse,
-    type TaskCompleteManualSessionResponse as TaskCompleteManualSessionResponse,
     type TaskStartManualSessionResponse as TaskStartManualSessionResponse,
     type TaskCreateParams as TaskCreateParams,
     type TaskStartManualSessionParams as TaskStartManualSessionParams,
@@ -749,7 +772,17 @@ export declare namespace Indices {
     Runs as Runs,
     type Run as Run,
     type RunListResponse as RunListResponse,
+    type RunLogsResponse as RunLogsResponse,
     type RunListParams as RunListParams,
     type RunRunParams as RunRunParams,
+  };
+
+  export {
+    Secrets as Secrets,
+    type Secret as Secret,
+    type SecretListResponse as SecretListResponse,
+    type SecretDeleteResponse as SecretDeleteResponse,
+    type SecretGetTotpResponse as SecretGetTotpResponse,
+    type SecretCreateParams as SecretCreateParams,
   };
 }
