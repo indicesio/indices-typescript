@@ -22,11 +22,13 @@ Types:
 
 - <code><a href="./src/resources/runs.ts">Run</a></code>
 - <code><a href="./src/resources/runs.ts">RunListResponse</a></code>
+- <code><a href="./src/resources/runs.ts">RunLogsResponse</a></code>
 
 Methods:
 
 - <code title="get /v1beta/runs/{run_id}">client.runs.<a href="./src/resources/runs.ts">retrieve</a>(runID) -> Run</code>
 - <code title="get /v1beta/runs">client.runs.<a href="./src/resources/runs.ts">list</a>({ ...params }) -> RunListResponse</code>
+- <code title="get /v1beta/runs/{run_id}/logs">client.runs.<a href="./src/resources/runs.ts">logs</a>(runID) -> RunLogsResponse</code>
 - <code title="post /v1beta/runs">client.runs.<a href="./src/resources/runs.ts">run</a>({ ...params }) -> Run</code>
 
 # Secrets

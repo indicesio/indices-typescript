@@ -21,6 +21,13 @@ export class Runs extends APIResource {
   }
 
   /**
+   * <p>Retrieve stdout and stderr logs for a run.</p>
+   */
+  logs(runID: string, options?: RequestOptions): APIPromise<RunLogsResponse> {
+    return this._client.get(path`/v1beta/runs/${runID}/logs`, options);
+  }
+
+  /**
    * <p>Execute a task that has already been created.</p>
    */
   run(body: RunRunParams, options?: RequestOptions): APIPromise<Run> {
@@ -73,6 +80,18 @@ export interface Run {
 
 export type RunListResponse = Array<Run>;
 
+export interface RunLogsResponse {
+  /**
+   * Standard error output from the run execution.
+   */
+  stderr: string;
+
+  /**
+   * Standard output from the run execution.
+   */
+  stdout: string;
+}
+
 export interface RunListParams {
   /**
    * The ID of the task to list runs for.
@@ -103,6 +122,7 @@ export declare namespace Runs {
   export {
     type Run as Run,
     type RunListResponse as RunListResponse,
+    type RunLogsResponse as RunLogsResponse,
     type RunListParams as RunListParams,
     type RunRunParams as RunRunParams,
   };
