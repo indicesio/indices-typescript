@@ -27,7 +27,6 @@ import {
 } from './resources/secrets';
 import {
   Task,
-  TaskCompleteManualSessionResponse,
   TaskCreateParams,
   TaskDeleteResponse,
   TaskListResponse,
@@ -715,6 +714,14 @@ export class Indices {
         (Symbol.iterator in body && 'next' in body && typeof body.next === 'function'))
     ) {
       return { bodyHeaders: undefined, body: Shims.ReadableStreamFrom(body as AsyncIterable<Uint8Array>) };
+    } else if (
+      typeof body === 'object' &&
+      headers.values.get('content-type') === 'application/x-www-form-urlencoded'
+    ) {
+      return {
+        bodyHeaders: { 'content-type': 'application/x-www-form-urlencoded' },
+        body: this.stringifyQuery(body as Record<string, unknown>),
+      };
     } else {
       return this.#encoder({ body, headers });
     }
@@ -756,7 +763,6 @@ export declare namespace Indices {
     type Task as Task,
     type TaskListResponse as TaskListResponse,
     type TaskDeleteResponse as TaskDeleteResponse,
-    type TaskCompleteManualSessionResponse as TaskCompleteManualSessionResponse,
     type TaskStartManualSessionResponse as TaskStartManualSessionResponse,
     type TaskCreateParams as TaskCreateParams,
     type TaskStartManualSessionParams as TaskStartManualSessionParams,

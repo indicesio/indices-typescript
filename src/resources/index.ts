@@ -14,7 +14,6 @@ export {
   type Task,
   type TaskListResponse,
   type TaskDeleteResponse,
-  type TaskCompleteManualSessionResponse,
   type TaskStartManualSessionResponse,
   type TaskCreateParams,
   type TaskStartManualSessionParams,

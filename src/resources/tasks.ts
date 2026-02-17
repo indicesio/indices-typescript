@@ -38,7 +38,7 @@ export class Tasks extends APIResource {
   /**
    * <p>Mark the manual browser session as complete and continue the task workflow.</p>
    */
-  completeManualSession(id: string, options?: RequestOptions): APIPromise<unknown> {
+  completeManualSession(id: string, options?: RequestOptions): APIPromise<Task> {
     return this._client.post(path`/v1beta/tasks/${id}/complete-manual-session`, options);
   }
 
@@ -180,8 +180,6 @@ export type TaskListResponse = Array<Task>;
 
 export type TaskDeleteResponse = unknown;
 
-export type TaskCompleteManualSessionResponse = unknown;
-
 export interface TaskStartManualSessionResponse {
   /**
    * URL to embed in an iframe to control the browser.
@@ -207,16 +205,6 @@ export interface TaskCreateParams {
   display_name: string;
 
   /**
-   * Task input parameters in the form of a JSON schema.
-   */
-  input_schema: string;
-
-  /**
-   * Task output in the form of a JSON schema.
-   */
-  output_schema: string;
-
-  /**
    * Detailed explanation of the task to be performed.
    */
   task: string;
@@ -225,6 +213,18 @@ export interface TaskCreateParams {
    * The website to perform the task on.
    */
   website: string;
+
+  /**
+   * Task input parameters in the form of a JSON schema. Optional if
+   * auto_generate_schemas is enabled.
+   */
+  input_schema?: string | null;
+
+  /**
+   * Task output in the form of a JSON schema. Optional if auto_generate_schemas is
+   * enabled.
+   */
+  output_schema?: string | null;
 }
 
 export namespace TaskCreateParams {
@@ -232,6 +232,14 @@ export namespace TaskCreateParams {
    * Information used during task creation.
    */
   export interface CreationParams {
+    /**
+     * If true, input and output schemas will be automatically generated from captured
+     * HAR traffic. When enabled, input_schema and output_schema in the request are
+     * optional and will be replaced with auto-generated schemas during the task
+     * creation workflow.
+     */
+    auto_generate_schemas?: boolean;
+
     /**
      * Initial values for input schema fields, keyed by property name. Used during task
      * creation to demonstrate the task. Especially important for tasks requiring
@@ -324,7 +332,6 @@ export declare namespace Tasks {
     type Task as Task,
     type TaskListResponse as TaskListResponse,
     type TaskDeleteResponse as TaskDeleteResponse,
-    type TaskCompleteManualSessionResponse as TaskCompleteManualSessionResponse,
     type TaskStartManualSessionResponse as TaskStartManualSessionResponse,
     type TaskCreateParams as TaskCreateParams,
     type TaskStartManualSessionParams as TaskStartManualSessionParams,
