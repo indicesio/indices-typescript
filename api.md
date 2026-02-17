@@ -5,7 +5,6 @@ Types:
 - <code><a href="./src/resources/tasks.ts">Task</a></code>
 - <code><a href="./src/resources/tasks.ts">TaskListResponse</a></code>
 - <code><a href="./src/resources/tasks.ts">TaskDeleteResponse</a></code>
-- <code><a href="./src/resources/tasks.ts">TaskCompleteManualSessionResponse</a></code>
 - <code><a href="./src/resources/tasks.ts">TaskStartManualSessionResponse</a></code>
 
 Methods:
@@ -14,7 +13,7 @@ Methods:
 - <code title="get /v1beta/tasks/{id}">client.tasks.<a href="./src/resources/tasks.ts">retrieve</a>(id) -> Task</code>
 - <code title="get /v1beta/tasks">client.tasks.<a href="./src/resources/tasks.ts">list</a>() -> TaskListResponse</code>
 - <code title="delete /v1beta/tasks/{id}">client.tasks.<a href="./src/resources/tasks.ts">delete</a>(id) -> unknown</code>
-- <code title="post /v1beta/tasks/{id}/complete-manual-session">client.tasks.<a href="./src/resources/tasks.ts">completeManualSession</a>(id) -> unknown</code>
+- <code title="post /v1beta/tasks/{id}/complete-manual-session">client.tasks.<a href="./src/resources/tasks.ts">completeManualSession</a>(id) -> Task</code>
 - <code title="post /v1beta/tasks/{id}/start-manual-session">client.tasks.<a href="./src/resources/tasks.ts">startManualSession</a>(id, { ...params }) -> TaskStartManualSessionResponse</code>
 
 # Runs
