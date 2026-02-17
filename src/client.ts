@@ -16,7 +16,7 @@ import * as Errors from './core/error';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
-import { Run, RunListParams, RunListResponse, RunRunParams, Runs } from './resources/runs';
+import { Run, RunListParams, RunListResponse, RunLogsResponse, RunRunParams, Runs } from './resources/runs';
 import {
   Secret,
   SecretCreateParams,
@@ -772,6 +772,7 @@ export declare namespace Indices {
     Runs as Runs,
     type Run as Run,
     type RunListResponse as RunListResponse,
+    type RunLogsResponse as RunLogsResponse,
     type RunListParams as RunListParams,
     type RunRunParams as RunRunParams,
   };

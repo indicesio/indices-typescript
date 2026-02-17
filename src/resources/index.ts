@@ -1,6 +1,13 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-export { Runs, type Run, type RunListResponse, type RunListParams, type RunRunParams } from './runs';
+export {
+  Runs,
+  type Run,
+  type RunListResponse,
+  type RunLogsResponse,
+  type RunListParams,
+  type RunRunParams,
+} from './runs';
 export {
   Secrets,
   type Secret,
