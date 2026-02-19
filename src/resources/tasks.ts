@@ -101,6 +101,12 @@ export interface Task {
   website: string;
 
   /**
+   * Whether schemas were configured to auto-generate during task creation, if
+   * available.
+   */
+  creation_auto_generate_schemas?: boolean | null;
+
+  /**
    * List of secrets provided during task creation.
    */
   creation_secrets?: Array<Task.CreationSecret>;
