@@ -7,22 +7,21 @@ import { path } from '../internal/utils/path';
 
 export class Tasks extends APIResource {
   /**
-   * <p>Create a new task to repeatedly perform an action on an external website.</p>
-   *         <p>Once a task has been created and is ready for usage, it can be repeatedly executed using the `run` endpoint.</p>
+   * <p>Create a new task to repeatedly perform an action on an external website.</p><p>Once created and ready, it can be repeatedly executed using the <code>run</code> endpoint.</p><p>When <code>auto_generate_schemas</code> is enabled and schemas are omitted, <code>input_schema</code> and <code>output_schema</code> remain <code>null</code> until generation completes.</p>
    */
   create(body: TaskCreateParams, options?: RequestOptions): APIPromise<Task> {
     return this._client.post('/v1beta/tasks', { body, ...options });
   }
 
   /**
-   * <p>Retrieve a task by its ID.</p>
+   * <p>Retrieve a task by its ID.</p><p>For tasks that are still being generated, <code>input_schema</code> and <code>output_schema</code> may be <code>null</code>. They are guaranteed to be present once the task reaches the ready state.</p>
    */
   retrieve(id: string, options?: RequestOptions): APIPromise<Task> {
     return this._client.get(path`/v1beta/tasks/${id}`, options);
   }
 
   /**
-   * <p>List all tasks that have been created.</p>
+   * <p>List all tasks that have been created.</p><p>For tasks that are still being generated, <code>input_schema</code> and <code>output_schema</code> may be <code>null</code>. They are guaranteed to be present once the task reaches the ready state.</p>
    */
   list(options?: RequestOptions): APIPromise<TaskListResponse> {
     return this._client.get('/v1beta/tasks', options);
@@ -82,14 +81,18 @@ export interface Task {
   display_name: string;
 
   /**
-   * Task input parameters in the form of a JSON schema.
+   * Task input schema as a JSON schema string. May be null while the task is not
+   * ready (e.g. schema generation in progress). Guaranteed non-null when
+   * current_state is ready.
    */
-  input_schema: string;
+  input_schema: string | null;
 
   /**
-   * Task output in the form of a JSON schema.
+   * Task output schema as a JSON schema string. May be null while the task is not
+   * ready (e.g. schema generation in progress). Guaranteed non-null when
+   * current_state is ready.
    */
-  output_schema: string;
+  output_schema: string | null;
 
   /**
    * Detailed explanation of the task to be performed.
@@ -221,14 +224,16 @@ export interface TaskCreateParams {
   website: string;
 
   /**
-   * Task input parameters in the form of a JSON schema. Optional if
-   * auto_generate_schemas is enabled.
+   * Task input parameters as a JSON schema string. Required when
+   * auto_generate_schemas is disabled. When auto_generate_schemas is enabled, this
+   * may be omitted and remains null until generation completes.
    */
   input_schema?: string | null;
 
   /**
-   * Task output in the form of a JSON schema. Optional if auto_generate_schemas is
-   * enabled.
+   * Task output schema as a JSON schema string. Required when auto_generate_schemas
+   * is disabled. When auto_generate_schemas is enabled, this may be omitted and
+   * remains null until generation completes.
    */
   output_schema?: string | null;
 }
@@ -241,8 +246,8 @@ export namespace TaskCreateParams {
     /**
      * If true, input and output schemas will be automatically generated from captured
      * HAR traffic. When enabled, input_schema and output_schema in the request are
-     * optional and will be replaced with auto-generated schemas during the task
-     * creation workflow.
+     * optional. If omitted, task responses may return null for these fields until
+     * generation completes.
      */
     auto_generate_schemas?: boolean;
 
