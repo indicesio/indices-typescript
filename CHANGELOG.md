@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.1.0 (2026-02-20)
+
+Full Changelog: [v0.0.2...v0.1.0](https://github.com/indicesio/indices-typescript/compare/v0.0.2...v0.1.0)
+
+### Features
+
+* **api:** api update ([192a01c](https://github.com/indicesio/indices-typescript/commit/192a01cc7a790dc60034aa15fcfdeddad4d0f3cd))
+* **api:** api update ([656c14c](https://github.com/indicesio/indices-typescript/commit/656c14c5db74b3998a2ae4060765ef1ba891f94b))
+* **api:** api update ([4296f4c](https://github.com/indicesio/indices-typescript/commit/4296f4c295a7f77191de1db7dd230220706d503d))
+
+
+### Chores
+
+* **internal:** remove mock server code ([e08856f](https://github.com/indicesio/indices-typescript/commit/e08856f01273ebb25869a13ee7ddbe27f0052c29))
+* update mock server docs ([bf5abb9](https://github.com/indicesio/indices-typescript/commit/bf5abb9bda730ca610b64d62c97bfe378daa194b))
+
 ## 0.0.2 (2026-02-17)
 
 Full Changelog: [v0.0.1...v0.0.2](https://github.com/indicesio/indices-typescript/compare/v0.0.1...v0.0.2)
