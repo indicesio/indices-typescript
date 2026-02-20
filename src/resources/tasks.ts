@@ -66,6 +66,12 @@ export interface Task {
   created_at: string;
 
   /**
+   * Whether schemas were configured to auto-generate during task creation, if
+   * available.
+   */
+  creation_auto_generate_schemas: boolean;
+
+  /**
    * Current state of the task, in particular whether it is ready to use.
    */
   current_state: 'not_ready' | 'waiting_for_manual_completion' | 'ready' | 'failed';
@@ -99,12 +105,6 @@ export interface Task {
    * The website to perform the task on.
    */
   website: string;
-
-  /**
-   * Whether schemas were configured to auto-generate during task creation, if
-   * available.
-   */
-  creation_auto_generate_schemas?: boolean | null;
 
   /**
    * List of secrets provided during task creation.
