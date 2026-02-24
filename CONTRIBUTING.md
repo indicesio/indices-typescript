@@ -60,7 +60,7 @@ $ yarn link indices-ts
 # With pnpm
 $ pnpm link --global
 $ cd ../my-package
-$ pnpm link -—global indices-ts
+$ pnpm link --global indices-ts
 ```
 
 ## Running tests
