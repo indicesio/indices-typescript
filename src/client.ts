@@ -734,8 +734,17 @@ export class Indices {
 
   static toFile = Uploads.toFile;
 
+  /**
+   * Create a task to repeatedly perform an action on an external website.
+   */
   tasks: API.Tasks = new API.Tasks(this);
+  /**
+   * Execute a task.
+   */
   runs: API.Runs = new API.Runs(this);
+  /**
+   * Manage secrets like login credentials and API keys.
+   */
   secrets: API.Secrets = new API.Secrets(this);
 }
 

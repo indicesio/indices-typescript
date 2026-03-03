@@ -5,6 +5,9 @@ import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
+/**
+ * Create a task to repeatedly perform an action on an external website.
+ */
 export class Tasks extends APIResource {
   /**
    * <p>Create a new task to repeatedly perform an action on an external website.</p><p>Once created and ready, it can be repeatedly executed using the <code>run</code> endpoint.</p><p>When <code>auto_generate_schemas</code> is enabled and schemas are omitted (enforced), <code>input_schema</code> and <code>output_schema</code> remain <code>null</code> until generation completes.</p>

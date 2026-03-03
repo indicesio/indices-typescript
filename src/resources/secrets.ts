@@ -5,6 +5,9 @@ import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
+/**
+ * Manage secrets like login credentials and API keys.
+ */
 export class Secrets extends APIResource {
   /**
    * <p>Create a new secret. Credentials are stored securely in 1Password.</p>
