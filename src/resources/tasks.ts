@@ -10,7 +10,7 @@ import { path } from '../internal/utils/path';
  */
 export class Tasks extends APIResource {
   /**
-   * <p>Create a new task to repeatedly perform an action on an external website.</p><p>Once created and ready, it can be repeatedly executed using the <code>run</code> endpoint.</p><p>When <code>auto_generate_schemas</code> is enabled and schemas are omitted (enforced), <code>input_schema</code> and <code>output_schema</code> remain <code>null</code> until generation completes.</p>
+   * <p>Create a new task to repeatedly perform an action on an external website.</p><p>Once created and ready, it can be repeatedly executed using the <code>run</code> endpoint.</p>
    */
   create(body: TaskCreateParams, options?: RequestOptions): APIPromise<Task> {
     return this._client.post('/v1beta/tasks', { body, ...options });
@@ -68,10 +68,9 @@ export interface Task {
   created_at: string;
 
   /**
-   * Whether schemas were configured to auto-generate during task creation, if
-   * available.
+   * Parameters set during the creation of this task.
    */
-  creation_auto_generate_schemas: boolean;
+  creation: Task.Creation;
 
   /**
    * Current state of the task, in particular whether it is ready to use.
@@ -113,11 +112,6 @@ export interface Task {
   website: string;
 
   /**
-   * List of secrets provided during task creation.
-   */
-  creation_secrets?: Array<Task.CreationSecret>;
-
-  /**
    * Information about why a task failed, for user display.
    */
   failure_info?: Task.FailureInfo | null;
@@ -126,29 +120,46 @@ export interface Task {
    * List of secrets that must be provided when running this task.
    */
   required_secrets?: Array<Task.RequiredSecret>;
-
-  /**
-   * Mapping of required secret slot names to secret UUIDs bound during task
-   * creation.
-   */
-  secret_bindings?: { [key: string]: string };
 }
 
 export namespace Task {
   /**
-   * A secret provided during task creation
+   * Parameters set during the creation of this task.
    */
-  export interface CreationSecret {
+  export interface Creation {
     /**
-     * UUID of the secret to bind.
+     * Whether schemas were configured to auto-generate during task creation.
      */
-    secret_uuid: string;
+    auto_generate_schemas: boolean;
 
     /**
-     * Optional description of what this secret is used for (helps generate meaningful
-     * slot names).
+     * Mapping of required secret slot names to secret UUIDs bound during task
+     * creation.
      */
-    description?: string | null;
+    secret_bindings?: { [key: string]: string };
+
+    /**
+     * List of secrets provided during task creation.
+     */
+    secrets?: Array<Creation.Secret>;
+  }
+
+  export namespace Creation {
+    /**
+     * A secret provided during task creation
+     */
+    export interface Secret {
+      /**
+       * UUID of the secret to bind.
+       */
+      secret_uuid: string;
+
+      /**
+       * Optional description of what this secret is used for (helps generate meaningful
+       * slot names).
+       */
+      description?: string | null;
+    }
   }
 
   /**
