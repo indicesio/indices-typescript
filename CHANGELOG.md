@@ -1,5 +1,35 @@
 # Changelog
 
+## 0.0.3 (2026-03-13)
+
+Full Changelog: [v0.0.2...v0.0.3](https://github.com/indicesio/indices-typescript/compare/v0.0.2...v0.0.3)
+
+### Features
+
+* **api:** api update ([ca64c41](https://github.com/indicesio/indices-typescript/commit/ca64c4189137b01a5049cd5e9583e2e946a1da4f))
+* **api:** api update ([8653a8c](https://github.com/indicesio/indices-typescript/commit/8653a8ca43ff3ed17d0d609cbcc251835fa8f1a2))
+* **api:** api update ([192a01c](https://github.com/indicesio/indices-typescript/commit/192a01cc7a790dc60034aa15fcfdeddad4d0f3cd))
+* **api:** api update ([656c14c](https://github.com/indicesio/indices-typescript/commit/656c14c5db74b3998a2ae4060765ef1ba891f94b))
+* **api:** api update ([4296f4c](https://github.com/indicesio/indices-typescript/commit/4296f4c295a7f77191de1db7dd230220706d503d))
+
+
+### Bug Fixes
+
+* **client:** preserve URL params already embedded in path ([cb79d65](https://github.com/indicesio/indices-typescript/commit/cb79d6594b407afa9083b144c296607212f61389))
+* **docs/contributing:** correct pnpm link command ([264422c](https://github.com/indicesio/indices-typescript/commit/264422c17faac214fab8c3a4bb5d58afaea81744))
+
+
+### Chores
+
+* **ci:** skip uploading artifacts on stainless-internal branches ([5ff9316](https://github.com/indicesio/indices-typescript/commit/5ff9316596527ad5fcbf0b3701f0c5d032ccdd48))
+* **internal:** codegen related update ([bdf7bc5](https://github.com/indicesio/indices-typescript/commit/bdf7bc57225c17fdb094878bcd5d64dcd718fa6d))
+* **internal:** codegen related update ([f3bad0e](https://github.com/indicesio/indices-typescript/commit/f3bad0e849d1a635a7aac0e1a3e3941a9ffb6776))
+* **internal:** move stringifyQuery implementation to internal function ([a57c228](https://github.com/indicesio/indices-typescript/commit/a57c228ceb3b391f1707e5fa4afd5ab51ab70a5a))
+* **internal:** remove mock server code ([e08856f](https://github.com/indicesio/indices-typescript/commit/e08856f01273ebb25869a13ee7ddbe27f0052c29))
+* **internal:** update dependencies to address dependabot vulnerabilities ([3ba24b5](https://github.com/indicesio/indices-typescript/commit/3ba24b50310b3b9fbef070132d5684511e93bf84))
+* update mock server docs ([bf5abb9](https://github.com/indicesio/indices-typescript/commit/bf5abb9bda730ca610b64d62c97bfe378daa194b))
+* update SDK settings ([e38f4f1](https://github.com/indicesio/indices-typescript/commit/e38f4f1e4fc1b238940193cf193da39d20abcecf))
+
 ## 0.0.2 (2026-02-17)
 
 Full Changelog: [v0.0.1...v0.0.2](https://github.com/indicesio/indices-typescript/compare/v0.0.1...v0.0.2)
