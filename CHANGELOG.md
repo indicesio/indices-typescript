@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.0.4 (2026-03-13)
+
+Full Changelog: [v0.0.3...v0.0.4](https://github.com/indicesio/indices-typescript/compare/v0.0.3...v0.0.4)
+
+### Features
+
+* **ts:** migrate to pnpm ([5f482d8](https://github.com/indicesio/indices-typescript/commit/5f482d8712dd85322bf3166479965b7c275049c7))
+
 ## 0.0.3 (2026-03-13)
 
 Full Changelog: [v0.0.2...v0.0.3](https://github.com/indicesio/indices-typescript/compare/v0.0.2...v0.0.3)
