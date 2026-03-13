@@ -5,24 +5,26 @@ import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
+/**
+ * Create a task to repeatedly perform an action on an external website.
+ */
 export class Tasks extends APIResource {
   /**
-   * <p>Create a new task to repeatedly perform an action on an external website.</p>
-   *         <p>Once a task has been created and is ready for usage, it can be repeatedly executed using the `run` endpoint.</p>
+   * <p>Create a new task to repeatedly perform an action on an external website.</p><p>Once created and ready, it can be repeatedly executed using the <code>run</code> endpoint.</p>
    */
   create(body: TaskCreateParams, options?: RequestOptions): APIPromise<Task> {
     return this._client.post('/v1beta/tasks', { body, ...options });
   }
 
   /**
-   * <p>Retrieve a task by its ID.</p>
+   * <p>Retrieve a task by its ID.</p><p>For tasks that are still being generated, <code>input_schema</code> and <code>output_schema</code> may be <code>null</code>. They are guaranteed to be present once the task reaches the ready state.</p>
    */
   retrieve(id: string, options?: RequestOptions): APIPromise<Task> {
     return this._client.get(path`/v1beta/tasks/${id}`, options);
   }
 
   /**
-   * <p>List all tasks that have been created.</p>
+   * <p>List all tasks that have been created.</p><p>For tasks that are still being generated, <code>input_schema</code> and <code>output_schema</code> may be <code>null</code>. They are guaranteed to be present once the task reaches the ready state.</p>
    */
   list(options?: RequestOptions): APIPromise<TaskListResponse> {
     return this._client.get('/v1beta/tasks', options);
@@ -66,6 +68,11 @@ export interface Task {
   created_at: string;
 
   /**
+   * Parameters set during the creation of this task.
+   */
+  creation: Task.Creation;
+
+  /**
    * Current state of the task, in particular whether it is ready to use.
    */
   current_state: 'not_ready' | 'waiting_for_manual_completion' | 'ready' | 'failed';
@@ -76,14 +83,18 @@ export interface Task {
   display_name: string;
 
   /**
-   * Task input parameters in the form of a JSON schema.
+   * Task input schema as a JSON schema string. May be null while the task is not
+   * ready (e.g. schema generation in progress). Guaranteed non-null when
+   * current_state is ready.
    */
-  input_schema: string;
+  input_schema: string | null;
 
   /**
-   * Task output in the form of a JSON schema.
+   * Task output schema as a JSON schema string. May be null while the task is not
+   * ready (e.g. schema generation in progress). Guaranteed non-null when
+   * current_state is ready.
    */
-  output_schema: string;
+  output_schema: string | null;
 
   /**
    * Detailed explanation of the task to be performed.
@@ -101,11 +112,6 @@ export interface Task {
   website: string;
 
   /**
-   * List of secrets provided during task creation.
-   */
-  creation_secrets?: Array<Task.CreationSecret>;
-
-  /**
    * Information about why a task failed, for user display.
    */
   failure_info?: Task.FailureInfo | null;
@@ -114,29 +120,46 @@ export interface Task {
    * List of secrets that must be provided when running this task.
    */
   required_secrets?: Array<Task.RequiredSecret>;
-
-  /**
-   * Mapping of required secret slot names to secret UUIDs bound during task
-   * creation.
-   */
-  secret_bindings?: { [key: string]: string };
 }
 
 export namespace Task {
   /**
-   * A secret provided during task creation
+   * Parameters set during the creation of this task.
    */
-  export interface CreationSecret {
+  export interface Creation {
     /**
-     * UUID of the secret to bind.
+     * Whether schemas were configured to auto-generate during task creation.
      */
-    secret_uuid: string;
+    auto_generate_schemas: boolean;
 
     /**
-     * Optional description of what this secret is used for (helps generate meaningful
-     * slot names).
+     * Mapping of required secret slot names to secret UUIDs bound during task
+     * creation.
      */
-    description?: string | null;
+    secret_bindings?: { [key: string]: string };
+
+    /**
+     * List of secrets provided during task creation.
+     */
+    secrets?: Array<Creation.Secret>;
+  }
+
+  export namespace Creation {
+    /**
+     * A secret provided during task creation
+     */
+    export interface Secret {
+      /**
+       * UUID of the secret to bind.
+       */
+      secret_uuid: string;
+
+      /**
+       * Optional description of what this secret is used for (helps generate meaningful
+       * slot names).
+       */
+      description?: string | null;
+    }
   }
 
   /**
@@ -215,14 +238,16 @@ export interface TaskCreateParams {
   website: string;
 
   /**
-   * Task input parameters in the form of a JSON schema. Optional if
-   * auto_generate_schemas is enabled.
+   * Task input parameters as a JSON schema string. Required when
+   * auto_generate_schemas is disabled. Must be omitted when auto_generate_schemas is
+   * enabled; remains null until generation completes.
    */
   input_schema?: string | null;
 
   /**
-   * Task output in the form of a JSON schema. Optional if auto_generate_schemas is
-   * enabled.
+   * Task output schema as a JSON schema string. Required when auto_generate_schemas
+   * is disabled. Must be omitted when auto_generate_schemas is enabled; remains null
+   * until generation completes.
    */
   output_schema?: string | null;
 }
@@ -234,9 +259,9 @@ export namespace TaskCreateParams {
   export interface CreationParams {
     /**
      * If true, input and output schemas will be automatically generated from captured
-     * HAR traffic. When enabled, input_schema and output_schema in the request are
-     * optional and will be replaced with auto-generated schemas during the task
-     * creation workflow.
+     * HAR traffic. When enabled, input_schema and output_schema must be omitted from
+     * the request. Task responses may return null for these fields until generation
+     * completes.
      */
     auto_generate_schemas?: boolean;
 

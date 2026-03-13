@@ -7,8 +7,8 @@ const config: JestConfigWithTsJest = {
     '^.+\\.(t|j)sx?$': ['@swc/jest', { sourceMaps: 'inline' }],
   },
   moduleNameMapper: {
-    '^indices-ts$': '<rootDir>/src/index.ts',
-    '^indices-ts/(.*)$': '<rootDir>/src/$1',
+    '^indicesio$': '<rootDir>/src/index.ts',
+    '^indicesio/(.*)$': '<rootDir>/src/$1',
   },
   modulePathIgnorePatterns: [
     '<rootDir>/ecosystem-tests/',
