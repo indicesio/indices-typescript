@@ -1,5 +1,5 @@
-import { multipartFormRequestOptions, createForm } from 'indices-ts/internal/uploads';
-import { toFile } from 'indices-ts/core/uploads';
+import { multipartFormRequestOptions, createForm } from 'indicesio/internal/uploads';
+import { toFile } from 'indicesio/core/uploads';
 
 describe('form data validation', () => {
   test('valid values do not error', async () => {

@@ -8,8 +8,8 @@
     "moduleResolution": "node",
     "esModuleInterop": true,
     "paths": {
-      "indices-ts/*": ["./src/*"],
-      "indices-ts": ["./src/index.ts"]
+      "indicesio/*": ["./src/*"],
+      "indicesio": ["./src/index.ts"]
     },
     "noEmit": true,
 
