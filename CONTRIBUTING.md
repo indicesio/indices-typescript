@@ -55,12 +55,12 @@ $ cd indices-typescript
 # With yarn
 $ yarn link
 $ cd ../my-package
-$ yarn link indices-ts
+$ yarn link indicesio
 
 # With pnpm
 $ pnpm link --global
 $ cd ../my-package
-$ pnpm link --global indices-ts
+$ pnpm link --global indicesio
 ```
 
 ## Running tests

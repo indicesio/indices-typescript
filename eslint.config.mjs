@@ -25,7 +25,7 @@ export default tseslint.config(
         {
           patterns: [
             {
-              regex: '^indices-ts(/.*)?',
+              regex: '^indicesio(/.*)?',
               message: 'Use a relative import, not a package import.',
             },
           ],
