@@ -18,14 +18,7 @@ import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import { Run, RunListParams, RunListResponse, RunLogsResponse, RunRunParams, Runs } from './resources/runs';
-import {
-  Secret,
-  SecretCreateParams,
-  SecretDeleteResponse,
-  SecretGetTotpResponse,
-  SecretListResponse,
-  Secrets,
-} from './resources/secrets';
+import { Secret, SecretCreateParams, SecretListResponse, Secrets } from './resources/secrets';
 import {
   Task,
   TaskCreateParams,
@@ -779,8 +772,6 @@ export declare namespace Indices {
     Secrets as Secrets,
     type Secret as Secret,
     type SecretListResponse as SecretListResponse,
-    type SecretDeleteResponse as SecretDeleteResponse,
-    type SecretGetTotpResponse as SecretGetTotpResponse,
     type SecretCreateParams as SecretCreateParams,
   };
 }
