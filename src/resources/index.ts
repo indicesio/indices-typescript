@@ -8,14 +8,7 @@ export {
   type RunListParams,
   type RunRunParams,
 } from './runs';
-export {
-  Secrets,
-  type Secret,
-  type SecretListResponse,
-  type SecretDeleteResponse,
-  type SecretGetTotpResponse,
-  type SecretCreateParams,
-} from './secrets';
+export { Secrets, type Secret, type SecretListResponse, type SecretCreateParams } from './secrets';
 export {
   Tasks,
   type Task,
