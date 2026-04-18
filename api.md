@@ -37,8 +37,12 @@ Types:
 
 - <code><a href="./src/resources/secrets.ts">Secret</a></code>
 - <code><a href="./src/resources/secrets.ts">SecretListResponse</a></code>
+- <code><a href="./src/resources/secrets.ts">SecretDeleteResponse</a></code>
+- <code><a href="./src/resources/secrets.ts">SecretGetTotpResponse</a></code>
 
 Methods:
 
 - <code title="post /v1beta/secrets">client.secrets.<a href="./src/resources/secrets.ts">create</a>({ ...params }) -> Secret</code>
 - <code title="get /v1beta/secrets">client.secrets.<a href="./src/resources/secrets.ts">list</a>() -> SecretListResponse</code>
+- <code title="delete /v1beta/secrets/{id}">client.secrets.<a href="./src/resources/secrets.ts">delete</a>(id) -> SecretDeleteResponse</code>
+- <code title="post /v1beta/secrets/{id}/totp">client.secrets.<a href="./src/resources/secrets.ts">getTotp</a>(id) -> SecretGetTotpResponse</code>

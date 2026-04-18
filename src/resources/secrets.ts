@@ -3,6 +3,7 @@
 import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
+import { path } from '../internal/utils/path';
 
 /**
  * Manage secrets like login credentials and API keys.
@@ -20,6 +21,20 @@ export class Secrets extends APIResource {
    */
   list(options?: RequestOptions): APIPromise<SecretListResponse> {
     return this._client.get('/v1beta/secrets', options);
+  }
+
+  /**
+   * <p>Delete a secret. This removes it from both the database and 1Password.</p>
+   */
+  delete(id: string, options?: RequestOptions): APIPromise<SecretDeleteResponse> {
+    return this._client.delete(path`/v1beta/secrets/${id}`, options);
+  }
+
+  /**
+   * <p>Generate a current TOTP code for a login secret that has 2FA configured.</p>
+   */
+  getTotp(id: string, options?: RequestOptions): APIPromise<SecretGetTotpResponse> {
+    return this._client.post(path`/v1beta/secrets/${id}/totp`, options);
   }
 }
 
@@ -62,6 +77,30 @@ export interface Secret {
 
 export type SecretListResponse = Array<Secret>;
 
+export interface SecretDeleteResponse {
+  /**
+   * Unique identifier of the deleted secret.
+   */
+  id: string;
+
+  /**
+   * Whether the secret was successfully deleted.
+   */
+  deleted: boolean;
+}
+
+export interface SecretGetTotpResponse {
+  /**
+   * Unique identifier of the secret.
+   */
+  id: string;
+
+  /**
+   * Current 6-digit TOTP code.
+   */
+  code: string;
+}
+
 export interface SecretCreateParams {
   /**
    * Human-readable name for the secret.
@@ -103,6 +142,8 @@ export declare namespace Secrets {
   export {
     type Secret as Secret,
     type SecretListResponse as SecretListResponse,
+    type SecretDeleteResponse as SecretDeleteResponse,
+    type SecretGetTotpResponse as SecretGetTotpResponse,
     type SecretCreateParams as SecretCreateParams,
   };
 }
