@@ -81,7 +81,7 @@ export interface Run {
   secret_bindings?: { [key: string]: string };
 }
 
-export type RunListResponse = Array<Run>;
+export type RunListResponse = Array<Run>
 
 export interface RunLogsResponse {
   /**
@@ -127,6 +127,6 @@ export declare namespace Runs {
     type RunListResponse as RunListResponse,
     type RunLogsResponse as RunLogsResponse,
     type RunListParams as RunListParams,
-    type RunRunParams as RunRunParams,
+    type RunRunParams as RunRunParams
   };
 }
