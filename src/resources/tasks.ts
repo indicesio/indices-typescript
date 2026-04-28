@@ -47,7 +47,11 @@ export class Tasks extends APIResource {
   /**
    * <p>Spawn a browser session for manual task completion. If a session already exists, it will be closed and replaced.</p>
    */
-  startManualSession(id: string, body: TaskStartManualSessionParams | null | undefined = {}, options?: RequestOptions): APIPromise<TaskStartManualSessionResponse> {
+  startManualSession(
+    id: string,
+    body: TaskStartManualSessionParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<TaskStartManualSessionResponse> {
     return this._client.post(path`/v1beta/tasks/${id}/start-manual-session`, { body, ...options });
   }
 }
@@ -195,9 +199,9 @@ export namespace Task {
   }
 }
 
-export type TaskListResponse = Array<Task>
+export type TaskListResponse = Array<Task>;
 
-export type TaskDeleteResponse = unknown
+export type TaskDeleteResponse = unknown;
 
 export interface TaskStartManualSessionResponse {
   /**
@@ -355,6 +359,6 @@ export declare namespace Tasks {
     type TaskDeleteResponse as TaskDeleteResponse,
     type TaskStartManualSessionResponse as TaskStartManualSessionResponse,
     type TaskCreateParams as TaskCreateParams,
-    type TaskStartManualSessionParams as TaskStartManualSessionParams
+    type TaskStartManualSessionParams as TaskStartManualSessionParams,
   };
 }

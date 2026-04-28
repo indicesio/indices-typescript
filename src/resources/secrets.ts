@@ -75,7 +75,7 @@ export interface Secret {
   website: string | null;
 }
 
-export type SecretListResponse = Array<Secret>
+export type SecretListResponse = Array<Secret>;
 
 export interface SecretDeleteResponse {
   /**
@@ -144,6 +144,6 @@ export declare namespace Secrets {
     type SecretListResponse as SecretListResponse,
     type SecretDeleteResponse as SecretDeleteResponse,
     type SecretGetTotpResponse as SecretGetTotpResponse,
-    type SecretCreateParams as SecretCreateParams
+    type SecretCreateParams as SecretCreateParams,
   };
 }

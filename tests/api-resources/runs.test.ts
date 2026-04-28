@@ -2,7 +2,10 @@
 
 import Indices from 'indicesio';
 
-const client = new Indices({ apiKey: 'My API Key', baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010' });
+const client = new Indices({
+  apiKey: 'My API Key',
+  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
+});
 
 describe('resource runs', () => {
   // Mock server tests are disabled
@@ -61,9 +64,9 @@ describe('resource runs', () => {
   // Mock server tests are disabled
   test.skip('run: required and optional params', async () => {
     const response = await client.runs.run({
-    task_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-    arguments: { foo: 'bar' },
-    secret_bindings: { foo: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e' },
-  });
+      task_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      arguments: { foo: 'bar' },
+      secret_bindings: { foo: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e' },
+    });
   });
 });
