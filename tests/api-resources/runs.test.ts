@@ -22,7 +22,7 @@ describe('resource runs', () => {
 
   // Mock server tests are disabled
   test.skip('list: only required params', async () => {
-    const responsePromise = client.runs.list({ task_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e' });
+    const responsePromise = client.runs.list({ task_id: 'task_id' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -34,7 +34,7 @@ describe('resource runs', () => {
 
   // Mock server tests are disabled
   test.skip('list: required and optional params', async () => {
-    const response = await client.runs.list({ task_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e' });
+    const response = await client.runs.list({ task_id: 'task_id' });
   });
 
   // Mock server tests are disabled
@@ -51,7 +51,7 @@ describe('resource runs', () => {
 
   // Mock server tests are disabled
   test.skip('run: only required params', async () => {
-    const responsePromise = client.runs.run({ task_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e' });
+    const responsePromise = client.runs.run({ task_id: 'task_id' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -64,7 +64,7 @@ describe('resource runs', () => {
   // Mock server tests are disabled
   test.skip('run: required and optional params', async () => {
     const response = await client.runs.run({
-      task_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      task_id: 'task_id',
       arguments: { foo: 'bar' },
       secret_bindings: { foo: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e' },
     });
