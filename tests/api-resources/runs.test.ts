@@ -10,7 +10,7 @@ const client = new Indices({
 describe('resource runs', () => {
   // Mock server tests are disabled
   test.skip('retrieve', async () => {
-    const responsePromise = client.runs.retrieve('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
+    const responsePromise = client.runs.retrieve('run_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -39,7 +39,7 @@ describe('resource runs', () => {
 
   // Mock server tests are disabled
   test.skip('logs', async () => {
-    const responsePromise = client.runs.logs('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
+    const responsePromise = client.runs.logs('run_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
