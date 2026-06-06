@@ -1,5 +1,39 @@
 # Changelog
 
+## 0.0.5 (2026-06-06)
+
+Full Changelog: [v0.0.4...v0.0.5](https://github.com/indicesio/indices-typescript/compare/v0.0.4...v0.0.5)
+
+### Features
+
+* **api:** api update ([634fdfc](https://github.com/indicesio/indices-typescript/commit/634fdfca2d5f9465cda49eff14036f017d1bfe2a))
+* **api:** api update ([2e23479](https://github.com/indicesio/indices-typescript/commit/2e234797f742229c1214687b472cc8c184e1cff7))
+* **api:** api update ([f1913d9](https://github.com/indicesio/indices-typescript/commit/f1913d933cfafdd42351aefb9a4a7c542c8597ff))
+* **api:** api update ([ef3fc72](https://github.com/indicesio/indices-typescript/commit/ef3fc725dae5bc8b2aa1c0f8558955cae567627b))
+* **api:** api update ([0e9945f](https://github.com/indicesio/indices-typescript/commit/0e9945fbd3ea78b6764da61172f1cbde8a8e4f99))
+* **api:** manual updates ([2d91298](https://github.com/indicesio/indices-typescript/commit/2d912987dc000da870ac65eb344153b54bd8eea4))
+* support setting headers via env ([a23fd38](https://github.com/indicesio/indices-typescript/commit/a23fd383978fad5a9553417b9167414a5abbafd2))
+
+
+### Bug Fixes
+
+* **internal:** gitignore generated `oidc` dir ([f52d6da](https://github.com/indicesio/indices-typescript/commit/f52d6da1cea969faf0842307f94cd2b8a77c0e4d))
+
+
+### Chores
+
+* **ci:** skip lint on metadata-only changes ([6f42c8c](https://github.com/indicesio/indices-typescript/commit/6f42c8cc856997cf56d3ea7e5dbf617b51fd829a))
+* **format:** run eslint and prettier separately ([ec7e680](https://github.com/indicesio/indices-typescript/commit/ec7e6804e8b1e36d32fdca11be0a1b6939ab0c0f))
+* **formatter:** run prettier and eslint separately ([342da83](https://github.com/indicesio/indices-typescript/commit/342da83127b3e63a9789c874db67d291efffc85d))
+* **internal:** codegen related update ([116ebbb](https://github.com/indicesio/indices-typescript/commit/116ebbb2e6747af88a4f74f6eb9b22c627a57200))
+* **internal:** codegen related update ([a0641eb](https://github.com/indicesio/indices-typescript/commit/a0641eb42aa6cdea8759e9e1359966fe9206eccc))
+* **internal:** codegen related update ([afc1607](https://github.com/indicesio/indices-typescript/commit/afc1607a485c310566858c0318e1981351d1ac2e))
+* **internal:** more robust bootstrap script ([36d22f7](https://github.com/indicesio/indices-typescript/commit/36d22f74274496d4c9dba524e5467295c8195d71))
+* **internal:** tweak CI branches ([52ed630](https://github.com/indicesio/indices-typescript/commit/52ed630a932edddfab99adc2c4c5029e8e69a3d4))
+* **internal:** update gitignore ([c9fb9e0](https://github.com/indicesio/indices-typescript/commit/c9fb9e0182d8aa7d639ba32ece729c83b491c926))
+* redact api-key headers in debug logs ([508198a](https://github.com/indicesio/indices-typescript/commit/508198af83253ffe90dde42ab1ef16668b001ec7))
+* update SDK settings ([e850059](https://github.com/indicesio/indices-typescript/commit/e850059870a5b09a26b74586eb06f90d79c6c6be))
+
 ## 0.0.4 (2026-03-13)
 
 Full Changelog: [v0.0.3...v0.0.4](https://github.com/indicesio/indices-typescript/compare/v0.0.3...v0.0.4)
