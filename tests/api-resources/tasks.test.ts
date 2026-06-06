@@ -32,7 +32,12 @@ describe('resource tasks', () => {
         auto_generate_schemas: true,
         initial_input_values: { foo: 'bar' },
         is_fully_autonomous: true,
-        secrets: [{ secret_id: 'secret_id', description: 'description' }],
+        secrets: [
+          {
+            secret_id: 'sec_8kPq2mWxYz1aBcDeFgHi3J',
+            description: 'Login credentials for the store account.',
+          },
+        ],
       },
       display_name: 'display_name',
       task: 'task',
