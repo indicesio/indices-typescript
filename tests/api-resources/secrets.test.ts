@@ -47,7 +47,7 @@ describe('resource secrets', () => {
 
   // Mock server tests are disabled
   test.skip('delete', async () => {
-    const responsePromise = client.secrets.delete('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
+    const responsePromise = client.secrets.delete('id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -59,7 +59,7 @@ describe('resource secrets', () => {
 
   // Mock server tests are disabled
   test.skip('getTotp', async () => {
-    const responsePromise = client.secrets.getTotp('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
+    const responsePromise = client.secrets.getTotp('id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;

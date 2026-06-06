@@ -32,7 +32,7 @@ describe('resource tasks', () => {
         auto_generate_schemas: true,
         initial_input_values: { foo: 'bar' },
         is_fully_autonomous: true,
-        secrets: [{ secret_uuid: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', description: 'description' }],
+        secrets: [{ secret_id: 'secret_id', description: 'description' }],
       },
       display_name: 'display_name',
       task: 'task',
@@ -44,7 +44,7 @@ describe('resource tasks', () => {
 
   // Mock server tests are disabled
   test.skip('retrieve', async () => {
-    const responsePromise = client.tasks.retrieve('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
+    const responsePromise = client.tasks.retrieve('id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -68,7 +68,7 @@ describe('resource tasks', () => {
 
   // Mock server tests are disabled
   test.skip('delete', async () => {
-    const responsePromise = client.tasks.delete('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
+    const responsePromise = client.tasks.delete('id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -80,7 +80,7 @@ describe('resource tasks', () => {
 
   // Mock server tests are disabled
   test.skip('completeManualSession', async () => {
-    const responsePromise = client.tasks.completeManualSession('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
+    const responsePromise = client.tasks.completeManualSession('id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -92,7 +92,7 @@ describe('resource tasks', () => {
 
   // Mock server tests are disabled
   test.skip('startManualSession', async () => {
-    const responsePromise = client.tasks.startManualSession('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
+    const responsePromise = client.tasks.startManualSession('id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -107,7 +107,7 @@ describe('resource tasks', () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.tasks.startManualSession(
-        '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+        'id',
         {
           cookies: [
             {
