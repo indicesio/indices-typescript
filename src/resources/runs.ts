@@ -24,7 +24,7 @@ export class Runs extends APIResource {
   }
 
   /**
-   * <p>Retrieve stdout and stderr logs for a run.</p>
+   * <p>Retrieve the combined logs for a run.</p>
    */
   logs(runID: string, options?: RequestOptions): APIPromise<RunLogsResponse> {
     return this._client.get(path`/v1beta/runs/${runID}/logs`, options);
@@ -85,14 +85,9 @@ export type RunListResponse = Array<Run>;
 
 export interface RunLogsResponse {
   /**
-   * Standard error output from the run execution.
+   * Run execution logs.
    */
-  stderr: string;
-
-  /**
-   * Standard output from the run execution.
-   */
-  stdout: string;
+  logs: string;
 }
 
 export interface RunListParams {
