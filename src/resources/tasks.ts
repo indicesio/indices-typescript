@@ -133,8 +133,7 @@ export namespace Task {
     auto_generate_schemas: boolean;
 
     /**
-     * Mapping of required secret slot names to secret UUIDs bound during task
-     * creation.
+     * Mapping of required secret slot names to secret IDs bound during task creation.
      */
     secret_bindings?: { [key: string]: string };
 
@@ -150,9 +149,9 @@ export namespace Task {
      */
     export interface Secret {
       /**
-       * UUID of the secret to bind.
+       * ID of the secret to bind.
        */
-      secret_uuid: string;
+      secret_id: string;
 
       /**
        * Optional description of what this secret is used for (helps generate meaningful
@@ -290,9 +289,9 @@ export namespace TaskCreateParams {
      */
     export interface Secret {
       /**
-       * UUID of the secret to bind.
+       * ID of the secret to bind.
        */
-      secret_uuid: string;
+      secret_id: string;
 
       /**
        * Optional description of what this secret is used for (helps generate meaningful
