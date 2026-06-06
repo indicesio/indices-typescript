@@ -32,7 +32,7 @@ describe('resource tasks', () => {
         auto_generate_schemas: true,
         initial_input_values: { foo: 'bar' },
         is_fully_autonomous: true,
-        secrets: [{ secret_uuid: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', description: 'description' }],
+        secrets: [{ secret_id: 'secret_id', description: 'description' }],
       },
       display_name: 'display_name',
       task: 'task',

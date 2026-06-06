@@ -76,7 +76,7 @@ export interface Run {
 
   /**
    * Secrets to use for this run. This dict must be a mapping of secret slot names to
-   * secret UUIDs.
+   * secret IDs.
    */
   secret_bindings?: { [key: string]: string };
 }
@@ -115,7 +115,7 @@ export interface RunRunParams {
   arguments?: { [key: string]: unknown };
 
   /**
-   * Mapping of secret slot names to secret UUIDs. Each slot defined in the task's
+   * Mapping of secret slot names to secret IDs. Each slot defined in the task's
    * required_secrets must be mapped to a user-owned secret.
    */
   secret_bindings?: { [key: string]: string };
