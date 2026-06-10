@@ -272,12 +272,6 @@ export namespace TaskCreateParams {
     initial_input_values?: { [key: string]: unknown };
 
     /**
-     * If true, the server will run the browser task autonomously. If false, the user
-     * must complete the task manually in a spawned browser.
-     */
-    is_fully_autonomous?: boolean;
-
-    /**
      * List of secrets to use for this task.
      */
     secrets?: Array<CreationParams.Secret>;
