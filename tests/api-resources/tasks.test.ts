@@ -31,7 +31,6 @@ describe('resource tasks', () => {
       creation_params: {
         auto_generate_schemas: true,
         initial_input_values: { foo: 'bar' },
-        is_fully_autonomous: true,
         secrets: [
           {
             secret_id: 'sec_8kPq2mWxYz1aBcDeFgHi3J',
