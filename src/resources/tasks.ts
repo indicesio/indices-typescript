@@ -107,9 +107,10 @@ export interface Task {
   updated_at: string;
 
   /**
-   * The website to perform the task on.
+   * The primary URL the task targets. May be null while the task is not ready;
+   * non-null once generation completes.
    */
-  website: string;
+  website: string | null;
 
   /**
    * Information about why a task failed, for user display.
@@ -232,11 +233,6 @@ export interface TaskCreateParams {
   task: string;
 
   /**
-   * The website to perform the task on.
-   */
-  website: string;
-
-  /**
    * Task input parameters as a JSON schema string. Required when
    * auto_generate_schemas is disabled. Must be omitted when auto_generate_schemas is
    * enabled; remains null until generation completes.
@@ -263,13 +259,6 @@ export namespace TaskCreateParams {
      * completes.
      */
     auto_generate_schemas?: boolean;
-
-    /**
-     * Initial values for input schema fields, keyed by property name. Used during task
-     * creation to demonstrate the task. Especially important for tasks requiring
-     * authentication, as initial credentials must be provided.
-     */
-    initial_input_values?: { [key: string]: unknown };
 
     /**
      * List of secrets to use for this task.
