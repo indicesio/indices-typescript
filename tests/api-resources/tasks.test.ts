@@ -14,7 +14,6 @@ describe('resource tasks', () => {
       creation_params: {},
       display_name: 'display_name',
       task: 'task',
-      website: 'https://example.com',
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -30,7 +29,6 @@ describe('resource tasks', () => {
     const response = await client.tasks.create({
       creation_params: {
         auto_generate_schemas: true,
-        initial_input_values: { foo: 'bar' },
         secrets: [
           {
             secret_id: 'sec_8kPq2mWxYz1aBcDeFgHi3J',
@@ -40,7 +38,6 @@ describe('resource tasks', () => {
       },
       display_name: 'display_name',
       task: 'task',
-      website: 'https://example.com',
       input_schema: 'input_schema',
       output_schema: 'output_schema',
     });
