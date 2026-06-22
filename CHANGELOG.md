@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.0.6 (2026-06-22)
+
+Full Changelog: [v0.0.5...v0.0.6](https://github.com/indicesio/indices-typescript/compare/v0.0.5...v0.0.6)
+
+### Features
+
+* **api:** api update ([61e82d5](https://github.com/indicesio/indices-typescript/commit/61e82d55df39acc9cc2787c7404c388bb155ea59))
+* **api:** api update ([afb7cee](https://github.com/indicesio/indices-typescript/commit/afb7ceeaae8e3a08dd9c519275cf59c14502269e))
+* **api:** api update ([b02683f](https://github.com/indicesio/indices-typescript/commit/b02683f19eec5e9aef3c47c101fc778fbfcd929b))
+
+
+### Bug Fixes
+
+* **client:** send content-type header for requests with an omitted optional body ([768348b](https://github.com/indicesio/indices-typescript/commit/768348b527ea0e78334b64aec9bda61754dba77d))
+
 ## 0.0.5 (2026-06-06)
 
 Full Changelog: [v0.0.4...v0.0.5](https://github.com/indicesio/indices-typescript/compare/v0.0.4...v0.0.5)
