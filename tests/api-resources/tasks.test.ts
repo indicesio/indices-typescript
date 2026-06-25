@@ -28,7 +28,6 @@ describe('resource tasks', () => {
   test.skip('create: required and optional params', async () => {
     const response = await client.tasks.create({
       creation_params: {
-        auto_generate_schemas: true,
         secrets: [
           {
             secret_id: 'sec_8kPq2mWxYz1aBcDeFgHi3J',
@@ -38,8 +37,6 @@ describe('resource tasks', () => {
       },
       display_name: 'display_name',
       task: 'task',
-      input_schema: 'input_schema',
-      output_schema: 'output_schema',
     });
   });
 

@@ -129,11 +129,6 @@ export namespace Task {
    */
   export interface Creation {
     /**
-     * Whether schemas were configured to auto-generate during task creation.
-     */
-    auto_generate_schemas: boolean;
-
-    /**
      * Mapping of required secret slot names to secret IDs bound during task creation.
      */
     secret_bindings?: { [key: string]: string };
@@ -231,20 +226,6 @@ export interface TaskCreateParams {
    * Detailed explanation of the task to be performed.
    */
   task: string;
-
-  /**
-   * Task input parameters as a JSON schema string. Required when
-   * auto_generate_schemas is disabled. Must be omitted when auto_generate_schemas is
-   * enabled; remains null until generation completes.
-   */
-  input_schema?: string | null;
-
-  /**
-   * Task output schema as a JSON schema string. Required when auto_generate_schemas
-   * is disabled. Must be omitted when auto_generate_schemas is enabled; remains null
-   * until generation completes.
-   */
-  output_schema?: string | null;
 }
 
 export namespace TaskCreateParams {
@@ -252,14 +233,6 @@ export namespace TaskCreateParams {
    * Information used during task creation.
    */
   export interface CreationParams {
-    /**
-     * If true, input and output schemas will be automatically generated from captured
-     * HAR traffic. When enabled, input_schema and output_schema must be omitted from
-     * the request. Task responses may return null for these fields until generation
-     * completes.
-     */
-    auto_generate_schemas?: boolean;
-
     /**
      * List of secrets to use for this task.
      */
