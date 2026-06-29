@@ -83,18 +83,18 @@ export interface Task {
   display_name: string;
 
   /**
-   * Task input schema as a JSON schema string. May be null while the task is not
+   * Task input schema as a JSON Schema object. May be null while the task is not
    * ready (e.g. schema generation in progress). Guaranteed non-null when
    * current_state is ready.
    */
-  input_schema: string | null;
+  input_schema: { [key: string]: unknown } | null;
 
   /**
-   * Task output schema as a JSON schema string. May be null while the task is not
+   * Task output schema as a JSON Schema object. May be null while the task is not
    * ready (e.g. schema generation in progress). Guaranteed non-null when
    * current_state is ready.
    */
-  output_schema: string | null;
+  output_schema: { [key: string]: unknown } | null;
 
   /**
    * Detailed explanation of the task to be performed.
