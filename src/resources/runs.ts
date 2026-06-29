@@ -60,6 +60,11 @@ export interface Run {
   finished_at: string | null;
 
   /**
+   * Whether the run has associated logs
+   */
+  has_logs: boolean;
+
+  /**
    * Execution result of the run. In JSON, matching the task's output schema.
    */
   result_json: string | null;
