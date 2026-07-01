@@ -17,7 +17,7 @@ export class Runs extends APIResource {
   }
 
   /**
-   * <p>List all runs for a given task.</p>
+   * <p>List runs for a given task.</p>
    */
   list(query: RunListParams, options?: RequestOptions): APIPromise<RunListResponse> {
     return this._client.get('/v1beta/runs', { query, ...options });
@@ -86,7 +86,23 @@ export interface Run {
   secret_bindings?: { [key: string]: string };
 }
 
-export type RunListResponse = Array<Run>;
+export interface RunListResponse {
+  /**
+   * Runs for the requested page, ordered newest first.
+   */
+  data: Array<Run>;
+
+  /**
+   * Whether more runs exist after this page.
+   */
+  has_more: boolean;
+
+  /**
+   * Pass as the `cursor` query parameter to fetch the next page. Null when has_more
+   * is false.
+   */
+  next_cursor: string | null;
+}
 
 export interface RunLogsResponse {
   /**
@@ -100,6 +116,16 @@ export interface RunListParams {
    * The ID of the task to list runs for.
    */
   task_id: string;
+
+  /**
+   * Cursor from a previous response's `next_cursor`, to fetch the next page.
+   */
+  cursor?: string | null;
+
+  /**
+   * Maximum number of runs to return.
+   */
+  limit?: number;
 }
 
 export interface RunRunParams {
