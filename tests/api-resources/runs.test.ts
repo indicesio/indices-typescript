@@ -34,7 +34,11 @@ describe('resource runs', () => {
 
   // Mock server tests are disabled
   test.skip('list: required and optional params', async () => {
-    const response = await client.runs.list({ task_id: 'task_id' });
+    const response = await client.runs.list({
+      task_id: 'task_id',
+      cursor: 'cursor',
+      limit: 1,
+    });
   });
 
   // Mock server tests are disabled
