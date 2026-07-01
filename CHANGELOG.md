@@ -1,5 +1,84 @@
 # Changelog
 
+## 0.2.0 (2026-07-01)
+
+Full Changelog: [v0.1.0...v0.2.0](https://github.com/indicesio/indices-typescript/compare/v0.1.0...v0.2.0)
+
+### Features
+
+* **api:** add secrets APIs ([7aee8c3](https://github.com/indicesio/indices-typescript/commit/7aee8c388758164bf0300c8c2a7998eb009d25fa))
+* **api:** add secrets APIs ([f0d9712](https://github.com/indicesio/indices-typescript/commit/f0d971287027f141da87d58f5a0a8563912ec2ad))
+* **api:** api update ([0c58354](https://github.com/indicesio/indices-typescript/commit/0c58354eb0caccca41dc9b0b6b5f8fa1b25b4bd5))
+* **api:** api update ([bf122b3](https://github.com/indicesio/indices-typescript/commit/bf122b3a88abc92cf2f077bff6dd56be5a0ff1e2))
+* **api:** api update ([cdda664](https://github.com/indicesio/indices-typescript/commit/cdda66484c7c91c8a110798d16d9c5bf39988031))
+* **api:** api update ([634fdfc](https://github.com/indicesio/indices-typescript/commit/634fdfca2d5f9465cda49eff14036f017d1bfe2a))
+* **api:** api update ([2e23479](https://github.com/indicesio/indices-typescript/commit/2e234797f742229c1214687b472cc8c184e1cff7))
+* **api:** api update ([f1913d9](https://github.com/indicesio/indices-typescript/commit/f1913d933cfafdd42351aefb9a4a7c542c8597ff))
+* **api:** api update ([ef3fc72](https://github.com/indicesio/indices-typescript/commit/ef3fc725dae5bc8b2aa1c0f8558955cae567627b))
+* **api:** api update ([0e9945f](https://github.com/indicesio/indices-typescript/commit/0e9945fbd3ea78b6764da61172f1cbde8a8e4f99))
+* **api:** api update ([ca64c41](https://github.com/indicesio/indices-typescript/commit/ca64c4189137b01a5049cd5e9583e2e946a1da4f))
+* **api:** api update ([8653a8c](https://github.com/indicesio/indices-typescript/commit/8653a8ca43ff3ed17d0d609cbcc251835fa8f1a2))
+* **api:** api update ([192a01c](https://github.com/indicesio/indices-typescript/commit/192a01cc7a790dc60034aa15fcfdeddad4d0f3cd))
+* **api:** api update ([656c14c](https://github.com/indicesio/indices-typescript/commit/656c14c5db74b3998a2ae4060765ef1ba891f94b))
+* **api:** api update ([4296f4c](https://github.com/indicesio/indices-typescript/commit/4296f4c295a7f77191de1db7dd230220706d503d))
+* **api:** api update ([2d9b2d0](https://github.com/indicesio/indices-typescript/commit/2d9b2d05397fcb63593a2025730c955f19a740b1))
+* **api:** config updates ([78cab23](https://github.com/indicesio/indices-typescript/commit/78cab231ca1966153947b7c9b4c1c93a597dd1c7))
+* **api:** improve examples ([77d3935](https://github.com/indicesio/indices-typescript/commit/77d39353deb8d25a6e4e97be18bc575e91741d86))
+* **api:** manual updates ([2d91298](https://github.com/indicesio/indices-typescript/commit/2d912987dc000da870ac65eb344153b54bd8eea4))
+* **api:** manual updates ([fdd3bdd](https://github.com/indicesio/indices-typescript/commit/fdd3bdd59eb350962fbc24a060f240d8570f3d54))
+* **api:** sync ([a63bbb0](https://github.com/indicesio/indices-typescript/commit/a63bbb00aab6f8e651cc0f55dd668060c3e61de1))
+* **api:** update openapi spec (v1beta, etc) ([8053147](https://github.com/indicesio/indices-typescript/commit/8053147db0aaefe5db912e3a4761ea264a3420e4))
+* support setting headers via env ([a23fd38](https://github.com/indicesio/indices-typescript/commit/a23fd383978fad5a9553417b9167414a5abbafd2))
+* **ts:** migrate to pnpm ([5f482d8](https://github.com/indicesio/indices-typescript/commit/5f482d8712dd85322bf3166479965b7c275049c7))
+
+
+### Bug Fixes
+
+* **client:** preserve URL params already embedded in path ([cb79d65](https://github.com/indicesio/indices-typescript/commit/cb79d6594b407afa9083b144c296607212f61389))
+* **docs/contributing:** correct pnpm link command ([264422c](https://github.com/indicesio/indices-typescript/commit/264422c17faac214fab8c3a4bb5d58afaea81744))
+* **internal:** gitignore generated `oidc` dir ([f52d6da](https://github.com/indicesio/indices-typescript/commit/f52d6da1cea969faf0842307f94cd2b8a77c0e4d))
+* **mcp:** correct code tool API endpoint ([3e2de53](https://github.com/indicesio/indices-typescript/commit/3e2de538cf0c2f26cd573784429d96710a65430d))
+* **mcp:** return correct lines on typescript errors ([d6c6d71](https://github.com/indicesio/indices-typescript/commit/d6c6d716ee1557eb0205f9889351d003540ea394))
+
+
+### Chores
+
+* **ci:** skip lint on metadata-only changes ([6f42c8c](https://github.com/indicesio/indices-typescript/commit/6f42c8cc856997cf56d3ea7e5dbf617b51fd829a))
+* **ci:** skip uploading artifacts on stainless-internal branches ([5ff9316](https://github.com/indicesio/indices-typescript/commit/5ff9316596527ad5fcbf0b3701f0c5d032ccdd48))
+* **client:** fix logger property type ([fc994e6](https://github.com/indicesio/indices-typescript/commit/fc994e609fa781fdfb2d3f947e6582942d1ee1c1))
+* configure new SDK language ([d1e58e3](https://github.com/indicesio/indices-typescript/commit/d1e58e3d2e31d89d97ed5b6596c219dfbd47591f))
+* **format:** run eslint and prettier separately ([ec7e680](https://github.com/indicesio/indices-typescript/commit/ec7e6804e8b1e36d32fdca11be0a1b6939ab0c0f))
+* **formatter:** run prettier and eslint separately ([342da83](https://github.com/indicesio/indices-typescript/commit/342da83127b3e63a9789c874db67d291efffc85d))
+* **internal:** codegen related update ([116ebbb](https://github.com/indicesio/indices-typescript/commit/116ebbb2e6747af88a4f74f6eb9b22c627a57200))
+* **internal:** codegen related update ([a0641eb](https://github.com/indicesio/indices-typescript/commit/a0641eb42aa6cdea8759e9e1359966fe9206eccc))
+* **internal:** codegen related update ([afc1607](https://github.com/indicesio/indices-typescript/commit/afc1607a485c310566858c0318e1981351d1ac2e))
+* **internal:** codegen related update ([bdf7bc5](https://github.com/indicesio/indices-typescript/commit/bdf7bc57225c17fdb094878bcd5d64dcd718fa6d))
+* **internal:** codegen related update ([f3bad0e](https://github.com/indicesio/indices-typescript/commit/f3bad0e849d1a635a7aac0e1a3e3941a9ffb6776))
+* **internal:** codegen related update ([8e12fa2](https://github.com/indicesio/indices-typescript/commit/8e12fa20695bc5f74ad719aa27599337e08cad98))
+* **internal:** codegen related update ([f09f52c](https://github.com/indicesio/indices-typescript/commit/f09f52cab3c50ec708548b686bc542e07682a1f5))
+* **internal:** codegen related update ([760ce13](https://github.com/indicesio/indices-typescript/commit/760ce13ad2de5878cd35c8ce0139700a75b8be2a))
+* **internal:** codegen related update ([049e843](https://github.com/indicesio/indices-typescript/commit/049e8434cebd4a8206ed6d82aa4cddb832da2259))
+* **internal:** codegen related update ([c05e078](https://github.com/indicesio/indices-typescript/commit/c05e078ab3a249ca0a8a9f107df3c2b1aefd837a))
+* **internal:** codegen related update ([65053a8](https://github.com/indicesio/indices-typescript/commit/65053a8e73da7acf40a917fb138793f34e717587))
+* **internal:** codegen related update ([4674ac6](https://github.com/indicesio/indices-typescript/commit/4674ac6c15198f45a36ccefd4bd2eeabea429733))
+* **internal:** codegen related update ([c925749](https://github.com/indicesio/indices-typescript/commit/c925749b8a6fe38a28e32f495d1f8d11e85b9e01))
+* **internal:** codegen related update ([66dcdd8](https://github.com/indicesio/indices-typescript/commit/66dcdd8cac80bf2b1077fb1ff69bdaeb78037217))
+* **internal:** codegen related update ([0be1279](https://github.com/indicesio/indices-typescript/commit/0be1279d71071eae4c8ce6d49e4dc2e7a3451615))
+* **internal:** codegen related update ([29a75b8](https://github.com/indicesio/indices-typescript/commit/29a75b8e630bbd26b03bd66d3a2298c5d23b74c4))
+* **internal:** more robust bootstrap script ([36d22f7](https://github.com/indicesio/indices-typescript/commit/36d22f74274496d4c9dba524e5467295c8195d71))
+* **internal:** move stringifyQuery implementation to internal function ([a57c228](https://github.com/indicesio/indices-typescript/commit/a57c228ceb3b391f1707e5fa4afd5ab51ab70a5a))
+* **internal:** remove mock server code ([e08856f](https://github.com/indicesio/indices-typescript/commit/e08856f01273ebb25869a13ee7ddbe27f0052c29))
+* **internal:** tweak CI branches ([52ed630](https://github.com/indicesio/indices-typescript/commit/52ed630a932edddfab99adc2c4c5029e8e69a3d4))
+* **internal:** update dependencies to address dependabot vulnerabilities ([3ba24b5](https://github.com/indicesio/indices-typescript/commit/3ba24b50310b3b9fbef070132d5684511e93bf84))
+* **internal:** update gitignore ([c9fb9e0](https://github.com/indicesio/indices-typescript/commit/c9fb9e0182d8aa7d639ba32ece729c83b491c926))
+* **internal:** upgrade eslint ([a9336f3](https://github.com/indicesio/indices-typescript/commit/a9336f33eddada110dae1d350b64fc3bde89282f))
+* redact api-key headers in debug logs ([508198a](https://github.com/indicesio/indices-typescript/commit/508198af83253ffe90dde42ab1ef16668b001ec7))
+* update mock server docs ([bf5abb9](https://github.com/indicesio/indices-typescript/commit/bf5abb9bda730ca610b64d62c97bfe378daa194b))
+* update SDK settings ([e850059](https://github.com/indicesio/indices-typescript/commit/e850059870a5b09a26b74586eb06f90d79c6c6be))
+* update SDK settings ([e38f4f1](https://github.com/indicesio/indices-typescript/commit/e38f4f1e4fc1b238940193cf193da39d20abcecf))
+* update SDK settings ([85d6f53](https://github.com/indicesio/indices-typescript/commit/85d6f53c17e91f19f3faf547997c70d50bbdd386))
+* update SDK settings ([f7a00fd](https://github.com/indicesio/indices-typescript/commit/f7a00fd8d9baa359e8d467713654e09e3c817dc1))
+
 ## 0.1.0 (2026-06-25)
 
 Full Changelog: [v0.0.6...v0.1.0](https://github.com/indicesio/indices-typescript/compare/v0.0.6...v0.1.0)
