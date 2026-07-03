@@ -70,9 +70,10 @@ export interface Run {
   result_json: string | null;
 
   /**
-   * Whether the run was successful.
+   * Lifecycle status of the run: `running`, `success`, `failed`, `timed_out`,
+   * `result_too_large`, or `internal_error`.
    */
-  success: boolean;
+  status: 'running' | 'success' | 'failed' | 'timed_out' | 'result_too_large' | 'internal_error';
 
   /**
    * ID of the task executed in this run.
