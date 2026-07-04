@@ -70,10 +70,10 @@ export interface Run {
   result_json: string | null;
 
   /**
-   * Lifecycle status of the run: `running`, `success`, `failed`, `timed_out`,
-   * `result_too_large`, or `internal_error`.
+   * Lifecycle status of the run: `pending`, `running`, `success`, `failed`,
+   * `timed_out`, `result_too_large`, or `internal_error`.
    */
-  status: 'running' | 'success' | 'failed' | 'timed_out' | 'result_too_large' | 'internal_error';
+  status: 'pending' | 'running' | 'success' | 'failed' | 'timed_out' | 'result_too_large' | 'internal_error';
 
   /**
    * ID of the task executed in this run.
@@ -140,6 +140,17 @@ export interface RunRunParams {
    * arguments.
    */
   arguments?: { [key: string]: unknown };
+
+  /**
+   * When true, return immediately with a pending run; poll retrieveRun for the
+   * result.
+   */
+  async?: boolean;
+
+  /**
+   * Maximum execution time in seconds before the run is timed out.
+   */
+  max_timeout_s?: number;
 
   /**
    * Mapping of secret slot names to secret IDs. Each slot defined in the task's
