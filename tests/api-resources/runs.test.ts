@@ -70,6 +70,8 @@ describe('resource runs', () => {
     const response = await client.runs.run({
       task_id: 'task_id',
       arguments: { foo: 'bar' },
+      async: true,
+      max_timeout_s: 1,
       secret_bindings: { foo: 'string' },
     });
   });
