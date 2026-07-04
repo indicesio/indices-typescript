@@ -31,7 +31,7 @@ export class Runs extends APIResource {
   }
 
   /**
-   * <p>Execute a task that has already been created.</p>
+   * <p>Execute a task that has already been created. By default the call blocks until the run finishes. Pass <code>async: true</code> to return immediately, in which case you should poll <code>GET /runs</code> to retrieve the result once it's ready.</p>
    */
   run(body: RunRunParams, options?: RequestOptions): APIPromise<Run> {
     return this._client.post('/v1beta/runs', { body, ...options });
