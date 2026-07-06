@@ -17,6 +17,14 @@ import * as Errors from './core/error';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
+import {
+  File,
+  FileDeleteResponse,
+  FileGetDownloadURLResponse,
+  FileListParams,
+  FileListResponse,
+  Files,
+} from './resources/files';
 import { Run, RunListParams, RunListResponse, RunLogsResponse, RunRunParams, Runs } from './resources/runs';
 import {
   Secret,
@@ -27,9 +35,12 @@ import {
   Secrets,
 } from './resources/secrets';
 import {
+  SecretSlotDefinition,
   Task,
   TaskCreateParams,
+  TaskCreation,
   TaskDeleteResponse,
+  TaskFailureInfo,
   TaskListResponse,
   TaskStartManualSessionParams,
   TaskStartManualSessionResponse,
@@ -767,18 +778,23 @@ export class Indices {
    * Manage secrets like login credentials and API keys.
    */
   secrets: API.Secrets = new API.Secrets(this);
+  files: API.Files = new API.Files(this);
 }
 
 Indices.Tasks = Tasks;
 Indices.Runs = Runs;
 Indices.Secrets = Secrets;
+Indices.Files = Files;
 
 export declare namespace Indices {
   export type RequestOptions = Opts.RequestOptions;
 
   export {
     Tasks as Tasks,
+    type SecretSlotDefinition as SecretSlotDefinition,
     type Task as Task,
+    type TaskCreation as TaskCreation,
+    type TaskFailureInfo as TaskFailureInfo,
     type TaskListResponse as TaskListResponse,
     type TaskDeleteResponse as TaskDeleteResponse,
     type TaskStartManualSessionResponse as TaskStartManualSessionResponse,
@@ -802,5 +818,14 @@ export declare namespace Indices {
     type SecretDeleteResponse as SecretDeleteResponse,
     type SecretGetTotpResponse as SecretGetTotpResponse,
     type SecretCreateParams as SecretCreateParams,
+  };
+
+  export {
+    Files as Files,
+    type File as File,
+    type FileListResponse as FileListResponse,
+    type FileDeleteResponse as FileDeleteResponse,
+    type FileGetDownloadURLResponse as FileGetDownloadURLResponse,
+    type FileListParams as FileListParams,
   };
 }
