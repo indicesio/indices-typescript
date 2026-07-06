@@ -3,18 +3,18 @@
 export {
   Files,
   type File,
-  type FileListResponse,
   type FileDeleteResponse,
   type FileGetDownloadURLResponse,
   type FileListParams,
+  type FilesCursorPage,
 } from './files';
 export {
   Runs,
   type Run,
-  type RunListResponse,
   type RunLogsResponse,
   type RunListParams,
   type RunRunParams,
+  type RunsCursorPage,
 } from './runs';
 export {
   Secrets,

@@ -14,6 +14,8 @@ import * as Opts from './internal/request-options';
 import { stringifyQuery } from './internal/utils/query';
 import { VERSION } from './version';
 import * as Errors from './core/error';
+import * as Pagination from './core/pagination';
+import { AbstractPage, type CursorPageParams, CursorPageResponse } from './core/pagination';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
@@ -22,10 +24,10 @@ import {
   FileDeleteResponse,
   FileGetDownloadURLResponse,
   FileListParams,
-  FileListResponse,
   Files,
+  FilesCursorPage,
 } from './resources/files';
-import { Run, RunListParams, RunListResponse, RunLogsResponse, RunRunParams, Runs } from './resources/runs';
+import { Run, RunListParams, RunLogsResponse, RunRunParams, Runs, RunsCursorPage } from './resources/runs';
 import {
   Secret,
   SecretCreateParams,
@@ -511,6 +513,30 @@ export class Indices {
     return { response, options, controller, requestLogID, retryOfRequestLogID, startTime };
   }
 
+  getAPIList<Item, PageClass extends Pagination.AbstractPage<Item> = Pagination.AbstractPage<Item>>(
+    path: string,
+    Page: new (...args: any[]) => PageClass,
+    opts?: PromiseOrValue<RequestOptions>,
+  ): Pagination.PagePromise<PageClass, Item> {
+    return this.requestAPIList(
+      Page,
+      opts && 'then' in opts ?
+        opts.then((opts) => ({ method: 'get', path, ...opts }))
+      : { method: 'get', path, ...opts },
+    );
+  }
+
+  requestAPIList<
+    Item = unknown,
+    PageClass extends Pagination.AbstractPage<Item> = Pagination.AbstractPage<Item>,
+  >(
+    Page: new (...args: ConstructorParameters<typeof Pagination.AbstractPage>) => PageClass,
+    options: PromiseOrValue<FinalRequestOptions>,
+  ): Pagination.PagePromise<PageClass, Item> {
+    const request = this.makeRequest(options, null, undefined);
+    return new Pagination.PagePromise<PageClass, Item>(this as any as Indices, request, Page);
+  }
+
   async fetchWithTimeout(
     url: RequestInfo,
     init: RequestInit | undefined,
@@ -789,6 +815,9 @@ Indices.Files = Files;
 export declare namespace Indices {
   export type RequestOptions = Opts.RequestOptions;
 
+  export import CursorPage = Pagination.CursorPage;
+  export { type CursorPageParams as CursorPageParams, type CursorPageResponse as CursorPageResponse };
+
   export {
     Tasks as Tasks,
     type SecretSlotDefinition as SecretSlotDefinition,
@@ -805,8 +834,8 @@ export declare namespace Indices {
   export {
     Runs as Runs,
     type Run as Run,
-    type RunListResponse as RunListResponse,
     type RunLogsResponse as RunLogsResponse,
+    type RunsCursorPage as RunsCursorPage,
     type RunListParams as RunListParams,
     type RunRunParams as RunRunParams,
   };
@@ -823,9 +852,9 @@ export declare namespace Indices {
   export {
     Files as Files,
     type File as File,
-    type FileListResponse as FileListResponse,
     type FileDeleteResponse as FileDeleteResponse,
     type FileGetDownloadURLResponse as FileGetDownloadURLResponse,
+    type FilesCursorPage as FilesCursorPage,
     type FileListParams as FileListParams,
   };
 }
