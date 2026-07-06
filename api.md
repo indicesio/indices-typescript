@@ -24,13 +24,12 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/runs.ts">Run</a></code>
-- <code><a href="./src/resources/runs.ts">RunListResponse</a></code>
 - <code><a href="./src/resources/runs.ts">RunLogsResponse</a></code>
 
 Methods:
 
 - <code title="get /v1beta/runs/{run_id}">client.runs.<a href="./src/resources/runs.ts">retrieve</a>(runID) -> Run</code>
-- <code title="get /v1beta/runs">client.runs.<a href="./src/resources/runs.ts">list</a>({ ...params }) -> RunListResponse</code>
+- <code title="get /v1beta/runs">client.runs.<a href="./src/resources/runs.ts">list</a>({ ...params }) -> RunsCursorPage</code>
 - <code title="get /v1beta/runs/{run_id}/logs">client.runs.<a href="./src/resources/runs.ts">logs</a>(runID) -> RunLogsResponse</code>
 - <code title="post /v1beta/runs">client.runs.<a href="./src/resources/runs.ts">run</a>({ ...params }) -> Run</code>
 
@@ -55,14 +54,13 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/files.ts">File</a></code>
-- <code><a href="./src/resources/files.ts">FileListResponse</a></code>
 - <code><a href="./src/resources/files.ts">FileDeleteResponse</a></code>
 - <code><a href="./src/resources/files.ts">FileGetDownloadURLResponse</a></code>
 
 Methods:
 
 - <code title="get /v1beta/files/{file_id}">client.files.<a href="./src/resources/files.ts">retrieve</a>(fileID) -> File</code>
-- <code title="get /v1beta/files">client.files.<a href="./src/resources/files.ts">list</a>({ ...params }) -> FileListResponse</code>
+- <code title="get /v1beta/files">client.files.<a href="./src/resources/files.ts">list</a>({ ...params }) -> FilesCursorPage</code>
 - <code title="delete /v1beta/files/{file_id}">client.files.<a href="./src/resources/files.ts">delete</a>(fileID) -> FileDeleteResponse</code>
 - <code title="get /v1beta/files/{file_id}/download">client.files.<a href="./src/resources/files.ts">download</a>(fileID) -> void</code>
 - <code title="get /v1beta/files/{file_id}/download_url">client.files.<a href="./src/resources/files.ts">getDownloadURL</a>(fileID) -> FileGetDownloadURLResponse</code>

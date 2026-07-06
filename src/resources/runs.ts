@@ -2,6 +2,7 @@
 
 import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
+import { CursorPage, type CursorPageParams, PagePromise } from '../core/pagination';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
@@ -19,8 +20,8 @@ export class Runs extends APIResource {
   /**
    * <p>List runs for a given task.</p>
    */
-  list(query: RunListParams, options?: RequestOptions): APIPromise<RunListResponse> {
-    return this._client.get('/v1beta/runs', { query, ...options });
+  list(query: RunListParams, options?: RequestOptions): PagePromise<RunsCursorPage, Run> {
+    return this._client.getAPIList('/v1beta/runs', CursorPage<Run>, { query, ...options });
   }
 
   /**
@@ -37,6 +38,8 @@ export class Runs extends APIResource {
     return this._client.post('/v1beta/runs', { body, ...options });
   }
 }
+
+export type RunsCursorPage = CursorPage<Run>;
 
 export interface Run {
   /**
@@ -87,24 +90,6 @@ export interface Run {
   secret_bindings?: { [key: string]: string };
 }
 
-export interface RunListResponse {
-  /**
-   * Runs for the requested page, ordered newest first.
-   */
-  data: Array<Run>;
-
-  /**
-   * Whether more runs exist after this page.
-   */
-  has_more: boolean;
-
-  /**
-   * Pass as the `cursor` query parameter to fetch the next page. Null when has_more
-   * is false.
-   */
-  next_cursor: string | null;
-}
-
 export interface RunLogsResponse {
   /**
    * Run execution logs.
@@ -112,21 +97,11 @@ export interface RunLogsResponse {
   logs: string;
 }
 
-export interface RunListParams {
+export interface RunListParams extends CursorPageParams {
   /**
    * The ID of the task to list runs for.
    */
   task_id: string;
-
-  /**
-   * Cursor from a previous response's `next_cursor`, to fetch the next page.
-   */
-  cursor?: string | null;
-
-  /**
-   * Maximum number of runs to return.
-   */
-  limit?: number;
 }
 
 export interface RunRunParams {
@@ -162,8 +137,8 @@ export interface RunRunParams {
 export declare namespace Runs {
   export {
     type Run as Run,
-    type RunListResponse as RunListResponse,
     type RunLogsResponse as RunLogsResponse,
+    type RunsCursorPage as RunsCursorPage,
     type RunListParams as RunListParams,
     type RunRunParams as RunRunParams,
   };

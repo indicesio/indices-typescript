@@ -140,6 +140,37 @@ On timeout, an `APIConnectionTimeoutError` is thrown.
 
 Note that requests which time out will be [retried twice by default](#retries).
 
+## Auto-pagination
+
+List methods in the Indices API are paginated.
+You can use the `for await … of` syntax to iterate through items across all pages:
+
+```ts
+async function fetchAllRuns(params) {
+  const allRuns = [];
+  // Automatically fetches more pages as needed.
+  for await (const run of client.runs.list({ task_id: 'task_id' })) {
+    allRuns.push(run);
+  }
+  return allRuns;
+}
+```
+
+Alternatively, you can request a single page at a time:
+
+```ts
+let page = await client.runs.list({ task_id: 'task_id' });
+for (const run of page.data) {
+  console.log(run);
+}
+
+// Convenience methods are provided for manually paginating:
+while (page.hasNextPage()) {
+  page = await page.getNextPage();
+  // ...
+}
+```
+
 ## Advanced Usage
 
 ### Accessing raw Response data (e.g., headers)
