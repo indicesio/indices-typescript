@@ -2,6 +2,7 @@
 
 import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
+import { CursorPage, type CursorPageParams, PagePromise } from '../core/pagination';
 import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
@@ -17,8 +18,8 @@ export class Files extends APIResource {
   /**
    * <p>List the files produced by a run.</p>
    */
-  list(query: FileListParams, options?: RequestOptions): APIPromise<FileListResponse> {
-    return this._client.get('/v1beta/files', { query, ...options });
+  list(query: FileListParams, options?: RequestOptions): PagePromise<FilesCursorPage, File> {
+    return this._client.getAPIList('/v1beta/files', CursorPage<File>, { query, ...options });
   }
 
   /**
@@ -45,6 +46,8 @@ export class Files extends APIResource {
     return this._client.get(path`/v1beta/files/${fileID}/download_url`, options);
   }
 }
+
+export type FilesCursorPage = CursorPage<File>;
 
 export interface File {
   /**
@@ -83,24 +86,6 @@ export interface File {
   size_bytes: number;
 }
 
-export interface FileListResponse {
-  /**
-   * Files for the requested page, ordered newest first.
-   */
-  data: Array<File>;
-
-  /**
-   * Whether more files exist after this page.
-   */
-  has_more: boolean;
-
-  /**
-   * Pass as the `cursor` query parameter to fetch the next page. Null when has_more
-   * is false.
-   */
-  next_cursor: string | null;
-}
-
 export interface FileDeleteResponse {
   /**
    * ID of the deleted file.
@@ -125,29 +110,19 @@ export interface FileGetDownloadURLResponse {
   url: string;
 }
 
-export interface FileListParams {
+export interface FileListParams extends CursorPageParams {
   /**
    * The ID of the run whose files to list.
    */
   run_id: string;
-
-  /**
-   * Cursor from a previous response's `next_cursor`, to fetch the next page.
-   */
-  cursor?: string | null;
-
-  /**
-   * Maximum number of files to return.
-   */
-  limit?: number;
 }
 
 export declare namespace Files {
   export {
     type File as File,
-    type FileListResponse as FileListResponse,
     type FileDeleteResponse as FileDeleteResponse,
     type FileGetDownloadURLResponse as FileGetDownloadURLResponse,
+    type FilesCursorPage as FilesCursorPage,
     type FileListParams as FileListParams,
   };
 }
