@@ -1,6 +1,14 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 export {
+  Files,
+  type File,
+  type FileListResponse,
+  type FileDeleteResponse,
+  type FileGetDownloadURLResponse,
+  type FileListParams,
+} from './files';
+export {
   Runs,
   type Run,
   type RunListResponse,
@@ -18,7 +26,10 @@ export {
 } from './secrets';
 export {
   Tasks,
+  type SecretSlotDefinition,
   type Task,
+  type TaskCreation,
+  type TaskFailureInfo,
   type TaskListResponse,
   type TaskDeleteResponse,
   type TaskStartManualSessionResponse,
