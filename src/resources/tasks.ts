@@ -33,7 +33,7 @@ export class Tasks extends APIResource {
   /**
    * <p>Delete a task by its ID.</p>
    */
-  delete(id: string, options?: RequestOptions): APIPromise<unknown> {
+  delete(id: string, options?: RequestOptions): APIPromise<TaskDeleteResponse> {
     return this._client.delete(path`/v1beta/tasks/${id}`, options);
   }
 
@@ -194,7 +194,17 @@ export interface TaskFailureInfo {
 
 export type TaskListResponse = Array<Task>;
 
-export type TaskDeleteResponse = unknown;
+export interface TaskDeleteResponse {
+  /**
+   * ID of the deleted task.
+   */
+  id: string;
+
+  /**
+   * Always true when the task was deleted.
+   */
+  deleted: boolean;
+}
 
 export interface TaskStartManualSessionResponse {
   /**
