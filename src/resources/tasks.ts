@@ -56,6 +56,27 @@ export class Tasks extends APIResource {
   }
 }
 
+/**
+ * Definition of a secret slot that a task requires.
+ */
+export interface SecretSlotDefinition {
+  /**
+   * Name of the secret slot (used as env var prefix, e.g., 'LOGIN' →
+   * LOGIN_USERNAME).
+   */
+  name: string;
+
+  /**
+   * Type of secret required: 'login' or 'string'.
+   */
+  type: 'login' | 'string';
+
+  /**
+   * Whether this login slot requires 2FA/TOTP. Only applicable for 'login' type.
+   */
+  requires_totp?: boolean;
+}
+
 export interface Task {
   /**
    * Unique identifier for the object.
@@ -70,7 +91,7 @@ export interface Task {
   /**
    * Parameters set during the creation of this task.
    */
-  creation: Task.Creation;
+  creation: TaskCreation;
 
   /**
    * Current state of the task, in particular whether it is ready to use.
@@ -115,83 +136,60 @@ export interface Task {
   /**
    * Information about why a task failed, for user display.
    */
-  failure_info?: Task.FailureInfo | null;
+  failure_info?: TaskFailureInfo | null;
 
   /**
    * List of secrets that must be provided when running this task.
    */
-  required_secrets?: Array<Task.RequiredSecret>;
+  required_secrets?: Array<SecretSlotDefinition>;
 }
 
-export namespace Task {
+/**
+ * Creation-related task data.
+ */
+export interface TaskCreation {
   /**
-   * Parameters set during the creation of this task.
+   * Mapping of required secret slot names to secret IDs bound during task creation.
    */
-  export interface Creation {
-    /**
-     * Mapping of required secret slot names to secret IDs bound during task creation.
-     */
-    secret_bindings?: { [key: string]: string };
-
-    /**
-     * List of secrets provided during task creation.
-     */
-    secrets?: Array<Creation.Secret>;
-  }
-
-  export namespace Creation {
-    /**
-     * A secret provided during task creation
-     */
-    export interface Secret {
-      /**
-       * ID of the secret to bind.
-       */
-      secret_id: string;
-
-      /**
-       * Optional description of what this secret is used for (helps generate meaningful
-       * slot names).
-       */
-      description?: string | null;
-    }
-  }
+  secret_bindings?: { [key: string]: string };
 
   /**
-   * Information about why a task failed, for user display.
+   * List of secrets provided during task creation.
    */
-  export interface FailureInfo {
+  secrets?: Array<TaskCreation.Secret>;
+}
+
+export namespace TaskCreation {
+  /**
+   * A secret provided during task creation
+   */
+  export interface Secret {
     /**
-     * Primary failure category
+     * ID of the secret to bind.
      */
-    category: string;
+    secret_id: string;
 
     /**
-     * Summary of the failure cause
+     * Optional description of what this secret is used for (helps generate meaningful
+     * slot names).
      */
-    message: string;
+    description?: string | null;
   }
+}
+
+/**
+ * Information about why a task failed, for user display.
+ */
+export interface TaskFailureInfo {
+  /**
+   * Primary failure category
+   */
+  category: string;
 
   /**
-   * Definition of a secret slot that a task requires.
+   * Summary of the failure cause
    */
-  export interface RequiredSecret {
-    /**
-     * Name of the secret slot (used as env var prefix, e.g., 'LOGIN' →
-     * LOGIN_USERNAME).
-     */
-    name: string;
-
-    /**
-     * Type of secret required: 'login' or 'string'.
-     */
-    type: 'login' | 'string';
-
-    /**
-     * Whether this login slot requires 2FA/TOTP. Only applicable for 'login' type.
-     */
-    requires_totp?: boolean;
-  }
+  message: string;
 }
 
 export type TaskListResponse = Array<Task>;
@@ -309,7 +307,10 @@ export namespace TaskStartManualSessionParams {
 
 export declare namespace Tasks {
   export {
+    type SecretSlotDefinition as SecretSlotDefinition,
     type Task as Task,
+    type TaskCreation as TaskCreation,
+    type TaskFailureInfo as TaskFailureInfo,
     type TaskListResponse as TaskListResponse,
     type TaskDeleteResponse as TaskDeleteResponse,
     type TaskStartManualSessionResponse as TaskStartManualSessionResponse,
