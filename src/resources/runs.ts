@@ -68,7 +68,9 @@ export interface Run {
   has_logs: boolean;
 
   /**
-   * Execution result of the run. In JSON, matching the task's output schema.
+   * Execution result of the run. In JSON, matching the task's output schema. Limited
+   * to 100MB; results above 100MB will be truncated and result in a
+   * `result_too_large` status.
    */
   result_json: string | null;
 
