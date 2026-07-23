@@ -21,8 +21,8 @@ describe('resource files', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('list: only required params', async () => {
-    const responsePromise = client.files.list({ run_id: 'run_id' });
+  test.skip('list', async () => {
+    const responsePromise = client.files.list();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -33,12 +33,23 @@ describe('resource files', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('list: required and optional params', async () => {
-    const response = await client.files.list({
-      run_id: 'run_id',
-      cursor: 'cursor',
-      limit: 1,
-    });
+  test.skip('list: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.files.list(
+        {
+          cursor: 'cursor',
+          filename: 'filename',
+          limit: 1,
+          order: 'asc',
+          run_id: 'run_id',
+          sort: 'name',
+          source: 'UPLOAD',
+          task_id: 'task_id',
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(Indices.NotFoundError);
   });
 
   // Mock server tests are disabled

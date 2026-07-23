@@ -16,9 +16,12 @@ export class Files extends APIResource {
   }
 
   /**
-   * <p>List the files produced by a run.</p>
+   * <p>List your files: uploads and run outputs. Default order is newest first.</p>
    */
-  list(query: FileListParams, options?: RequestOptions): PagePromise<FilesCursorPage, File> {
+  list(
+    query: FileListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<FilesCursorPage, File> {
     return this._client.getAPIList('/v1beta/files', CursorPage<File>, { query, ...options });
   }
 
@@ -76,14 +79,24 @@ export interface File {
   name: string;
 
   /**
-   * ID of the run that produced this file.
+   * ID of the run that produced this file. Null for uploaded files.
    */
-  run_id: string;
+  run_id: string | null;
 
   /**
    * Size of the file in bytes.
    */
   size_bytes: number;
+
+  /**
+   * How the file came to exist: uploaded by the user or produced by a run.
+   */
+  source: 'UPLOAD' | 'RUN_OUTPUT' | 'GENERATION';
+
+  /**
+   * ID of the task whose run produced this file. Null for uploaded files.
+   */
+  task_id: string | null;
 }
 
 export interface FileDeleteResponse {
@@ -112,9 +125,34 @@ export interface FileGetDownloadURLResponse {
 
 export interface FileListParams extends CursorPageParams {
   /**
-   * The ID of the run whose files to list.
+   * Only files whose name contains this text.
    */
-  run_id: string;
+  filename?: string;
+
+  /**
+   * Sort direction.
+   */
+  order?: 'asc' | 'desc';
+
+  /**
+   * Only files produced by this run.
+   */
+  run_id?: string;
+
+  /**
+   * Column to sort by: name, created_at, size_bytes, or source.
+   */
+  sort?: 'name' | 'created_at' | 'size_bytes' | 'source';
+
+  /**
+   * Only files from this source.
+   */
+  source?: 'UPLOAD' | 'RUN_OUTPUT' | 'GENERATION';
+
+  /**
+   * Only files produced by runs of this task.
+   */
+  task_id?: string;
 }
 
 export declare namespace Files {
