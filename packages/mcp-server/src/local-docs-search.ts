@@ -494,25 +494,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     name: 'list',
     endpoint: '/v1beta/files',
     httpMethod: 'get',
-    summary: 'List files for a run',
-    description: '<p>List the files produced by a run.</p>',
+    summary: 'List files',
+    description: '<p>List your files: uploads and run outputs. Default order is newest first.</p>',
     stainlessPath: '(resource) files > (method) list',
     qualified: 'client.files.list',
-    params: ['run_id: string;', 'cursor?: string;', 'limit?: number;'],
+    params: [
+      'cursor?: string;',
+      'filename?: string;',
+      'limit?: number;',
+      "order?: 'asc' | 'desc';",
+      'run_id?: string;',
+      "sort?: 'name' | 'created_at' | 'size_bytes' | 'source';",
+      "source?: 'UPLOAD' | 'RUN_OUTPUT' | 'GENERATION';",
+      'task_id?: string;',
+    ],
     response:
-      '{ id: string; content_type: string; crc32c: string; created_at: string; name: string; run_id: string; size_bytes: number; }',
+      "{ id: string; content_type: string; crc32c: string; created_at: string; name: string; run_id: string; size_bytes: number; source: 'UPLOAD' | 'RUN_OUTPUT' | 'GENERATION'; task_id: string; }",
     markdown:
-      "## list\n\n`client.files.list(run_id: string, cursor?: string, limit?: number): { id: string; content_type: string; crc32c: string; created_at: string; name: string; run_id: string; size_bytes: number; }`\n\n**get** `/v1beta/files`\n\n<p>List the files produced by a run.</p>\n\n### Parameters\n\n- `run_id: string`\n  The ID of the run whose files to list.\n\n- `cursor?: string`\n  Cursor from a previous response's `next_cursor`, to fetch the next page.\n\n- `limit?: number`\n  Maximum number of files to return.\n\n### Returns\n\n- `{ id: string; content_type: string; crc32c: string; created_at: string; name: string; run_id: string; size_bytes: number; }`\n\n  - `id: string`\n  - `content_type: string`\n  - `crc32c: string`\n  - `created_at: string`\n  - `name: string`\n  - `run_id: string`\n  - `size_bytes: number`\n\n### Example\n\n```typescript\nimport Indices from 'indicesio';\n\nconst client = new Indices();\n\n// Automatically fetches more pages as needed.\nfor await (const file of client.files.list({ run_id: 'run_id' })) {\n  console.log(file);\n}\n```",
+      "## list\n\n`client.files.list(cursor?: string, filename?: string, limit?: number, order?: 'asc' | 'desc', run_id?: string, sort?: 'name' | 'created_at' | 'size_bytes' | 'source', source?: 'UPLOAD' | 'RUN_OUTPUT' | 'GENERATION', task_id?: string): { id: string; content_type: string; crc32c: string; created_at: string; name: string; run_id: string; size_bytes: number; source: 'UPLOAD' | 'RUN_OUTPUT' | 'GENERATION'; task_id: string; }`\n\n**get** `/v1beta/files`\n\n<p>List your files: uploads and run outputs. Default order is newest first.</p>\n\n### Parameters\n\n- `cursor?: string`\n  Cursor from a previous response's `next_cursor`, to fetch the next page.\n\n- `filename?: string`\n  Only files whose name contains this text.\n\n- `limit?: number`\n  Maximum number of files to return.\n\n- `order?: 'asc' | 'desc'`\n  Sort direction.\n\n- `run_id?: string`\n  Only files produced by this run.\n\n- `sort?: 'name' | 'created_at' | 'size_bytes' | 'source'`\n  Column to sort by: name, created_at, size_bytes, or source.\n\n- `source?: 'UPLOAD' | 'RUN_OUTPUT' | 'GENERATION'`\n  Only files from this source.\n\n- `task_id?: string`\n  Only files produced by runs of this task.\n\n### Returns\n\n- `{ id: string; content_type: string; crc32c: string; created_at: string; name: string; run_id: string; size_bytes: number; source: 'UPLOAD' | 'RUN_OUTPUT' | 'GENERATION'; task_id: string; }`\n\n  - `id: string`\n  - `content_type: string`\n  - `crc32c: string`\n  - `created_at: string`\n  - `name: string`\n  - `run_id: string`\n  - `size_bytes: number`\n  - `source: 'UPLOAD' | 'RUN_OUTPUT' | 'GENERATION'`\n  - `task_id: string`\n\n### Example\n\n```typescript\nimport Indices from 'indicesio';\n\nconst client = new Indices();\n\n// Automatically fetches more pages as needed.\nfor await (const file of client.files.list()) {\n  console.log(file);\n}\n```",
     perLanguage: {
       typescript: {
         method: 'client.files.list',
         example:
-          "import Indices from 'indicesio';\n\nconst client = new Indices({\n  apiKey: process.env['INDICES_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const file of client.files.list({ run_id: 'run_id' })) {\n  console.log(file.id);\n}",
+          "import Indices from 'indicesio';\n\nconst client = new Indices({\n  apiKey: process.env['INDICES_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const file of client.files.list()) {\n  console.log(file.id);\n}",
       },
       python: {
         method: 'files.list',
         example:
-          'import os\nfrom indices import Indices\n\nclient = Indices(\n    api_key=os.environ.get("INDICES_API_KEY"),  # This is the default and can be omitted\n)\npage = client.files.list(\n    run_id="run_id",\n)\npage = page.data[0]\nprint(page.id)',
+          'import os\nfrom indices import Indices\n\nclient = Indices(\n    api_key=os.environ.get("INDICES_API_KEY"),  # This is the default and can be omitted\n)\npage = client.files.list()\npage = page.data[0]\nprint(page.id)',
       },
       http: {
         example:
@@ -530,9 +539,9 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     qualified: 'client.files.retrieve',
     params: ['file_id: string;'],
     response:
-      '{ id: string; content_type: string; crc32c: string; created_at: string; name: string; run_id: string; size_bytes: number; }',
+      "{ id: string; content_type: string; crc32c: string; created_at: string; name: string; run_id: string; size_bytes: number; source: 'UPLOAD' | 'RUN_OUTPUT' | 'GENERATION'; task_id: string; }",
     markdown:
-      "## retrieve\n\n`client.files.retrieve(file_id: string): { id: string; content_type: string; crc32c: string; created_at: string; name: string; run_id: string; size_bytes: number; }`\n\n**get** `/v1beta/files/{file_id}`\n\n<p>Retrieve a file's metadata by its ID.</p>\n\n### Parameters\n\n- `file_id: string`\n  The ID of the file to retrieve.\n\n### Returns\n\n- `{ id: string; content_type: string; crc32c: string; created_at: string; name: string; run_id: string; size_bytes: number; }`\n\n  - `id: string`\n  - `content_type: string`\n  - `crc32c: string`\n  - `created_at: string`\n  - `name: string`\n  - `run_id: string`\n  - `size_bytes: number`\n\n### Example\n\n```typescript\nimport Indices from 'indicesio';\n\nconst client = new Indices();\n\nconst file = await client.files.retrieve('file_id');\n\nconsole.log(file);\n```",
+      "## retrieve\n\n`client.files.retrieve(file_id: string): { id: string; content_type: string; crc32c: string; created_at: string; name: string; run_id: string; size_bytes: number; source: 'UPLOAD' | 'RUN_OUTPUT' | 'GENERATION'; task_id: string; }`\n\n**get** `/v1beta/files/{file_id}`\n\n<p>Retrieve a file's metadata by its ID.</p>\n\n### Parameters\n\n- `file_id: string`\n  The ID of the file to retrieve.\n\n### Returns\n\n- `{ id: string; content_type: string; crc32c: string; created_at: string; name: string; run_id: string; size_bytes: number; source: 'UPLOAD' | 'RUN_OUTPUT' | 'GENERATION'; task_id: string; }`\n\n  - `id: string`\n  - `content_type: string`\n  - `crc32c: string`\n  - `created_at: string`\n  - `name: string`\n  - `run_id: string`\n  - `size_bytes: number`\n  - `source: 'UPLOAD' | 'RUN_OUTPUT' | 'GENERATION'`\n  - `task_id: string`\n\n### Example\n\n```typescript\nimport Indices from 'indicesio';\n\nconst client = new Indices();\n\nconst file = await client.files.retrieve('file_id');\n\nconsole.log(file);\n```",
     perLanguage: {
       typescript: {
         method: 'client.files.retrieve',
