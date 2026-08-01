@@ -44,8 +44,6 @@ import {
   TaskDeleteResponse,
   TaskFailureInfo,
   TaskListResponse,
-  TaskStartManualSessionParams,
-  TaskStartManualSessionResponse,
   Tasks,
 } from './resources/tasks';
 import { type Fetch } from './internal/builtin-types';
@@ -826,9 +824,7 @@ export declare namespace Indices {
     type TaskFailureInfo as TaskFailureInfo,
     type TaskListResponse as TaskListResponse,
     type TaskDeleteResponse as TaskDeleteResponse,
-    type TaskStartManualSessionResponse as TaskStartManualSessionResponse,
     type TaskCreateParams as TaskCreateParams,
-    type TaskStartManualSessionParams as TaskStartManualSessionParams,
   };
 
   export {

@@ -35,18 +35,6 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/v1beta/tasks/{id}',
   },
   {
-    clientCallName: 'client.tasks.completeManualSession',
-    fullyQualifiedName: 'tasks.completeManualSession',
-    httpMethod: 'post',
-    httpPath: '/v1beta/tasks/{id}/complete-manual-session',
-  },
-  {
-    clientCallName: 'client.tasks.startManualSession',
-    fullyQualifiedName: 'tasks.startManualSession',
-    httpMethod: 'post',
-    httpPath: '/v1beta/tasks/{id}/start-manual-session',
-  },
-  {
     clientCallName: 'client.runs.retrieve',
     fullyQualifiedName: 'runs.retrieve',
     httpMethod: 'get',
