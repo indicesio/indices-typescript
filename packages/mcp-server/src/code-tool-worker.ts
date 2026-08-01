@@ -108,12 +108,10 @@ function getTSDiagnostics(code: string): string[] {
 
 const fuse = new Fuse(
   [
-    'client.tasks.completeManualSession',
     'client.tasks.create',
     'client.tasks.delete',
     'client.tasks.list',
     'client.tasks.retrieve',
-    'client.tasks.startManualSession',
     'client.runs.list',
     'client.runs.logs',
     'client.runs.retrieve',

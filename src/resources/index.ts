@@ -32,7 +32,5 @@ export {
   type TaskFailureInfo,
   type TaskListResponse,
   type TaskDeleteResponse,
-  type TaskStartManualSessionResponse,
   type TaskCreateParams,
-  type TaskStartManualSessionParams,
 } from './tasks';

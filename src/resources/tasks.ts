@@ -36,24 +36,6 @@ export class Tasks extends APIResource {
   delete(id: string, options?: RequestOptions): APIPromise<TaskDeleteResponse> {
     return this._client.delete(path`/v1beta/tasks/${id}`, options);
   }
-
-  /**
-   * <p>Mark the manual browser session as complete and continue the task workflow.</p>
-   */
-  completeManualSession(id: string, options?: RequestOptions): APIPromise<Task> {
-    return this._client.post(path`/v1beta/tasks/${id}/complete-manual-session`, options);
-  }
-
-  /**
-   * <p>Spawn a browser session for manual task completion. If a session already exists, it will be closed and replaced.</p>
-   */
-  startManualSession(
-    id: string,
-    body: TaskStartManualSessionParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<TaskStartManualSessionResponse> {
-    return this._client.post(path`/v1beta/tasks/${id}/start-manual-session`, { body, ...options });
-  }
 }
 
 /**
@@ -206,18 +188,6 @@ export interface TaskDeleteResponse {
   deleted: boolean;
 }
 
-export interface TaskStartManualSessionResponse {
-  /**
-   * URL to embed in an iframe to control the browser.
-   */
-  iframe_url: string;
-
-  /**
-   * Opaque identifier for the spawned browser session.
-   */
-  session_id: string;
-}
-
 export interface TaskCreateParams {
   /**
    * Information used during task creation.
@@ -266,55 +236,6 @@ export namespace TaskCreateParams {
   }
 }
 
-export interface TaskStartManualSessionParams {
-  /**
-   * Initial cookies to set in the browser session.
-   */
-  cookies?: Array<TaskStartManualSessionParams.Cookie>;
-
-  /**
-   * If true, spawn the browser session using a proxy.
-   */
-  use_proxy?: boolean;
-}
-
-export namespace TaskStartManualSessionParams {
-  /**
-   * A cookie to set in the browser session.
-   */
-  export interface Cookie {
-    /**
-     * The name of the cookie.
-     */
-    name: string;
-
-    /**
-     * The value of the cookie.
-     */
-    value: string;
-
-    /**
-     * The domain of the cookie.
-     */
-    domain?: string | null;
-
-    /**
-     * Whether the cookie is HTTP only.
-     */
-    http_only?: boolean | null;
-
-    /**
-     * The path of the cookie.
-     */
-    path?: string | null;
-
-    /**
-     * Whether the cookie is secure.
-     */
-    secure?: boolean | null;
-  }
-}
-
 export declare namespace Tasks {
   export {
     type SecretSlotDefinition as SecretSlotDefinition,
@@ -323,8 +244,6 @@ export declare namespace Tasks {
     type TaskFailureInfo as TaskFailureInfo,
     type TaskListResponse as TaskListResponse,
     type TaskDeleteResponse as TaskDeleteResponse,
-    type TaskStartManualSessionResponse as TaskStartManualSessionResponse,
     type TaskCreateParams as TaskCreateParams,
-    type TaskStartManualSessionParams as TaskStartManualSessionParams,
   };
 }
