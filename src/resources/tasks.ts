@@ -11,6 +11,15 @@ import { path } from '../internal/utils/path';
 export class Tasks extends APIResource {
   /**
    * <p>Create a new task to repeatedly perform an action on an external website.</p><p>Once created and ready, it can be repeatedly executed using the <code>run</code> endpoint.</p>
+   *
+   * @example
+   * ```ts
+   * const task = await client.tasks.create({
+   *   creation_params: {},
+   *   display_name: 'display_name',
+   *   task: 'task',
+   * });
+   * ```
    */
   create(body: TaskCreateParams, options?: RequestOptions): APIPromise<Task> {
     return this._client.post('/v1beta/tasks', { body, ...options });
@@ -18,6 +27,11 @@ export class Tasks extends APIResource {
 
   /**
    * <p>Retrieve a task by its ID.</p><p>For tasks that are still being generated, <code>input_schema</code> and <code>output_schema</code> may be <code>null</code>. They are guaranteed to be present once the task reaches the ready state.</p>
+   *
+   * @example
+   * ```ts
+   * const task = await client.tasks.retrieve('id');
+   * ```
    */
   retrieve(id: string, options?: RequestOptions): APIPromise<Task> {
     return this._client.get(path`/v1beta/tasks/${id}`, options);
@@ -25,6 +39,11 @@ export class Tasks extends APIResource {
 
   /**
    * <p>List all tasks that have been created.</p><p>For tasks that are still being generated, <code>input_schema</code> and <code>output_schema</code> may be <code>null</code>. They are guaranteed to be present once the task reaches the ready state.</p>
+   *
+   * @example
+   * ```ts
+   * const tasks = await client.tasks.list();
+   * ```
    */
   list(options?: RequestOptions): APIPromise<TaskListResponse> {
     return this._client.get('/v1beta/tasks', options);
@@ -32,9 +51,32 @@ export class Tasks extends APIResource {
 
   /**
    * <p>Delete a task by its ID.</p>
+   *
+   * @example
+   * ```ts
+   * const task = await client.tasks.delete('id');
+   * ```
    */
   delete(id: string, options?: RequestOptions): APIPromise<TaskDeleteResponse> {
     return this._client.delete(path`/v1beta/tasks/${id}`, options);
+  }
+
+  /**
+   * <p>Use a completed capture session as this task's recording and kick off API generation from it.</p><p>A capture session can be attached to several tasks: each task filters and consumes the recording independently.</p>
+   *
+   * @example
+   * ```ts
+   * const task = await client.tasks.attachCaptureSession('id', {
+   *   capture_session_id: 'cap_0R3kPq8mWxYz1aBcDeFgHi',
+   * });
+   * ```
+   */
+  attachCaptureSession(
+    id: string,
+    body: TaskAttachCaptureSessionParams,
+    options?: RequestOptions,
+  ): APIPromise<Task> {
+    return this._client.post(path`/v1beta/tasks/${id}/attach_capture_session`, { body, ...options });
   }
 }
 
@@ -236,6 +278,14 @@ export namespace TaskCreateParams {
   }
 }
 
+export interface TaskAttachCaptureSessionParams {
+  /**
+   * ID of a completed capture session to use as this task's recording. Attaching
+   * kicks off API generation from it.
+   */
+  capture_session_id: string;
+}
+
 export declare namespace Tasks {
   export {
     type SecretSlotDefinition as SecretSlotDefinition,
@@ -245,5 +295,6 @@ export declare namespace Tasks {
     type TaskListResponse as TaskListResponse,
     type TaskDeleteResponse as TaskDeleteResponse,
     type TaskCreateParams as TaskCreateParams,
+    type TaskAttachCaptureSessionParams as TaskAttachCaptureSessionParams,
   };
 }

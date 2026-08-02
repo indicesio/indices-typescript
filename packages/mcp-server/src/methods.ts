@@ -35,6 +35,12 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/v1beta/tasks/{id}',
   },
   {
+    clientCallName: 'client.tasks.attachCaptureSession',
+    fullyQualifiedName: 'tasks.attachCaptureSession',
+    httpMethod: 'post',
+    httpPath: '/v1beta/tasks/{id}/attach_capture_session',
+  },
+  {
     clientCallName: 'client.runs.retrieve',
     fullyQualifiedName: 'runs.retrieve',
     httpMethod: 'get',
@@ -83,6 +89,12 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/v1beta/secrets/{id}/totp',
   },
   {
+    clientCallName: 'client.files.create',
+    fullyQualifiedName: 'files.create',
+    httpMethod: 'post',
+    httpPath: '/v1beta/files',
+  },
+  {
     clientCallName: 'client.files.retrieve',
     fullyQualifiedName: 'files.retrieve',
     httpMethod: 'get',
@@ -107,10 +119,40 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/v1beta/files/{file_id}/download',
   },
   {
+    clientCallName: 'client.files.finalize',
+    fullyQualifiedName: 'files.finalize',
+    httpMethod: 'post',
+    httpPath: '/v1beta/files/{file_id}/complete',
+  },
+  {
     clientCallName: 'client.files.getDownloadURL',
     fullyQualifiedName: 'files.getDownloadURL',
     httpMethod: 'get',
     httpPath: '/v1beta/files/{file_id}/download_url',
+  },
+  {
+    clientCallName: 'client.captureSessions.create',
+    fullyQualifiedName: 'captureSessions.create',
+    httpMethod: 'post',
+    httpPath: '/v1beta/capture_sessions',
+  },
+  {
+    clientCallName: 'client.captureSessions.retrieve',
+    fullyQualifiedName: 'captureSessions.retrieve',
+    httpMethod: 'get',
+    httpPath: '/v1beta/capture_sessions/{id}',
+  },
+  {
+    clientCallName: 'client.captureSessions.list',
+    fullyQualifiedName: 'captureSessions.list',
+    httpMethod: 'get',
+    httpPath: '/v1beta/capture_sessions',
+  },
+  {
+    clientCallName: 'client.captureSessions.complete',
+    fullyQualifiedName: 'captureSessions.complete',
+    httpMethod: 'post',
+    httpPath: '/v1beta/capture_sessions/{id}/complete',
   },
 ];
 
