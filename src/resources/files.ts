@@ -9,6 +9,13 @@ import { path } from '../internal/utils/path';
 
 export class Files extends APIResource {
   /**
+   * <p>Create a pending file and get a signed URL to PUT the bytes to.</p>
+   */
+  create(body: FileCreateParams, options?: RequestOptions): APIPromise<FileCreateResponse> {
+    return this._client.post('/v1beta/files', { body, ...options });
+  }
+
+  /**
    * <p>Retrieve a file's metadata by its ID.</p>
    */
   retrieve(fileID: string, options?: RequestOptions): APIPromise<File> {
@@ -40,6 +47,13 @@ export class Files extends APIResource {
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
+  }
+
+  /**
+   * <p>Confirm the bytes were uploaded; the file becomes available for use.</p>
+   */
+  finalize(fileID: string, options?: RequestOptions): APIPromise<FileFinalizeResponse> {
+    return this._client.post(path`/v1beta/files/${fileID}/complete`, options);
   }
 
   /**
@@ -99,6 +113,29 @@ export interface File {
   task_id: string | null;
 }
 
+export interface FileCreateResponse {
+  /**
+   * When the upload URL stops being valid.
+   */
+  expires_at: string;
+
+  /**
+   * Server-assigned ID of the pending file.
+   */
+  file_id: string;
+
+  /**
+   * Headers that must be sent verbatim with the PUT; they are covered by the URL
+   * signature.
+   */
+  upload_headers: { [key: string]: string };
+
+  /**
+   * Signed URL the sandbox must PUT the file bytes to.
+   */
+  upload_url: string;
+}
+
 export interface FileDeleteResponse {
   /**
    * ID of the deleted file.
@@ -111,6 +148,33 @@ export interface FileDeleteResponse {
   deleted: boolean;
 }
 
+export interface FileFinalizeResponse {
+  /**
+   * MIME type of the stored file.
+   */
+  content_type: string;
+
+  /**
+   * Base64-encoded CRC32C checksum reported by storage.
+   */
+  crc32c: string;
+
+  /**
+   * ID of the finalized file.
+   */
+  file_id: string;
+
+  /**
+   * User-facing filename.
+   */
+  name: string;
+
+  /**
+   * Size of the stored file in bytes, as reported by storage.
+   */
+  size_bytes: number;
+}
+
 export interface FileGetDownloadURLResponse {
   /**
    * When the download URL stops being valid.
@@ -121,6 +185,23 @@ export interface FileGetDownloadURLResponse {
    * Short-lived signed URL to download the file bytes directly from storage.
    */
   url: string;
+}
+
+export interface FileCreateParams {
+  /**
+   * MIME type of the file content.
+   */
+  content_type: string;
+
+  /**
+   * User-facing filename, e.g. 'report.pdf'.
+   */
+  name: string;
+
+  /**
+   * Exact size of the file in bytes. Enforced by the signed upload URL.
+   */
+  size_bytes: number;
 }
 
 export interface FileListParams extends CursorPageParams {
@@ -158,9 +239,12 @@ export interface FileListParams extends CursorPageParams {
 export declare namespace Files {
   export {
     type File as File,
+    type FileCreateResponse as FileCreateResponse,
     type FileDeleteResponse as FileDeleteResponse,
+    type FileFinalizeResponse as FileFinalizeResponse,
     type FileGetDownloadURLResponse as FileGetDownloadURLResponse,
     type FilesCursorPage as FilesCursorPage,
+    type FileCreateParams as FileCreateParams,
     type FileListParams as FileListParams,
   };
 }

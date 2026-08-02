@@ -1,10 +1,21 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 export {
+  CaptureSessions,
+  type CaptureSession,
+  type CaptureSessionState,
+  type SessionCookie,
+  type CaptureSessionListResponse,
+  type CaptureSessionCreateParams,
+} from './capture-sessions';
+export {
   Files,
   type File,
+  type FileCreateResponse,
   type FileDeleteResponse,
+  type FileFinalizeResponse,
   type FileGetDownloadURLResponse,
+  type FileCreateParams,
   type FileListParams,
   type FilesCursorPage,
 } from './files';
@@ -33,4 +44,5 @@ export {
   type TaskListResponse,
   type TaskDeleteResponse,
   type TaskCreateParams,
+  type TaskAttachCaptureSessionParams,
 } from './tasks';

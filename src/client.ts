@@ -20,8 +20,19 @@ import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import {
+  CaptureSession,
+  CaptureSessionCreateParams,
+  CaptureSessionListResponse,
+  CaptureSessionState,
+  CaptureSessions,
+  SessionCookie,
+} from './resources/capture-sessions';
+import {
   File,
+  FileCreateParams,
+  FileCreateResponse,
   FileDeleteResponse,
+  FileFinalizeResponse,
   FileGetDownloadURLResponse,
   FileListParams,
   Files,
@@ -39,6 +50,7 @@ import {
 import {
   SecretSlotDefinition,
   Task,
+  TaskAttachCaptureSessionParams,
   TaskCreateParams,
   TaskCreation,
   TaskDeleteResponse,
@@ -803,12 +815,17 @@ export class Indices {
    */
   secrets: API.Secrets = new API.Secrets(this);
   files: API.Files = new API.Files(this);
+  /**
+   * Record a browser session; a completed capture is a reusable input for task generation.
+   */
+  captureSessions: API.CaptureSessions = new API.CaptureSessions(this);
 }
 
 Indices.Tasks = Tasks;
 Indices.Runs = Runs;
 Indices.Secrets = Secrets;
 Indices.Files = Files;
+Indices.CaptureSessions = CaptureSessions;
 
 export declare namespace Indices {
   export type RequestOptions = Opts.RequestOptions;
@@ -825,6 +842,7 @@ export declare namespace Indices {
     type TaskListResponse as TaskListResponse,
     type TaskDeleteResponse as TaskDeleteResponse,
     type TaskCreateParams as TaskCreateParams,
+    type TaskAttachCaptureSessionParams as TaskAttachCaptureSessionParams,
   };
 
   export {
@@ -848,9 +866,21 @@ export declare namespace Indices {
   export {
     Files as Files,
     type File as File,
+    type FileCreateResponse as FileCreateResponse,
     type FileDeleteResponse as FileDeleteResponse,
+    type FileFinalizeResponse as FileFinalizeResponse,
     type FileGetDownloadURLResponse as FileGetDownloadURLResponse,
     type FilesCursorPage as FilesCursorPage,
+    type FileCreateParams as FileCreateParams,
     type FileListParams as FileListParams,
+  };
+
+  export {
+    CaptureSessions as CaptureSessions,
+    type CaptureSession as CaptureSession,
+    type CaptureSessionState as CaptureSessionState,
+    type SessionCookie as SessionCookie,
+    type CaptureSessionListResponse as CaptureSessionListResponse,
+    type CaptureSessionCreateParams as CaptureSessionCreateParams,
   };
 }

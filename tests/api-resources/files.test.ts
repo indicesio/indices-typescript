@@ -9,6 +9,31 @@ const client = new Indices({
 
 describe('resource files', () => {
   // Mock server tests are disabled
+  test.skip('create: only required params', async () => {
+    const responsePromise = client.files.create({
+      content_type: 'x',
+      name: 'x',
+      size_bytes: 0,
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('create: required and optional params', async () => {
+    const response = await client.files.create({
+      content_type: 'x',
+      name: 'x',
+      size_bytes: 0,
+    });
+  });
+
+  // Mock server tests are disabled
   test.skip('retrieve', async () => {
     const responsePromise = client.files.retrieve('file_id');
     const rawResponse = await responsePromise.asResponse();
@@ -67,6 +92,18 @@ describe('resource files', () => {
   // Mock server tests are disabled
   test.skip('download', async () => {
     const responsePromise = client.files.download('file_id');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('finalize', async () => {
+    const responsePromise = client.files.finalize('file_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;

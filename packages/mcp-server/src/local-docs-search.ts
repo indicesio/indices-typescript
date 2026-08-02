@@ -176,6 +176,37 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     },
   },
   {
+    name: 'attach_capture_session',
+    endpoint: '/v1beta/tasks/{id}/attach_capture_session',
+    httpMethod: 'post',
+    summary: 'Attach a capture session',
+    description:
+      "<p>Use a completed capture session as this task's recording and kick off API generation from it.</p><p>A capture session can be attached to several tasks: each task filters and consumes the recording independently.</p>",
+    stainlessPath: '(resource) tasks > (method) attach_capture_session',
+    qualified: 'client.tasks.attachCaptureSession',
+    params: ['id: string;', 'capture_session_id: string;'],
+    response:
+      "{ id: string; created_at: string; creation: { secret_bindings?: object; secrets?: object[]; }; current_state: 'not_ready' | 'waiting_for_manual_completion' | 'ready' | 'failed'; display_name: string; input_schema: object; output_schema: object; task: string; updated_at: string; website: string; failure_info?: { category: string; message: string; }; required_secrets?: { name: string; type: 'login' | 'string'; requires_totp?: boolean; }[]; }",
+    markdown:
+      "## attach_capture_session\n\n`client.tasks.attachCaptureSession(id: string, capture_session_id: string): { id: string; created_at: string; creation: task_creation; current_state: 'not_ready' | 'waiting_for_manual_completion' | 'ready' | 'failed'; display_name: string; input_schema: object; output_schema: object; task: string; updated_at: string; website: string; failure_info?: task_failure_info; required_secrets?: secret_slot_definition[]; }`\n\n**post** `/v1beta/tasks/{id}/attach_capture_session`\n\n<p>Use a completed capture session as this task's recording and kick off API generation from it.</p><p>A capture session can be attached to several tasks: each task filters and consumes the recording independently.</p>\n\n### Parameters\n\n- `id: string`\n  The ID of the task to attach the capture session to.\n\n- `capture_session_id: string`\n  ID of a completed capture session to use as this task's recording. Attaching kicks off API generation from it.\n\n### Returns\n\n- `{ id: string; created_at: string; creation: { secret_bindings?: object; secrets?: object[]; }; current_state: 'not_ready' | 'waiting_for_manual_completion' | 'ready' | 'failed'; display_name: string; input_schema: object; output_schema: object; task: string; updated_at: string; website: string; failure_info?: { category: string; message: string; }; required_secrets?: { name: string; type: 'login' | 'string'; requires_totp?: boolean; }[]; }`\n\n  - `id: string`\n  - `created_at: string`\n  - `creation: { secret_bindings?: object; secrets?: { secret_id: string; description?: string; }[]; }`\n  - `current_state: 'not_ready' | 'waiting_for_manual_completion' | 'ready' | 'failed'`\n  - `display_name: string`\n  - `input_schema: object`\n  - `output_schema: object`\n  - `task: string`\n  - `updated_at: string`\n  - `website: string`\n  - `failure_info?: { category: string; message: string; }`\n  - `required_secrets?: { name: string; type: 'login' | 'string'; requires_totp?: boolean; }[]`\n\n### Example\n\n```typescript\nimport Indices from 'indicesio';\n\nconst client = new Indices();\n\nconst task = await client.tasks.attachCaptureSession('id', { capture_session_id: 'cap_0R3kPq8mWxYz1aBcDeFgHi' });\n\nconsole.log(task);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.tasks.attachCaptureSession',
+        example:
+          "import Indices from 'indicesio';\n\nconst client = new Indices({\n  apiKey: process.env['INDICES_API_KEY'], // This is the default and can be omitted\n});\n\nconst task = await client.tasks.attachCaptureSession('id', {\n  capture_session_id: 'cap_0R3kPq8mWxYz1aBcDeFgHi',\n});\n\nconsole.log(task.id);",
+      },
+      python: {
+        method: 'tasks.attach_capture_session',
+        example:
+          'import os\nfrom indices import Indices\n\nclient = Indices(\n    api_key=os.environ.get("INDICES_API_KEY"),  # This is the default and can be omitted\n)\ntask = client.tasks.attach_capture_session(\n    id="id",\n    capture_session_id="cap_0R3kPq8mWxYz1aBcDeFgHi",\n)\nprint(task.id)',
+      },
+      http: {
+        example:
+          'curl https://api.indices.io/v1beta/tasks/$ID/attach_capture_session \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $INDICES_API_KEY" \\\n    -d \'{\n          "capture_session_id": "cap_0R3kPq8mWxYz1aBcDeFgHi"\n        }\'',
+      },
+    },
+  },
+  {
     name: 'list',
     endpoint: '/v1beta/runs',
     httpMethod: 'get',
@@ -578,6 +609,189 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.indices.io/v1beta/files/$FILE_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $INDICES_API_KEY"',
+      },
+    },
+  },
+  {
+    name: 'create',
+    endpoint: '/v1beta/files',
+    httpMethod: 'post',
+    summary: 'Initiate a file upload',
+    description: '<p>Create a pending file and get a signed URL to PUT the bytes to.</p>',
+    stainlessPath: '(resource) files > (method) create',
+    qualified: 'client.files.create',
+    params: ['content_type: string;', 'name: string;', 'size_bytes: number;'],
+    response: '{ expires_at: string; file_id: string; upload_headers: object; upload_url: string; }',
+    markdown:
+      "## create\n\n`client.files.create(content_type: string, name: string, size_bytes: number): { expires_at: string; file_id: string; upload_headers: object; upload_url: string; }`\n\n**post** `/v1beta/files`\n\n<p>Create a pending file and get a signed URL to PUT the bytes to.</p>\n\n### Parameters\n\n- `content_type: string`\n  MIME type of the file content.\n\n- `name: string`\n  User-facing filename, e.g. 'report.pdf'.\n\n- `size_bytes: number`\n  Exact size of the file in bytes. Enforced by the signed upload URL.\n\n### Returns\n\n- `{ expires_at: string; file_id: string; upload_headers: object; upload_url: string; }`\n\n  - `expires_at: string`\n  - `file_id: string`\n  - `upload_headers: object`\n  - `upload_url: string`\n\n### Example\n\n```typescript\nimport Indices from 'indicesio';\n\nconst client = new Indices();\n\nconst file = await client.files.create({\n  content_type: 'x',\n  name: 'x',\n  size_bytes: 0,\n});\n\nconsole.log(file);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.files.create',
+        example:
+          "import Indices from 'indicesio';\n\nconst client = new Indices({\n  apiKey: process.env['INDICES_API_KEY'], // This is the default and can be omitted\n});\n\nconst file = await client.files.create({\n  content_type: 'x',\n  name: 'x',\n  size_bytes: 0,\n});\n\nconsole.log(file.file_id);",
+      },
+      python: {
+        method: 'files.create',
+        example:
+          'import os\nfrom indices import Indices\n\nclient = Indices(\n    api_key=os.environ.get("INDICES_API_KEY"),  # This is the default and can be omitted\n)\nfile = client.files.create(\n    content_type="x",\n    name="x",\n    size_bytes=0,\n)\nprint(file.file_id)',
+      },
+      http: {
+        example:
+          'curl https://api.indices.io/v1beta/files \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $INDICES_API_KEY" \\\n    -d \'{\n          "content_type": "x",\n          "name": "x",\n          "size_bytes": 0\n        }\'',
+      },
+    },
+  },
+  {
+    name: 'finalize',
+    endpoint: '/v1beta/files/{file_id}/complete',
+    httpMethod: 'post',
+    summary: 'Finalize a file upload',
+    description: '<p>Confirm the bytes were uploaded; the file becomes available for use.</p>',
+    stainlessPath: '(resource) files > (method) finalize',
+    qualified: 'client.files.finalize',
+    params: ['file_id: string;'],
+    response: '{ content_type: string; crc32c: string; file_id: string; name: string; size_bytes: number; }',
+    markdown:
+      "## finalize\n\n`client.files.finalize(file_id: string): { content_type: string; crc32c: string; file_id: string; name: string; size_bytes: number; }`\n\n**post** `/v1beta/files/{file_id}/complete`\n\n<p>Confirm the bytes were uploaded; the file becomes available for use.</p>\n\n### Parameters\n\n- `file_id: string`\n  The ID of the pending file to finalize.\n\n### Returns\n\n- `{ content_type: string; crc32c: string; file_id: string; name: string; size_bytes: number; }`\n\n  - `content_type: string`\n  - `crc32c: string`\n  - `file_id: string`\n  - `name: string`\n  - `size_bytes: number`\n\n### Example\n\n```typescript\nimport Indices from 'indicesio';\n\nconst client = new Indices();\n\nconst response = await client.files.finalize('file_id');\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.files.finalize',
+        example:
+          "import Indices from 'indicesio';\n\nconst client = new Indices({\n  apiKey: process.env['INDICES_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.files.finalize('file_id');\n\nconsole.log(response.file_id);",
+      },
+      python: {
+        method: 'files.finalize',
+        example:
+          'import os\nfrom indices import Indices\n\nclient = Indices(\n    api_key=os.environ.get("INDICES_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.files.finalize(\n    "file_id",\n)\nprint(response.file_id)',
+      },
+      http: {
+        example:
+          'curl https://api.indices.io/v1beta/files/$FILE_ID/complete \\\n    -X POST \\\n    -H "Authorization: Bearer $INDICES_API_KEY"',
+      },
+    },
+  },
+  {
+    name: 'list',
+    endpoint: '/v1beta/capture_sessions',
+    httpMethod: 'get',
+    summary: 'List capture sessions',
+    description: '<p>List all capture sessions, newest first.</p>',
+    stainlessPath: '(resource) capture_sessions > (method) list',
+    qualified: 'client.captureSessions.list',
+    response:
+      "{ id: string; browser_session_id: string; created_at: string; iframe_url: string; state: 'active' | 'completing' | 'completed' | 'abandoned' | 'failed'; updated_at: string; }[]",
+    markdown:
+      "## list\n\n`client.captureSessions.list(): object[]`\n\n**get** `/v1beta/capture_sessions`\n\n<p>List all capture sessions, newest first.</p>\n\n### Returns\n\n- `{ id: string; browser_session_id: string; created_at: string; iframe_url: string; state: 'active' | 'completing' | 'completed' | 'abandoned' | 'failed'; updated_at: string; }[]`\n\n### Example\n\n```typescript\nimport Indices from 'indicesio';\n\nconst client = new Indices();\n\nconst captureSessions = await client.captureSessions.list();\n\nconsole.log(captureSessions);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.captureSessions.list',
+        example:
+          "import Indices from 'indicesio';\n\nconst client = new Indices({\n  apiKey: process.env['INDICES_API_KEY'], // This is the default and can be omitted\n});\n\nconst captureSessions = await client.captureSessions.list();\n\nconsole.log(captureSessions);",
+      },
+      python: {
+        method: 'capture_sessions.list',
+        example:
+          'import os\nfrom indices import Indices\n\nclient = Indices(\n    api_key=os.environ.get("INDICES_API_KEY"),  # This is the default and can be omitted\n)\ncapture_sessions = client.capture_sessions.list()\nprint(capture_sessions)',
+      },
+      http: {
+        example:
+          'curl https://api.indices.io/v1beta/capture_sessions \\\n    -H "Authorization: Bearer $INDICES_API_KEY"',
+      },
+    },
+  },
+  {
+    name: 'create',
+    endpoint: '/v1beta/capture_sessions',
+    httpMethod: 'post',
+    summary: 'Start a capture session',
+    description:
+      '<p>Spawn a browser session that records the network traffic of everything done in it.</p><p>Once completed, the capture session is a reusable recording: attach it to a task to generate an API from it.</p>',
+    stainlessPath: '(resource) capture_sessions > (method) create',
+    qualified: 'client.captureSessions.create',
+    params: [
+      'cookies?: { name: string; value: string; domain?: string; http_only?: boolean; path?: string; secure?: boolean; }[];',
+      'use_proxy?: boolean;',
+    ],
+    response:
+      "{ id: string; browser_session_id: string; created_at: string; iframe_url: string; state: 'active' | 'completing' | 'completed' | 'abandoned' | 'failed'; updated_at: string; }",
+    markdown:
+      "## create\n\n`client.captureSessions.create(cookies?: { name: string; value: string; domain?: string; http_only?: boolean; path?: string; secure?: boolean; }[], use_proxy?: boolean): { id: string; browser_session_id: string; created_at: string; iframe_url: string; state: capture_session_state; updated_at: string; }`\n\n**post** `/v1beta/capture_sessions`\n\n<p>Spawn a browser session that records the network traffic of everything done in it.</p><p>Once completed, the capture session is a reusable recording: attach it to a task to generate an API from it.</p>\n\n### Parameters\n\n- `cookies?: { name: string; value: string; domain?: string; http_only?: boolean; path?: string; secure?: boolean; }[]`\n  Initial cookies to set in the browser session.\n\n- `use_proxy?: boolean`\n  If true, spawn the browser session using a proxy.\n\n### Returns\n\n- `{ id: string; browser_session_id: string; created_at: string; iframe_url: string; state: 'active' | 'completing' | 'completed' | 'abandoned' | 'failed'; updated_at: string; }`\n\n  - `id: string`\n  - `browser_session_id: string`\n  - `created_at: string`\n  - `iframe_url: string`\n  - `state: 'active' | 'completing' | 'completed' | 'abandoned' | 'failed'`\n  - `updated_at: string`\n\n### Example\n\n```typescript\nimport Indices from 'indicesio';\n\nconst client = new Indices();\n\nconst captureSession = await client.captureSessions.create();\n\nconsole.log(captureSession);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.captureSessions.create',
+        example:
+          "import Indices from 'indicesio';\n\nconst client = new Indices({\n  apiKey: process.env['INDICES_API_KEY'], // This is the default and can be omitted\n});\n\nconst captureSession = await client.captureSessions.create();\n\nconsole.log(captureSession.id);",
+      },
+      python: {
+        method: 'capture_sessions.create',
+        example:
+          'import os\nfrom indices import Indices\n\nclient = Indices(\n    api_key=os.environ.get("INDICES_API_KEY"),  # This is the default and can be omitted\n)\ncapture_session = client.capture_sessions.create()\nprint(capture_session.id)',
+      },
+      http: {
+        example:
+          'curl https://api.indices.io/v1beta/capture_sessions \\\n    -X POST \\\n    -H "Authorization: Bearer $INDICES_API_KEY"',
+      },
+    },
+  },
+  {
+    name: 'retrieve',
+    endpoint: '/v1beta/capture_sessions/{id}',
+    httpMethod: 'get',
+    summary: 'Retrieve a capture session',
+    description:
+      '<p>Retrieve a capture session by its ID.</p><p>Poll this after requesting completion: the session is a usable recording once <code>state</code> is <code>completed</code>.</p>',
+    stainlessPath: '(resource) capture_sessions > (method) retrieve',
+    qualified: 'client.captureSessions.retrieve',
+    params: ['id: string;'],
+    response:
+      "{ id: string; browser_session_id: string; created_at: string; iframe_url: string; state: 'active' | 'completing' | 'completed' | 'abandoned' | 'failed'; updated_at: string; }",
+    markdown:
+      "## retrieve\n\n`client.captureSessions.retrieve(id: string): { id: string; browser_session_id: string; created_at: string; iframe_url: string; state: capture_session_state; updated_at: string; }`\n\n**get** `/v1beta/capture_sessions/{id}`\n\n<p>Retrieve a capture session by its ID.</p><p>Poll this after requesting completion: the session is a usable recording once <code>state</code> is <code>completed</code>.</p>\n\n### Parameters\n\n- `id: string`\n  The ID of the capture session to retrieve.\n\n### Returns\n\n- `{ id: string; browser_session_id: string; created_at: string; iframe_url: string; state: 'active' | 'completing' | 'completed' | 'abandoned' | 'failed'; updated_at: string; }`\n\n  - `id: string`\n  - `browser_session_id: string`\n  - `created_at: string`\n  - `iframe_url: string`\n  - `state: 'active' | 'completing' | 'completed' | 'abandoned' | 'failed'`\n  - `updated_at: string`\n\n### Example\n\n```typescript\nimport Indices from 'indicesio';\n\nconst client = new Indices();\n\nconst captureSession = await client.captureSessions.retrieve('id');\n\nconsole.log(captureSession);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.captureSessions.retrieve',
+        example:
+          "import Indices from 'indicesio';\n\nconst client = new Indices({\n  apiKey: process.env['INDICES_API_KEY'], // This is the default and can be omitted\n});\n\nconst captureSession = await client.captureSessions.retrieve('id');\n\nconsole.log(captureSession.id);",
+      },
+      python: {
+        method: 'capture_sessions.retrieve',
+        example:
+          'import os\nfrom indices import Indices\n\nclient = Indices(\n    api_key=os.environ.get("INDICES_API_KEY"),  # This is the default and can be omitted\n)\ncapture_session = client.capture_sessions.retrieve(\n    "id",\n)\nprint(capture_session.id)',
+      },
+      http: {
+        example:
+          'curl https://api.indices.io/v1beta/capture_sessions/$ID \\\n    -H "Authorization: Bearer $INDICES_API_KEY"',
+      },
+    },
+  },
+  {
+    name: 'complete',
+    endpoint: '/v1beta/capture_sessions/{id}/complete',
+    httpMethod: 'post',
+    summary: 'Complete a capture session',
+    description:
+      '<p>Stop recording and finalize the capture session.</p><p>Completion is asynchronous: the browser uploads its recording and the session then transitions to <code>completed</code>. Poll <code>retrieveCaptureSession</code> to observe the transition.</p>',
+    stainlessPath: '(resource) capture_sessions > (method) complete',
+    qualified: 'client.captureSessions.complete',
+    params: ['id: string;'],
+    response:
+      "{ id: string; browser_session_id: string; created_at: string; iframe_url: string; state: 'active' | 'completing' | 'completed' | 'abandoned' | 'failed'; updated_at: string; }",
+    markdown:
+      "## complete\n\n`client.captureSessions.complete(id: string): { id: string; browser_session_id: string; created_at: string; iframe_url: string; state: capture_session_state; updated_at: string; }`\n\n**post** `/v1beta/capture_sessions/{id}/complete`\n\n<p>Stop recording and finalize the capture session.</p><p>Completion is asynchronous: the browser uploads its recording and the session then transitions to <code>completed</code>. Poll <code>retrieveCaptureSession</code> to observe the transition.</p>\n\n### Parameters\n\n- `id: string`\n  The ID of the capture session to complete.\n\n### Returns\n\n- `{ id: string; browser_session_id: string; created_at: string; iframe_url: string; state: 'active' | 'completing' | 'completed' | 'abandoned' | 'failed'; updated_at: string; }`\n\n  - `id: string`\n  - `browser_session_id: string`\n  - `created_at: string`\n  - `iframe_url: string`\n  - `state: 'active' | 'completing' | 'completed' | 'abandoned' | 'failed'`\n  - `updated_at: string`\n\n### Example\n\n```typescript\nimport Indices from 'indicesio';\n\nconst client = new Indices();\n\nconst captureSession = await client.captureSessions.complete('id');\n\nconsole.log(captureSession);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.captureSessions.complete',
+        example:
+          "import Indices from 'indicesio';\n\nconst client = new Indices({\n  apiKey: process.env['INDICES_API_KEY'], // This is the default and can be omitted\n});\n\nconst captureSession = await client.captureSessions.complete('id');\n\nconsole.log(captureSession.id);",
+      },
+      python: {
+        method: 'capture_sessions.complete',
+        example:
+          'import os\nfrom indices import Indices\n\nclient = Indices(\n    api_key=os.environ.get("INDICES_API_KEY"),  # This is the default and can be omitted\n)\ncapture_session = client.capture_sessions.complete(\n    "id",\n)\nprint(capture_session.id)',
+      },
+      http: {
+        example:
+          'curl https://api.indices.io/v1beta/capture_sessions/$ID/complete \\\n    -X POST \\\n    -H "Authorization: Bearer $INDICES_API_KEY"',
       },
     },
   },
