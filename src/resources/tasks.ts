@@ -81,7 +81,7 @@ export class Tasks extends APIResource {
 }
 
 /**
- * Definition of a secret slot that a task requires.
+ * Definition of a secret slot that a connector requires.
  */
 export interface SecretSlotDefinition {
   /**
@@ -106,6 +106,12 @@ export interface Task {
    * Unique identifier for the object.
    */
   id: string;
+
+  /**
+   * The connector executed when this task is run; pass it to the runs endpoints.
+   * Null until the task is ready. Changes when a revision publishes a new connector.
+   */
+  connector_id: string | null;
 
   /**
    * Timestamp when the object was created.

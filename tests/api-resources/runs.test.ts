@@ -22,7 +22,7 @@ describe('resource runs', () => {
 
   // Mock server tests are disabled
   test.skip('list: only required params', async () => {
-    const responsePromise = client.runs.list({ task_id: 'task_id' });
+    const responsePromise = client.runs.list({ connector_id: 'connector_id' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -35,7 +35,7 @@ describe('resource runs', () => {
   // Mock server tests are disabled
   test.skip('list: required and optional params', async () => {
     const response = await client.runs.list({
-      task_id: 'task_id',
+      connector_id: 'connector_id',
       cursor: 'cursor',
       limit: 1,
     });
@@ -55,7 +55,7 @@ describe('resource runs', () => {
 
   // Mock server tests are disabled
   test.skip('run: only required params', async () => {
-    const responsePromise = client.runs.run({ task_id: 'task_id' });
+    const responsePromise = client.runs.run({ connector_id: 'connector_id' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -68,7 +68,7 @@ describe('resource runs', () => {
   // Mock server tests are disabled
   test.skip('run: required and optional params', async () => {
     const response = await client.runs.run({
-      task_id: 'task_id',
+      connector_id: 'connector_id',
       arguments: { foo: 'bar' },
       async: true,
       max_timeout_s: 1,
