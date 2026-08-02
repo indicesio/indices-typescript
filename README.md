@@ -36,7 +36,7 @@ const client = new Indices({
 });
 
 const run = await client.runs.run({
-  task_id: '<your_task_id>',
+  connector_id: 'connector_id',
   arguments: { '...': null },
 });
 
@@ -56,7 +56,7 @@ const client = new Indices({
 });
 
 const params: Indices.RunRunParams = {
-  task_id: '<your_task_id>',
+  connector_id: 'connector_id',
   arguments: { '...': null },
 };
 const run: Indices.Run = await client.runs.run(params);
@@ -74,7 +74,7 @@ a subclass of `APIError` will be thrown:
 ```ts
 const run = await client.runs
   .run({
-    task_id: '<your_task_id>',
+    connector_id: 'connector_id',
     arguments: { '...': null },
   })
   .catch(async (err) => {
@@ -118,7 +118,7 @@ const client = new Indices({
 
 // Or, configure per-request:
 await client.runs.run({
-  task_id: '<your_task_id>',
+  connector_id: 'connector_id',
   arguments: { '...': null },
 }, {
   maxRetries: 5,
@@ -138,7 +138,7 @@ const client = new Indices({
 
 // Override per-request:
 await client.runs.run({
-  task_id: '<your_task_id>',
+  connector_id: 'connector_id',
   arguments: { '...': null },
 }, {
   timeout: 5 * 1000,
@@ -158,7 +158,7 @@ You can use the `for await … of` syntax to iterate through items across all pa
 async function fetchAllRuns(params) {
   const allRuns = [];
   // Automatically fetches more pages as needed.
-  for await (const run of client.runs.list({ task_id: 'task_id' })) {
+  for await (const run of client.runs.list({ connector_id: 'connector_id' })) {
     allRuns.push(run);
   }
   return allRuns;
@@ -168,7 +168,7 @@ async function fetchAllRuns(params) {
 Alternatively, you can request a single page at a time:
 
 ```ts
-let page = await client.runs.list({ task_id: 'task_id' });
+let page = await client.runs.list({ connector_id: 'connector_id' });
 for (const run of page.data) {
   console.log(run);
 }
@@ -196,7 +196,7 @@ const client = new Indices();
 
 const response = await client.runs
   .run({
-    task_id: '<your_task_id>',
+    connector_id: 'connector_id',
     arguments: { '...': null },
   })
   .asResponse();
@@ -205,7 +205,7 @@ console.log(response.statusText); // access the underlying Response object
 
 const { data: run, response: raw } = await client.runs
   .run({
-    task_id: '<your_task_id>',
+    connector_id: 'connector_id',
     arguments: { '...': null },
   })
   .withResponse();

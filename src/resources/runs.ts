@@ -18,7 +18,7 @@ export class Runs extends APIResource {
   }
 
   /**
-   * <p>List runs for a given task.</p>
+   * <p>List runs of a given connector.</p>
    */
   list(query: RunListParams, options?: RequestOptions): PagePromise<RunsCursorPage, Run> {
     return this._client.getAPIList('/v1beta/runs', CursorPage<Run>, { query, ...options });
@@ -32,7 +32,7 @@ export class Runs extends APIResource {
   }
 
   /**
-   * <p>Execute a task that has already been created. By default the call blocks until the run finishes. Pass <code>async: true</code> to return immediately, in which case you should poll <code>GET /runs</code> to retrieve the result once it's ready.</p>
+   * <p>Execute a connector. By default the call blocks until the run finishes. Pass <code>async: true</code> to return immediately, in which case you should poll <code>GET /runs</code> to retrieve the result once it's ready.</p>
    */
   run(body: RunRunParams, options?: RequestOptions): APIPromise<Run> {
     return this._client.post('/v1beta/runs', { body, ...options });
@@ -51,6 +51,11 @@ export interface Run {
    * Arguments in this run for the task's input parameters.
    */
   arguments: { [key: string]: unknown };
+
+  /**
+   * ID of the connector executed in this run.
+   */
+  connector_id: string;
 
   /**
    * Timestamp when the object was created.
@@ -81,9 +86,9 @@ export interface Run {
   status: 'pending' | 'running' | 'success' | 'failed' | 'timed_out' | 'result_too_large' | 'internal_error';
 
   /**
-   * ID of the task executed in this run.
+   * ID of the task executed in this run; null for direct connector runs.
    */
-  task_id: string;
+  task_id: string | null;
 
   /**
    * Secrets to use for this run. This dict must be a mapping of secret slot names to
@@ -101,20 +106,20 @@ export interface RunLogsResponse {
 
 export interface RunListParams extends CursorPageParams {
   /**
-   * The ID of the task to list runs for.
+   * The ID of the connector to list runs for.
    */
-  task_id: string;
+  connector_id: string;
 }
 
 export interface RunRunParams {
   /**
-   * ID of the task to execute.
+   * ID of the connector to execute.
    */
-  task_id: string;
+  connector_id: string;
 
   /**
-   * Arguments to pass to the task. Optional if the task does not require any
-   * arguments.
+   * Arguments to pass to the connector. Optional if the connector does not require
+   * any arguments.
    */
   arguments?: { [key: string]: unknown };
 
@@ -130,7 +135,7 @@ export interface RunRunParams {
   max_timeout_s?: number;
 
   /**
-   * Mapping of secret slot names to secret IDs. Each slot defined in the task's
+   * Mapping of secret slot names to secret IDs. Each slot defined in the connector's
    * required_secrets must be mapped to a user-owned secret.
    */
   secret_bindings?: { [key: string]: string };
