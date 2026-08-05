@@ -105,7 +105,7 @@ export interface File {
   /**
    * How the file came to exist: uploaded by the user or produced by a run.
    */
-  source: 'UPLOAD' | 'RUN_OUTPUT' | 'GENERATION';
+  source: 'UPLOAD' | 'RUN_OUTPUT' | 'GENERATION' | 'FORGE_SESSION';
 
   /**
    * ID of the task whose run produced this file. Null for uploaded files.
@@ -228,7 +228,7 @@ export interface FileListParams extends CursorPageParams {
   /**
    * Only files from this source.
    */
-  source?: 'UPLOAD' | 'RUN_OUTPUT' | 'GENERATION';
+  source?: 'UPLOAD' | 'RUN_OUTPUT' | 'GENERATION' | 'FORGE_SESSION';
 
   /**
    * Only files produced by runs of this task.
