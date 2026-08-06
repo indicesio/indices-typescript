@@ -80,13 +80,10 @@ export class Tasks extends APIResource {
   }
 }
 
-/**
- * Definition of a secret slot that a connector requires.
- */
 export interface SecretSlotDefinition {
   /**
-   * Name of the secret slot (used as env var prefix, e.g., 'LOGIN' →
-   * LOGIN_USERNAME).
+   * Name of the secret slot. Use this name as the identifier when binding secrets to
+   * a slot.
    */
   name: string;
 
