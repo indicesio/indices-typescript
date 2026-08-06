@@ -93,9 +93,11 @@ export interface SecretSlotDefinition {
   type: 'login' | 'string';
 
   /**
-   * Whether this login slot requires 2FA/TOTP. Only applicable for 'login' type.
+   * Whether the connector can perform 2FA/TOTP when the bound login has it
+   * configured. Logins without TOTP remain bindable. Only applicable for 'login'
+   * type.
    */
-  requires_totp?: boolean;
+  supports_totp?: boolean;
 }
 
 export interface Task {
