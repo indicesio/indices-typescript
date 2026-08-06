@@ -26,7 +26,7 @@ For example:
 \`\`\`
 async function run(client) {
   const run = await client.runs.run({
-    connector_id: 'connector_id',
+    connector_id: 'conn_8kPq2mWxYz1aBcDeFgHi3J',
     arguments: { '...': null },
   });
 
