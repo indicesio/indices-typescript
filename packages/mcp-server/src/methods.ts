@@ -41,6 +41,30 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/v1beta/tasks/{id}/attach_capture_session',
   },
   {
+    clientCallName: 'client.connectors.retrieve',
+    fullyQualifiedName: 'connectors.retrieve',
+    httpMethod: 'get',
+    httpPath: '/v1beta/connectors/{connector_id}',
+  },
+  {
+    clientCallName: 'client.connectors.list',
+    fullyQualifiedName: 'connectors.list',
+    httpMethod: 'get',
+    httpPath: '/v1beta/connectors',
+  },
+  {
+    clientCallName: 'client.connectors.delete',
+    fullyQualifiedName: 'connectors.delete',
+    httpMethod: 'delete',
+    httpPath: '/v1beta/connectors/{connector_id}',
+  },
+  {
+    clientCallName: 'client.connectors.listRevisions',
+    fullyQualifiedName: 'connectors.listRevisions',
+    httpMethod: 'get',
+    httpPath: '/v1beta/connectors/{connector_id}/revisions',
+  },
+  {
     clientCallName: 'client.runs.retrieve',
     fullyQualifiedName: 'runs.retrieve',
     httpMethod: 'get',
@@ -147,6 +171,12 @@ export const sdkMethods: SdkMethod[] = [
     fullyQualifiedName: 'captureSessions.list',
     httpMethod: 'get',
     httpPath: '/v1beta/capture_sessions',
+  },
+  {
+    clientCallName: 'client.captureSessions.abandon',
+    fullyQualifiedName: 'captureSessions.abandon',
+    httpMethod: 'post',
+    httpPath: '/v1beta/capture_sessions/{id}/abandon',
   },
   {
     clientCallName: 'client.captureSessions.complete',
