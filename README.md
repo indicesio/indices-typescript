@@ -36,7 +36,7 @@ const client = new Indices({
 });
 
 const run = await client.runs.run({
-  connector_id: 'connector_id',
+  connector_id: 'conn_8kPq2mWxYz1aBcDeFgHi3J',
   arguments: { '...': null },
 });
 
@@ -56,7 +56,7 @@ const client = new Indices({
 });
 
 const params: Indices.RunRunParams = {
-  connector_id: 'connector_id',
+  connector_id: 'conn_8kPq2mWxYz1aBcDeFgHi3J',
   arguments: { '...': null },
 };
 const run: Indices.Run = await client.runs.run(params);
@@ -74,7 +74,7 @@ a subclass of `APIError` will be thrown:
 ```ts
 const run = await client.runs
   .run({
-    connector_id: 'connector_id',
+    connector_id: 'conn_8kPq2mWxYz1aBcDeFgHi3J',
     arguments: { '...': null },
   })
   .catch(async (err) => {
@@ -118,7 +118,7 @@ const client = new Indices({
 
 // Or, configure per-request:
 await client.runs.run({
-  connector_id: 'connector_id',
+  connector_id: 'conn_8kPq2mWxYz1aBcDeFgHi3J',
   arguments: { '...': null },
 }, {
   maxRetries: 5,
@@ -138,7 +138,7 @@ const client = new Indices({
 
 // Override per-request:
 await client.runs.run({
-  connector_id: 'connector_id',
+  connector_id: 'conn_8kPq2mWxYz1aBcDeFgHi3J',
   arguments: { '...': null },
 }, {
   timeout: 5 * 1000,
@@ -155,22 +155,22 @@ List methods in the Indices API are paginated.
 You can use the `for await … of` syntax to iterate through items across all pages:
 
 ```ts
-async function fetchAllRuns(params) {
-  const allRuns = [];
+async function fetchAllConnectors(params) {
+  const allConnectors = [];
   // Automatically fetches more pages as needed.
-  for await (const run of client.runs.list({ connector_id: 'connector_id' })) {
-    allRuns.push(run);
+  for await (const connector of client.connectors.list()) {
+    allConnectors.push(connector);
   }
-  return allRuns;
+  return allConnectors;
 }
 ```
 
 Alternatively, you can request a single page at a time:
 
 ```ts
-let page = await client.runs.list({ connector_id: 'connector_id' });
-for (const run of page.data) {
-  console.log(run);
+let page = await client.connectors.list();
+for (const connector of page.data) {
+  console.log(connector);
 }
 
 // Convenience methods are provided for manually paginating:
@@ -196,7 +196,7 @@ const client = new Indices();
 
 const response = await client.runs
   .run({
-    connector_id: 'connector_id',
+    connector_id: 'conn_8kPq2mWxYz1aBcDeFgHi3J',
     arguments: { '...': null },
   })
   .asResponse();
@@ -205,7 +205,7 @@ console.log(response.statusText); // access the underlying Response object
 
 const { data: run, response: raw } = await client.runs
   .run({
-    connector_id: 'connector_id',
+    connector_id: 'conn_8kPq2mWxYz1aBcDeFgHi3J',
     arguments: { '...': null },
   })
   .withResponse();

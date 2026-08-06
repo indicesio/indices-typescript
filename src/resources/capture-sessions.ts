@@ -34,6 +34,13 @@ export class CaptureSessions extends APIResource {
   }
 
   /**
+   * <p>Discard an in-progress capture session and release its browser.</p>
+   */
+  abandon(id: string, options?: RequestOptions): APIPromise<CaptureSession> {
+    return this._client.post(path`/v1beta/capture_sessions/${id}/abandon`, options);
+  }
+
+  /**
    * <p>Stop recording and finalize the capture session.</p><p>Completion is asynchronous: the browser uploads its recording and the session then transitions to <code>completed</code>. Poll <code>retrieveCaptureSession</code> to observe the transition.</p>
    */
   complete(id: string, options?: RequestOptions): APIPromise<CaptureSession> {

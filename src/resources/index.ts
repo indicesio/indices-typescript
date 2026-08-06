@@ -9,6 +9,14 @@ export {
   type CaptureSessionCreateParams,
 } from './capture-sessions';
 export {
+  Connectors,
+  type Connector,
+  type ConnectorDeleteResponse,
+  type ConnectorListRevisionsResponse,
+  type ConnectorListParams,
+  type ConnectorsCursorPage,
+} from './connectors';
+export {
   Files,
   type File,
   type FileCreateResponse,

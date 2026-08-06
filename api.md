@@ -17,6 +17,21 @@ Methods:
 - <code title="delete /v1beta/tasks/{id}">client.tasks.<a href="./src/resources/tasks.ts">delete</a>(id) -> TaskDeleteResponse</code>
 - <code title="post /v1beta/tasks/{id}/attach_capture_session">client.tasks.<a href="./src/resources/tasks.ts">attachCaptureSession</a>(id, { ...params }) -> Task</code>
 
+# Connectors
+
+Types:
+
+- <code><a href="./src/resources/connectors.ts">Connector</a></code>
+- <code><a href="./src/resources/connectors.ts">ConnectorDeleteResponse</a></code>
+- <code><a href="./src/resources/connectors.ts">ConnectorListRevisionsResponse</a></code>
+
+Methods:
+
+- <code title="get /v1beta/connectors/{connector_id}">client.connectors.<a href="./src/resources/connectors.ts">retrieve</a>(connectorID) -> Connector</code>
+- <code title="get /v1beta/connectors">client.connectors.<a href="./src/resources/connectors.ts">list</a>({ ...params }) -> ConnectorsCursorPage</code>
+- <code title="delete /v1beta/connectors/{connector_id}">client.connectors.<a href="./src/resources/connectors.ts">delete</a>(connectorID) -> ConnectorDeleteResponse</code>
+- <code title="get /v1beta/connectors/{connector_id}/revisions">client.connectors.<a href="./src/resources/connectors.ts">listRevisions</a>(connectorID) -> ConnectorListRevisionsResponse</code>
+
 # Runs
 
 Types:
@@ -81,4 +96,5 @@ Methods:
 - <code title="post /v1beta/capture_sessions">client.captureSessions.<a href="./src/resources/capture-sessions.ts">create</a>({ ...params }) -> CaptureSession</code>
 - <code title="get /v1beta/capture_sessions/{id}">client.captureSessions.<a href="./src/resources/capture-sessions.ts">retrieve</a>(id) -> CaptureSession</code>
 - <code title="get /v1beta/capture_sessions">client.captureSessions.<a href="./src/resources/capture-sessions.ts">list</a>() -> CaptureSessionListResponse</code>
+- <code title="post /v1beta/capture_sessions/{id}/abandon">client.captureSessions.<a href="./src/resources/capture-sessions.ts">abandon</a>(id) -> CaptureSession</code>
 - <code title="post /v1beta/capture_sessions/{id}/complete">client.captureSessions.<a href="./src/resources/capture-sessions.ts">complete</a>(id) -> CaptureSession</code>

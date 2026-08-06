@@ -28,6 +28,14 @@ import {
   SessionCookie,
 } from './resources/capture-sessions';
 import {
+  Connector,
+  ConnectorDeleteResponse,
+  ConnectorListParams,
+  ConnectorListRevisionsResponse,
+  Connectors,
+  ConnectorsCursorPage,
+} from './resources/connectors';
+import {
   File,
   FileCreateParams,
   FileCreateResponse,
@@ -807,6 +815,10 @@ export class Indices {
    */
   tasks: API.Tasks = new API.Tasks(this);
   /**
+   * Manage connectors.
+   */
+  connectors: API.Connectors = new API.Connectors(this);
+  /**
    * Execute a task.
    */
   runs: API.Runs = new API.Runs(this);
@@ -822,6 +834,7 @@ export class Indices {
 }
 
 Indices.Tasks = Tasks;
+Indices.Connectors = Connectors;
 Indices.Runs = Runs;
 Indices.Secrets = Secrets;
 Indices.Files = Files;
@@ -843,6 +856,15 @@ export declare namespace Indices {
     type TaskDeleteResponse as TaskDeleteResponse,
     type TaskCreateParams as TaskCreateParams,
     type TaskAttachCaptureSessionParams as TaskAttachCaptureSessionParams,
+  };
+
+  export {
+    Connectors as Connectors,
+    type Connector as Connector,
+    type ConnectorDeleteResponse as ConnectorDeleteResponse,
+    type ConnectorListRevisionsResponse as ConnectorListRevisionsResponse,
+    type ConnectorsCursorPage as ConnectorsCursorPage,
+    type ConnectorListParams as ConnectorListParams,
   };
 
   export {
