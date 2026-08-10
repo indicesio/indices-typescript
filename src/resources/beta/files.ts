@@ -106,11 +106,6 @@ export interface File {
    * How the file came to exist: uploaded by the user or produced by a run.
    */
   source: 'UPLOAD' | 'RUN_OUTPUT';
-
-  /**
-   * ID of the task whose run produced this file. Null for uploaded files.
-   */
-  task_id: string | null;
 }
 
 export interface FileCreateResponse {
@@ -234,11 +229,6 @@ export interface FileListParams extends CursorPageParams {
    * Only files from this source.
    */
   source?: 'UPLOAD' | 'RUN_OUTPUT';
-
-  /**
-   * Only files produced by runs of this task.
-   */
-  task_id?: string;
 }
 
 export declare namespace Files {
