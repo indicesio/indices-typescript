@@ -19,43 +19,7 @@ import { AbstractPage, type CursorPageParams, CursorPageResponse } from './core/
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
-import {
-  CaptureSession,
-  CaptureSessionCreateParams,
-  CaptureSessionListResponse,
-  CaptureSessionState,
-  CaptureSessions,
-  SessionCookie,
-} from './resources/capture-sessions';
-import {
-  Connector,
-  ConnectorDeleteResponse,
-  ConnectorListParams,
-  ConnectorListRevisionsResponse,
-  Connectors,
-  ConnectorsCursorPage,
-} from './resources/connectors';
-import {
-  File,
-  FileCreateParams,
-  FileCreateResponse,
-  FileDeleteResponse,
-  FileFinalizeResponse,
-  FileGetDownloadURLResponse,
-  FileListParams,
-  Files,
-  FilesCursorPage,
-} from './resources/files';
-import { Run, RunListParams, RunLogsResponse, RunRunParams, Runs, RunsCursorPage } from './resources/runs';
-import {
-  Secret,
-  SecretCreateParams,
-  SecretDeleteResponse,
-  SecretGetTotpResponse,
-  SecretListResponse,
-  Secrets,
-} from './resources/secrets';
-import { SecretSlotDefinition, Tasks } from './resources/tasks';
+import { Beta } from './resources/beta/beta';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -800,32 +764,10 @@ export class Indices {
 
   static toFile = Uploads.toFile;
 
-  tasks: API.Tasks = new API.Tasks(this);
-  /**
-   * Manage connectors.
-   */
-  connectors: API.Connectors = new API.Connectors(this);
-  /**
-   * Execute a task.
-   */
-  runs: API.Runs = new API.Runs(this);
-  /**
-   * Manage secrets like login credentials and API keys.
-   */
-  secrets: API.Secrets = new API.Secrets(this);
-  files: API.Files = new API.Files(this);
-  /**
-   * Record a browser session; a completed capture is a reusable input for task generation.
-   */
-  captureSessions: API.CaptureSessions = new API.CaptureSessions(this);
+  beta: API.Beta = new API.Beta(this);
 }
 
-Indices.Tasks = Tasks;
-Indices.Connectors = Connectors;
-Indices.Runs = Runs;
-Indices.Secrets = Secrets;
-Indices.Files = Files;
-Indices.CaptureSessions = CaptureSessions;
+Indices.Beta = Beta;
 
 export declare namespace Indices {
   export type RequestOptions = Opts.RequestOptions;
@@ -833,53 +775,5 @@ export declare namespace Indices {
   export import CursorPage = Pagination.CursorPage;
   export { type CursorPageParams as CursorPageParams, type CursorPageResponse as CursorPageResponse };
 
-  export { Tasks as Tasks, type SecretSlotDefinition as SecretSlotDefinition };
-
-  export {
-    Connectors as Connectors,
-    type Connector as Connector,
-    type ConnectorDeleteResponse as ConnectorDeleteResponse,
-    type ConnectorListRevisionsResponse as ConnectorListRevisionsResponse,
-    type ConnectorsCursorPage as ConnectorsCursorPage,
-    type ConnectorListParams as ConnectorListParams,
-  };
-
-  export {
-    Runs as Runs,
-    type Run as Run,
-    type RunLogsResponse as RunLogsResponse,
-    type RunsCursorPage as RunsCursorPage,
-    type RunListParams as RunListParams,
-    type RunRunParams as RunRunParams,
-  };
-
-  export {
-    Secrets as Secrets,
-    type Secret as Secret,
-    type SecretListResponse as SecretListResponse,
-    type SecretDeleteResponse as SecretDeleteResponse,
-    type SecretGetTotpResponse as SecretGetTotpResponse,
-    type SecretCreateParams as SecretCreateParams,
-  };
-
-  export {
-    Files as Files,
-    type File as File,
-    type FileCreateResponse as FileCreateResponse,
-    type FileDeleteResponse as FileDeleteResponse,
-    type FileFinalizeResponse as FileFinalizeResponse,
-    type FileGetDownloadURLResponse as FileGetDownloadURLResponse,
-    type FilesCursorPage as FilesCursorPage,
-    type FileCreateParams as FileCreateParams,
-    type FileListParams as FileListParams,
-  };
-
-  export {
-    CaptureSessions as CaptureSessions,
-    type CaptureSession as CaptureSession,
-    type CaptureSessionState as CaptureSessionState,
-    type SessionCookie as SessionCookie,
-    type CaptureSessionListResponse as CaptureSessionListResponse,
-    type CaptureSessionCreateParams as CaptureSessionCreateParams,
-  };
+  export { Beta as Beta };
 }

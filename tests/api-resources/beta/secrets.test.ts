@@ -10,7 +10,7 @@ const client = new Indices({
 describe('resource secrets', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.secrets.create({ name: 'name', secret_type: 'login' });
+    const responsePromise = client.beta.secrets.create({ name: 'name', secret_type: 'login' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -22,7 +22,7 @@ describe('resource secrets', () => {
 
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
-    const response = await client.secrets.create({
+    const response = await client.beta.secrets.create({
       name: 'name',
       secret_type: 'login',
       password: 'password',
@@ -35,7 +35,7 @@ describe('resource secrets', () => {
 
   // Mock server tests are disabled
   test.skip('list', async () => {
-    const responsePromise = client.secrets.list();
+    const responsePromise = client.beta.secrets.list();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -47,7 +47,7 @@ describe('resource secrets', () => {
 
   // Mock server tests are disabled
   test.skip('delete', async () => {
-    const responsePromise = client.secrets.delete('id');
+    const responsePromise = client.beta.secrets.delete('id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -59,7 +59,7 @@ describe('resource secrets', () => {
 
   // Mock server tests are disabled
   test.skip('getTotp', async () => {
-    const responsePromise = client.secrets.getTotp('id');
+    const responsePromise = client.beta.secrets.getTotp('id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
