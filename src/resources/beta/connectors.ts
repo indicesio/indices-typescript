@@ -81,11 +81,6 @@ export interface Connector {
   revised_from_connector_id: string | null;
 
   /**
-   * Task this connector was generated from; null for directly published connectors.
-   */
-  task_id: string | null;
-
-  /**
    * Website the connector operates against.
    */
   website: string | null;

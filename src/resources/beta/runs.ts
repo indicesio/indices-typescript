@@ -7,7 +7,7 @@ import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
 /**
- * Execute a task.
+ * Execute a connector.
  */
 export class Runs extends APIResource {
   /**
@@ -48,7 +48,7 @@ export interface Run {
   id: string;
 
   /**
-   * Arguments in this run for the task's input parameters.
+   * Arguments in this run for the connector's input parameters.
    */
   arguments: { [key: string]: unknown };
 
@@ -73,8 +73,8 @@ export interface Run {
   has_logs: boolean;
 
   /**
-   * Execution result of the run. In JSON, matching the task's output schema. Limited
-   * to 100MB; results above 100MB will be truncated and result in a
+   * Execution result of the run. In JSON, matching the connector's output schema.
+   * Limited to 100MB; results above 100MB will be truncated and result in a
    * `result_too_large` status.
    */
   result_json: string | null;
@@ -84,11 +84,6 @@ export interface Run {
    * `timed_out`, `result_too_large`, or `internal_error`.
    */
   status: 'pending' | 'running' | 'success' | 'failed' | 'timed_out' | 'result_too_large' | 'internal_error';
-
-  /**
-   * ID of the task executed in this run; null for direct connector runs.
-   */
-  task_id: string | null;
 
   /**
    * Secrets to use for this run. This dict must be a mapping of secret slot names to
