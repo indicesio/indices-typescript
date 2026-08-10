@@ -11,36 +11,6 @@ export type SdkMethod = {
 
 export const sdkMethods: SdkMethod[] = [
   {
-    clientCallName: 'client.tasks.create',
-    fullyQualifiedName: 'tasks.create',
-    httpMethod: 'post',
-    httpPath: '/v1beta/tasks',
-  },
-  {
-    clientCallName: 'client.tasks.retrieve',
-    fullyQualifiedName: 'tasks.retrieve',
-    httpMethod: 'get',
-    httpPath: '/v1beta/tasks/{id}',
-  },
-  {
-    clientCallName: 'client.tasks.list',
-    fullyQualifiedName: 'tasks.list',
-    httpMethod: 'get',
-    httpPath: '/v1beta/tasks',
-  },
-  {
-    clientCallName: 'client.tasks.delete',
-    fullyQualifiedName: 'tasks.delete',
-    httpMethod: 'delete',
-    httpPath: '/v1beta/tasks/{id}',
-  },
-  {
-    clientCallName: 'client.tasks.attachCaptureSession',
-    fullyQualifiedName: 'tasks.attachCaptureSession',
-    httpMethod: 'post',
-    httpPath: '/v1beta/tasks/{id}/attach_capture_session',
-  },
-  {
     clientCallName: 'client.connectors.retrieve',
     fullyQualifiedName: 'connectors.retrieve',
     httpMethod: 'get',

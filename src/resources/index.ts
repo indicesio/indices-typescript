@@ -43,14 +43,4 @@ export {
   type SecretGetTotpResponse,
   type SecretCreateParams,
 } from './secrets';
-export {
-  Tasks,
-  type SecretSlotDefinition,
-  type Task,
-  type TaskCreation,
-  type TaskFailureInfo,
-  type TaskListResponse,
-  type TaskDeleteResponse,
-  type TaskCreateParams,
-  type TaskAttachCaptureSessionParams,
-} from './tasks';
+export { Tasks, type SecretSlotDefinition } from './tasks';
