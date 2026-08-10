@@ -115,14 +115,13 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     endpoint: '/v1beta/connectors/{connector_id}',
     httpMethod: 'delete',
     summary: 'Delete a connector',
-    description:
-      '<p>Delete a connector by its ID.</p><p>A legacy task that generated the connector is kept, but is detached and no longer runnable.</p>',
+    description: '<p>Delete a connector by its ID. Its past runs are kept, but it can no longer be run.</p>',
     stainlessPath: '(resource) beta.connectors > (method) delete',
     qualified: 'client.beta.connectors.delete',
     params: ['connector_id: string;'],
     response: '{ id: string; deleted: boolean; }',
     markdown:
-      "## delete\n\n`client.beta.connectors.delete(connector_id: string): { id: string; deleted: boolean; }`\n\n**delete** `/v1beta/connectors/{connector_id}`\n\n<p>Delete a connector by its ID.</p><p>A legacy task that generated the connector is kept, but is detached and no longer runnable.</p>\n\n### Parameters\n\n- `connector_id: string`\n  The ID of the connector to delete.\n\n### Returns\n\n- `{ id: string; deleted: boolean; }`\n\n  - `id: string`\n  - `deleted: boolean`\n\n### Example\n\n```typescript\nimport Indices from 'indicesio';\n\nconst client = new Indices();\n\nconst connector = await client.beta.connectors.delete('connector_id');\n\nconsole.log(connector);\n```",
+      "## delete\n\n`client.beta.connectors.delete(connector_id: string): { id: string; deleted: boolean; }`\n\n**delete** `/v1beta/connectors/{connector_id}`\n\n<p>Delete a connector by its ID. Its past runs are kept, but it can no longer be run.</p>\n\n### Parameters\n\n- `connector_id: string`\n  The ID of the connector to delete.\n\n### Returns\n\n- `{ id: string; deleted: boolean; }`\n\n  - `id: string`\n  - `deleted: boolean`\n\n### Example\n\n```typescript\nimport Indices from 'indicesio';\n\nconst client = new Indices();\n\nconst connector = await client.beta.connectors.delete('connector_id');\n\nconsole.log(connector);\n```",
     perLanguage: {
       typescript: {
         method: 'client.beta.connectors.delete',
