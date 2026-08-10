@@ -55,17 +55,7 @@ import {
   SecretListResponse,
   Secrets,
 } from './resources/secrets';
-import {
-  SecretSlotDefinition,
-  Task,
-  TaskAttachCaptureSessionParams,
-  TaskCreateParams,
-  TaskCreation,
-  TaskDeleteResponse,
-  TaskFailureInfo,
-  TaskListResponse,
-  Tasks,
-} from './resources/tasks';
+import { SecretSlotDefinition, Tasks } from './resources/tasks';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -810,9 +800,6 @@ export class Indices {
 
   static toFile = Uploads.toFile;
 
-  /**
-   * Create a task to repeatedly perform an action on an external website.
-   */
   tasks: API.Tasks = new API.Tasks(this);
   /**
    * Manage connectors.
@@ -846,17 +833,7 @@ export declare namespace Indices {
   export import CursorPage = Pagination.CursorPage;
   export { type CursorPageParams as CursorPageParams, type CursorPageResponse as CursorPageResponse };
 
-  export {
-    Tasks as Tasks,
-    type SecretSlotDefinition as SecretSlotDefinition,
-    type Task as Task,
-    type TaskCreation as TaskCreation,
-    type TaskFailureInfo as TaskFailureInfo,
-    type TaskListResponse as TaskListResponse,
-    type TaskDeleteResponse as TaskDeleteResponse,
-    type TaskCreateParams as TaskCreateParams,
-    type TaskAttachCaptureSessionParams as TaskAttachCaptureSessionParams,
-  };
+  export { Tasks as Tasks, type SecretSlotDefinition as SecretSlotDefinition };
 
   export {
     Connectors as Connectors,
