@@ -3,19 +3,6 @@
 Types:
 
 - <code><a href="./src/resources/tasks.ts">SecretSlotDefinition</a></code>
-- <code><a href="./src/resources/tasks.ts">Task</a></code>
-- <code><a href="./src/resources/tasks.ts">TaskCreation</a></code>
-- <code><a href="./src/resources/tasks.ts">TaskFailureInfo</a></code>
-- <code><a href="./src/resources/tasks.ts">TaskListResponse</a></code>
-- <code><a href="./src/resources/tasks.ts">TaskDeleteResponse</a></code>
-
-Methods:
-
-- <code title="post /v1beta/tasks">client.tasks.<a href="./src/resources/tasks.ts">create</a>({ ...params }) -> Task</code>
-- <code title="get /v1beta/tasks/{id}">client.tasks.<a href="./src/resources/tasks.ts">retrieve</a>(id) -> Task</code>
-- <code title="get /v1beta/tasks">client.tasks.<a href="./src/resources/tasks.ts">list</a>() -> TaskListResponse</code>
-- <code title="delete /v1beta/tasks/{id}">client.tasks.<a href="./src/resources/tasks.ts">delete</a>(id) -> TaskDeleteResponse</code>
-- <code title="post /v1beta/tasks/{id}/attach_capture_session">client.tasks.<a href="./src/resources/tasks.ts">attachCaptureSession</a>(id, { ...params }) -> Task</code>
 
 # Connectors
 

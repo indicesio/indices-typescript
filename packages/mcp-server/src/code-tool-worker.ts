@@ -108,11 +108,6 @@ function getTSDiagnostics(code: string): string[] {
 
 const fuse = new Fuse(
   [
-    'client.tasks.attachCaptureSession',
-    'client.tasks.create',
-    'client.tasks.delete',
-    'client.tasks.list',
-    'client.tasks.retrieve',
     'client.connectors.delete',
     'client.connectors.list',
     'client.connectors.listRevisions',
