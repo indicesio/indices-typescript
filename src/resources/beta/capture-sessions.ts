@@ -6,7 +6,7 @@ import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
 /**
- * Record a browser session; a completed capture is a reusable input for task generation.
+ * Record a browser session; a completed capture is a reusable input for building connectors.
  */
 export class CaptureSessions extends APIResource {
   /**

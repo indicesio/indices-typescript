@@ -71,7 +71,6 @@ describe('resource files', () => {
           run_id: 'run_id',
           sort: 'name',
           source: 'UPLOAD',
-          task_id: 'task_id',
         },
         { path: '/_stainless_unknown_path' },
       ),
