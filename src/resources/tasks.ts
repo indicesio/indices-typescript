@@ -82,8 +82,7 @@ export class Tasks extends APIResource {
 
 export interface SecretSlotDefinition {
   /**
-   * Name of the secret slot. Use this name as the identifier when binding secrets to
-   * a slot.
+   * Name of the secret slot, used as the key in a run's secret_bindings.
    */
   name: string;
 
@@ -91,6 +90,11 @@ export interface SecretSlotDefinition {
    * Type of secret required: 'login' or 'string'.
    */
   type: 'login' | 'string';
+
+  /**
+   * What the bound secret is used for, when the connector declares it.
+   */
+  description?: string | null;
 
   /**
    * Whether the connector can perform 2FA/TOTP when the bound login has it
