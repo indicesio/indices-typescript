@@ -35,7 +35,7 @@ const client = new Indices({
   apiKey: process.env['INDICES_API_KEY'], // This is the default and can be omitted
 });
 
-const run = await client.runs.run({
+const run = await client.beta.runs.run({
   connector_id: 'conn_8kPq2mWxYz1aBcDeFgHi3J',
   arguments: { '...': null },
 });
@@ -55,11 +55,11 @@ const client = new Indices({
   apiKey: process.env['INDICES_API_KEY'], // This is the default and can be omitted
 });
 
-const params: Indices.RunRunParams = {
+const params: Indices.Beta.RunRunParams = {
   connector_id: 'conn_8kPq2mWxYz1aBcDeFgHi3J',
   arguments: { '...': null },
 };
-const run: Indices.Run = await client.runs.run(params);
+const run: Indices.Beta.Run = await client.beta.runs.run(params);
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -72,7 +72,7 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-const run = await client.runs
+const run = await client.beta.runs
   .run({
     connector_id: 'conn_8kPq2mWxYz1aBcDeFgHi3J',
     arguments: { '...': null },
@@ -117,7 +117,7 @@ const client = new Indices({
 });
 
 // Or, configure per-request:
-await client.runs.run({
+await client.beta.runs.run({
   connector_id: 'conn_8kPq2mWxYz1aBcDeFgHi3J',
   arguments: { '...': null },
 }, {
@@ -137,7 +137,7 @@ const client = new Indices({
 });
 
 // Override per-request:
-await client.runs.run({
+await client.beta.runs.run({
   connector_id: 'conn_8kPq2mWxYz1aBcDeFgHi3J',
   arguments: { '...': null },
 }, {
@@ -158,7 +158,7 @@ You can use the `for await … of` syntax to iterate through items across all pa
 async function fetchAllConnectors(params) {
   const allConnectors = [];
   // Automatically fetches more pages as needed.
-  for await (const connector of client.connectors.list()) {
+  for await (const connector of client.beta.connectors.list()) {
     allConnectors.push(connector);
   }
   return allConnectors;
@@ -168,7 +168,7 @@ async function fetchAllConnectors(params) {
 Alternatively, you can request a single page at a time:
 
 ```ts
-let page = await client.connectors.list();
+let page = await client.beta.connectors.list();
 for (const connector of page.data) {
   console.log(connector);
 }
@@ -194,7 +194,7 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 ```ts
 const client = new Indices();
 
-const response = await client.runs
+const response = await client.beta.runs
   .run({
     connector_id: 'conn_8kPq2mWxYz1aBcDeFgHi3J',
     arguments: { '...': null },
@@ -203,7 +203,7 @@ const response = await client.runs
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: run, response: raw } = await client.runs
+const { data: run, response: raw } = await client.beta.runs
   .run({
     connector_id: 'conn_8kPq2mWxYz1aBcDeFgHi3J',
     arguments: { '...': null },
@@ -290,7 +290,7 @@ parameter. This library doesn't validate at runtime that the request matches the
 send will be sent as-is.
 
 ```ts
-client.runs.run({
+client.beta.runs.run({
   // ...
   // @ts-expect-error baz is not yet public
   baz: 'undocumented option',
