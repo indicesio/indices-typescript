@@ -63,6 +63,7 @@ describe('resource files', () => {
     await expect(
       client.beta.files.list(
         {
+          connector_id: 'connector_id',
           cursor: 'cursor',
           filename: 'filename',
           limit: 1,

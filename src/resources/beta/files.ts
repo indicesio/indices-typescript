@@ -206,6 +206,11 @@ export interface FileCreateParams {
 
 export interface FileListParams extends CursorPageParams {
   /**
+   * Only files produced by runs of this connector.
+   */
+  connector_id?: string;
+
+  /**
    * Only files whose name contains this text.
    */
   filename?: string;
