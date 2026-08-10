@@ -10,7 +10,7 @@ const client = new Indices({
 describe('resource files', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.files.create({
+    const responsePromise = client.beta.files.create({
       content_type: 'x',
       name: 'x',
       size_bytes: 0,
@@ -26,7 +26,7 @@ describe('resource files', () => {
 
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
-    const response = await client.files.create({
+    const response = await client.beta.files.create({
       content_type: 'x',
       name: 'x',
       size_bytes: 0,
@@ -35,7 +35,7 @@ describe('resource files', () => {
 
   // Mock server tests are disabled
   test.skip('retrieve', async () => {
-    const responsePromise = client.files.retrieve('file_id');
+    const responsePromise = client.beta.files.retrieve('file_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -47,7 +47,7 @@ describe('resource files', () => {
 
   // Mock server tests are disabled
   test.skip('list', async () => {
-    const responsePromise = client.files.list();
+    const responsePromise = client.beta.files.list();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -61,7 +61,7 @@ describe('resource files', () => {
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.files.list(
+      client.beta.files.list(
         {
           cursor: 'cursor',
           filename: 'filename',
@@ -79,7 +79,7 @@ describe('resource files', () => {
 
   // Mock server tests are disabled
   test.skip('delete', async () => {
-    const responsePromise = client.files.delete('file_id');
+    const responsePromise = client.beta.files.delete('file_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -91,7 +91,7 @@ describe('resource files', () => {
 
   // Mock server tests are disabled
   test.skip('download', async () => {
-    const responsePromise = client.files.download('file_id');
+    const responsePromise = client.beta.files.download('file_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -103,7 +103,7 @@ describe('resource files', () => {
 
   // Mock server tests are disabled
   test.skip('finalize', async () => {
-    const responsePromise = client.files.finalize('file_id');
+    const responsePromise = client.beta.files.finalize('file_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -115,7 +115,7 @@ describe('resource files', () => {
 
   // Mock server tests are disabled
   test.skip('getDownloadURL', async () => {
-    const responsePromise = client.files.getDownloadURL('file_id');
+    const responsePromise = client.beta.files.getDownloadURL('file_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;

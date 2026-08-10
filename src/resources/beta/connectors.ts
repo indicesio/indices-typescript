@@ -1,11 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../core/resource';
-import * as TasksAPI from './tasks';
-import { APIPromise } from '../core/api-promise';
-import { CursorPage, type CursorPageParams, PagePromise } from '../core/pagination';
-import { RequestOptions } from '../internal/request-options';
-import { path } from '../internal/utils/path';
+import { APIResource } from '../../core/resource';
+import { APIPromise } from '../../core/api-promise';
+import { CursorPage, type CursorPageParams, PagePromise } from '../../core/pagination';
+import { RequestOptions } from '../../internal/request-options';
+import { path } from '../../internal/utils/path';
 
 /**
  * Manage connectors.
@@ -94,7 +93,31 @@ export interface Connector {
   /**
    * Secret slots that must be bound when running the connector.
    */
-  required_secrets?: Array<TasksAPI.SecretSlotDefinition>;
+  required_secrets?: Array<SecretSlotDefinition>;
+}
+
+export interface SecretSlotDefinition {
+  /**
+   * Name of the secret slot, used as the key in a run's secret_bindings.
+   */
+  name: string;
+
+  /**
+   * Type of secret required: 'login' or 'string'.
+   */
+  type: 'login' | 'string';
+
+  /**
+   * What the bound secret is used for, when the connector declares it.
+   */
+  description?: string | null;
+
+  /**
+   * Whether the connector can perform 2FA/TOTP when the bound login has it
+   * configured. Logins without TOTP remain bindable. Only applicable for 'login'
+   * type.
+   */
+  supports_totp?: boolean;
 }
 
 export interface ConnectorDeleteResponse {
@@ -122,6 +145,7 @@ export interface ConnectorListParams extends CursorPageParams {}
 export declare namespace Connectors {
   export {
     type Connector as Connector,
+    type SecretSlotDefinition as SecretSlotDefinition,
     type ConnectorDeleteResponse as ConnectorDeleteResponse,
     type ConnectorListRevisionsResponse as ConnectorListRevisionsResponse,
     type ConnectorsCursorPage as ConnectorsCursorPage,

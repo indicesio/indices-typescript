@@ -7,10 +7,10 @@ const client = new Indices({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource connectors', () => {
+describe('resource runs', () => {
   // Mock server tests are disabled
   test.skip('retrieve', async () => {
-    const responsePromise = client.connectors.retrieve('connector_id');
+    const responsePromise = client.beta.runs.retrieve('run_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,8 +21,8 @@ describe('resource connectors', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('list', async () => {
-    const responsePromise = client.connectors.list();
+  test.skip('list: only required params', async () => {
+    const responsePromise = client.beta.runs.list({ connector_id: 'connector_id' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -33,16 +33,17 @@ describe('resource connectors', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('list: request options and params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.connectors.list({ cursor: 'cursor', limit: 1 }, { path: '/_stainless_unknown_path' }),
-    ).rejects.toThrow(Indices.NotFoundError);
+  test.skip('list: required and optional params', async () => {
+    const response = await client.beta.runs.list({
+      connector_id: 'connector_id',
+      cursor: 'cursor',
+      limit: 1,
+    });
   });
 
   // Mock server tests are disabled
-  test.skip('delete', async () => {
-    const responsePromise = client.connectors.delete('connector_id');
+  test.skip('logs', async () => {
+    const responsePromise = client.beta.runs.logs('run_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -53,8 +54,8 @@ describe('resource connectors', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('listRevisions', async () => {
-    const responsePromise = client.connectors.listRevisions('connector_id');
+  test.skip('run: only required params', async () => {
+    const responsePromise = client.beta.runs.run({ connector_id: 'connector_id' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -62,5 +63,16 @@ describe('resource connectors', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('run: required and optional params', async () => {
+    const response = await client.beta.runs.run({
+      connector_id: 'connector_id',
+      arguments: { foo: 'bar' },
+      async: true,
+      max_timeout_s: 1,
+      secret_bindings: { foo: 'string' },
+    });
   });
 });
