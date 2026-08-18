@@ -63,6 +63,12 @@ export interface Run {
   created_at: string;
 
   /**
+   * Why the run failed. Present iff `status` is `connector_error`; for platform
+   * failures the status itself is the reason.
+   */
+  error: Run.Error | null;
+
+  /**
    * Timestamp when the object was last updated.
    */
   finished_at: string | null;
@@ -80,16 +86,60 @@ export interface Run {
   result_json: string | null;
 
   /**
-   * Lifecycle status of the run: `pending`, `running`, `success`, `failed`,
-   * `timed_out`, `result_too_large`, or `internal_error`.
+   * Lifecycle status of the run: `pending`, `running`, `success`, `connector_error`,
+   * `timed_out`, `result_too_large`, or `internal_error`. `connector_error` means
+   * the connector's code failed (see `error`); `timed_out` and `internal_error` are
+   * platform outcomes worth retrying; `result_too_large` is not retryable as-is.
    */
-  status: 'pending' | 'running' | 'success' | 'failed' | 'timed_out' | 'result_too_large' | 'internal_error';
+  status:
+    | 'pending'
+    | 'running'
+    | 'success'
+    | 'connector_error'
+    | 'timed_out'
+    | 'result_too_large'
+    | 'internal_error';
 
   /**
    * Secrets to use for this run. This dict must be a mapping of secret slot names to
    * secret IDs.
    */
   secret_bindings?: { [key: string]: string };
+}
+
+export namespace Run {
+  /**
+   * Why the run failed. Present iff `status` is `connector_error`; for platform
+   * failures the status itself is the reason.
+   */
+  export interface Error {
+    /**
+     * Structured context reported by the connector.
+     */
+    details: { [key: string]: unknown } | null;
+
+    /**
+     * Exception class name, when the failure came from a raised exception.
+     */
+    exception: string | null;
+
+    /**
+     * Human-readable description of the failure.
+     */
+    message: string;
+
+    /**
+     * Whether retrying the run with the same arguments is expected to succeed. Null
+     * when unknown.
+     */
+    retryable: boolean | null;
+
+    /**
+     * Machine-readable failure type: `auth_required`, `invalid_input`,
+     * `site_unavailable`, `site_changed`, `crash`, or `unhandled`.
+     */
+    type: string;
+  }
 }
 
 export interface RunLogsResponse {
