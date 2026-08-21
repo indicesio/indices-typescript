@@ -135,7 +135,12 @@ export interface ConnectorListRevisionsResponse {
   data: Array<Connector>;
 }
 
-export interface ConnectorListParams extends CursorPageParams {}
+export interface ConnectorListParams extends CursorPageParams {
+  /**
+   * Only connectors whose website is this domain or a subdomain of it.
+   */
+  domain?: string;
+}
 
 export declare namespace Connectors {
   export {
