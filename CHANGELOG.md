@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3.0 (2026-08-27)
+
+Full Changelog: [v0.2.0...v0.3.0](https://github.com/indicesio/indices-typescript/compare/v0.2.0...v0.3.0)
+
+### Features
+
+* **api:** api update ([836b1df](https://github.com/indicesio/indices-typescript/commit/836b1df884ffec2c423199d52569d5af5b2b0e1d))
+
 ## 0.2.0 (2026-08-21)
 
 Full Changelog: [v0.1.0...v0.2.0](https://github.com/indicesio/indices-typescript/compare/v0.1.0...v0.2.0)
