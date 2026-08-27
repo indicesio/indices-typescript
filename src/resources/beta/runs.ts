@@ -136,7 +136,7 @@ export namespace Run {
 
     /**
      * Machine-readable failure type: `auth_required`, `invalid_input`,
-     * `site_unavailable`, `site_changed`, `crash`, or `unhandled`.
+     * `site_unavailable`, `site_changed`, `internal_error`, `crash`, or `unhandled`.
      */
     type: string;
   }
