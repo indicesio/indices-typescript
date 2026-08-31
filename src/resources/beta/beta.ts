@@ -33,7 +33,7 @@ import {
   FilesCursorPage,
 } from './files';
 import * as RunsAPI from './runs';
-import { Run, RunListParams, RunLogsResponse, RunRunParams, Runs, RunsCursorPage } from './runs';
+import { Run, RunError, RunListParams, RunLogsResponse, RunRunParams, Runs, RunsCursorPage } from './runs';
 import * as SecretsAPI from './secrets';
 import {
   Secret,
@@ -72,6 +72,7 @@ export declare namespace Beta {
   export {
     Runs as Runs,
     type Run as Run,
+    type RunError as RunError,
     type RunLogsResponse as RunLogsResponse,
     type RunsCursorPage as RunsCursorPage,
     type RunListParams as RunListParams,

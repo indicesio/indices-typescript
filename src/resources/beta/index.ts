@@ -32,6 +32,7 @@ export {
 export {
   Runs,
   type Run,
+  type RunError,
   type RunLogsResponse,
   type RunListParams,
   type RunRunParams,

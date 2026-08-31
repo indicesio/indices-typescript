@@ -66,7 +66,7 @@ export interface Run {
    * Why the run failed. Present iff `status` is `connector_error`; for platform
    * failures the status itself is the reason.
    */
-  error: Run.Error | null;
+  error: RunError | null;
 
   /**
    * Timestamp when the object was last updated.
@@ -107,39 +107,33 @@ export interface Run {
   secret_bindings?: { [key: string]: string };
 }
 
-export namespace Run {
+export interface RunError {
   /**
-   * Why the run failed. Present iff `status` is `connector_error`; for platform
-   * failures the status itself is the reason.
+   * Structured context reported by the connector.
    */
-  export interface Error {
-    /**
-     * Structured context reported by the connector.
-     */
-    details: { [key: string]: unknown } | null;
+  details: { [key: string]: unknown } | null;
 
-    /**
-     * Exception class name, when the failure came from a raised exception.
-     */
-    exception: string | null;
+  /**
+   * Exception class name, when the failure came from a raised exception.
+   */
+  exception: string | null;
 
-    /**
-     * Human-readable description of the failure.
-     */
-    message: string;
+  /**
+   * Human-readable description of the failure.
+   */
+  message: string;
 
-    /**
-     * Whether retrying the run with the same arguments is expected to succeed. Null
-     * when unknown.
-     */
-    retryable: boolean | null;
+  /**
+   * Whether retrying the run with the same arguments is expected to succeed. Null
+   * when unknown.
+   */
+  retryable: boolean | null;
 
-    /**
-     * Machine-readable failure type: `auth_required`, `invalid_input`,
-     * `site_unavailable`, `site_changed`, `internal_error`, `crash`, or `unhandled`.
-     */
-    type: string;
-  }
+  /**
+   * Machine-readable failure type: `auth_required`, `invalid_input`,
+   * `site_unavailable`, `site_changed`, `internal_error`, `crash`, or `unhandled`.
+   */
+  type: string;
 }
 
 export interface RunLogsResponse {
@@ -189,6 +183,7 @@ export interface RunRunParams {
 export declare namespace Runs {
   export {
     type Run as Run,
+    type RunError as RunError,
     type RunLogsResponse as RunLogsResponse,
     type RunsCursorPage as RunsCursorPage,
     type RunListParams as RunListParams,

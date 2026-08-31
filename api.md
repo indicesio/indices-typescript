@@ -21,6 +21,7 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/beta/runs.ts">Run</a></code>
+- <code><a href="./src/resources/beta/runs.ts">RunError</a></code>
 - <code><a href="./src/resources/beta/runs.ts">RunLogsResponse</a></code>
 
 Methods:
