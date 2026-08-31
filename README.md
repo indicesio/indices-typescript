@@ -40,7 +40,7 @@ const run = await client.beta.runs.run({
   arguments: { '...': null },
 });
 
-console.log(run.result_json);
+console.log(run.id);
 ```
 
 ### Request & Response types
@@ -210,7 +210,7 @@ const { data: run, response: raw } = await client.beta.runs
   })
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
-console.log(run.result_json);
+console.log(run.id);
 ```
 
 ### Logging

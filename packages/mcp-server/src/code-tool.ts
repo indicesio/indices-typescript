@@ -30,7 +30,7 @@ async function run(client) {
     arguments: { '...': null },
   });
 
-  console.log(run.result_json);
+  console.log(run.id);
 }
 \`\`\`
 

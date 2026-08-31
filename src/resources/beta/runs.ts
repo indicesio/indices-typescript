@@ -79,11 +79,11 @@ export interface Run {
   has_logs: boolean;
 
   /**
-   * Execution result of the run. In JSON, matching the connector's output schema.
-   * Limited to 100MB; results above 100MB will be truncated and result in a
-   * `result_too_large` status.
+   * Execution result of the run, matching the connector's output schema. Present iff
+   * `status` is `success`. Limited to 100MB; results above 100MB are not stored and
+   * the run ends with `result_too_large`.
    */
-  result_json: string | null;
+  result: { [key: string]: unknown } | null;
 
   /**
    * Lifecycle status of the run: `pending`, `running`, `success`, `connector_error`,
