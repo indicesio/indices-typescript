@@ -131,7 +131,8 @@ export interface RunError {
 
   /**
    * Machine-readable failure type: `auth_required`, `invalid_input`,
-   * `site_unavailable`, `site_changed`, `internal_error`, `crash`, or `unhandled`.
+   * `site_unavailable`, `anti_bot`, `site_changed`, `internal_error`, `crash`, or
+   * `unhandled`.
    */
   type: string;
 }
