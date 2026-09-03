@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.1](https://github.com/indicesio/indices-typescript/compare/v0.3.0...v0.3.1) (2026-09-03)
+
+
+### Chores
+
+* **ci:** fix npm publish workflow for single-package layout ([7cc3e38](https://github.com/indicesio/indices-typescript/commit/7cc3e383b7d97211e8b01f2cfc634c6cb56f6802))
+
 ## [0.3.0](https://github.com/indicesio/indices-typescript/compare/v0.2.0...v0.3.0) (2026-09-03)
 
 
