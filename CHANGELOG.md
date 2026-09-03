@@ -1,5 +1,26 @@
 # Changelog
 
+## [0.3.0](https://github.com/indicesio/indices-typescript/compare/v0.2.0...v0.3.0) (2026-09-03)
+
+
+### Features
+
+* **api:** api update ([9098a5b](https://github.com/indicesio/indices-typescript/commit/9098a5bd538ed59b08952a527553e60d79337264))
+* **api:** api update ([7056fa2](https://github.com/indicesio/indices-typescript/commit/7056fa2c12e109007354bab5601290a7ce02a9ba))
+* **api:** api update ([836b1df](https://github.com/indicesio/indices-typescript/commit/836b1df884ffec2c423199d52569d5af5b2b0e1d))
+* **api:** RunError struct ([e683b36](https://github.com/indicesio/indices-typescript/commit/e683b36e00b038755164a1005665dd0bf595440a))
+* initial stlc build ([9765ab9](https://github.com/indicesio/indices-typescript/commit/9765ab984cafd546c339929c2bf9cefb971d731a))
+
+
+### Chores
+
+* add stlc promote and back-sync workflows ([ebb6076](https://github.com/indicesio/indices-typescript/commit/ebb60764b1bb74c839587567a0da6897cfa4eeb0))
+
+
+### Documentation
+
+* **mcp:** document code execution modes and the local code runner ([468a815](https://github.com/indicesio/indices-typescript/commit/468a8154f04dde357ab9c108a80d516053a0d4f7))
+
 ## 0.2.0 (2026-08-21)
 
 Full Changelog: [v0.1.0...v0.2.0](https://github.com/indicesio/indices-typescript/compare/v0.1.0...v0.2.0)
